@@ -1,0 +1,52 @@
+{
+    "indicators": {
+        "RSI": {
+            "enabled": true,
+            "parameters": {
+                "period": 14,
+                "oversold": 30,
+                "overbought": 70
+            }
+        },
+        "SMA": {
+            "enabled": false,
+            "parameters": {
+                "short_period": 20,
+                "long_period": 50
+            }
+        },
+        "MACD": {
+            "enabled": false,
+            "parameters": {
+                "fast_period": 12,
+                "slow_period": 26,
+                "signal_period": 9
+            }
+        },
+        "BBANDS": {
+            "enabled": false,
+            "parameters": {
+                "period": 20,
+                "std_dev": 2
+            }
+        },
+        "FIBONACCI": {
+            "enabled": false,
+            "parameters": {
+                "levels": [0, 0.236, 0.382, 0.618, 1]
+            }
+        }
+    },
+    "trading": {
+        "amount": 1.5,
+        "min_volume": 10000000,
+        "update_interval": 5,
+        "max_workers": 10,
+        "stop_loss_percentage": 2,
+        "take_profit_percentage": 1,
+        "kline": {
+            "interval": "1",
+            "limit": 200
+        }
+    }
+} 
