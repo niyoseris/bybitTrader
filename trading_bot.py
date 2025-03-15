@@ -66,14 +66,39 @@ class TradingBot:
             self.console.print(f"[bold red]Error loading config: {str(e)}[/bold red]")
             raise
         
+    def get_trade_history(self, symbol):
+        """Get trade history for a symbol to find entry price"""
+        try:
+            # Get last 50 orders
+            orders = self.client.get_order_history(
+                category="spot",
+                symbol=symbol,
+                limit=50,
+                status="Filled"
+            )
+            
+            if orders and orders.get("retCode") == 0 and orders.get("result", {}).get("list"):
+                # Filter buy orders only
+                buy_orders = [order for order in orders["result"]["list"] 
+                            if order["side"] == "Buy"]
+                if buy_orders:
+                    # Get the most recent buy order
+                    last_buy = buy_orders[0]
+                    return {
+                        "entry_price": float(last_buy["avgPrice"]),
+                        "qty": float(last_buy["qty"])
+                    }
+            return None
+            
+        except Exception as e:
+            self.console.print(f"[yellow]Warning: Could not get order history for {symbol}: {str(e)}[/yellow]")
+            return None
+
     def get_positions(self):
-        """Get current positions"""
+        """Get current positions and set entry prices from trade history"""
         try:
             balances = self.client.get_wallet_balance(accountType="UNIFIED")
             positions = {}
-            
-            # Load saved positions
-            saved_positions = self.load_positions_from_file()
             
             if not balances.get("result") or not balances["result"].get("list"):
                 self.console.print("[yellow]No balance data received from API[/yellow]")
@@ -95,28 +120,30 @@ class TradingBot:
                             if coin["coin"] != "USDT":
                                 symbol = f"{coin['coin']}USDT"
                                 try:
+                                    # Get current price
                                     ticker = self.client.get_tickers(category="spot", symbol=symbol)["result"]["list"][0]
                                     current_price = float(ticker["lastPrice"])
                                     
-                                    # Use saved position data if available
-                                    if coin["coin"] in saved_positions:
-                                        saved_data = saved_positions[coin["coin"]]
-                                        entry_price = saved_data["entry_price"]
-                                        stop_loss = saved_data["stop_loss"]
-                                        take_profit = saved_data["take_profit"]
-                                        self.console.print(f"[green]Loaded saved position data for {coin['coin']}[/green]")
+                                    # Get trade history to find entry price
+                                    trade_info = self.get_trade_history(symbol)
+                                    if trade_info:
+                                        entry_price = trade_info["entry_price"]
+                                        self.console.print(f"[green]Found entry price for {coin['coin']} from trade history: {entry_price}[/green]")
                                     else:
-                                        # Set new position data
+                                        # If no trade history found, use current price
                                         entry_price = current_price
-                                        stop_loss = entry_price * 0.98
-                                        take_profit = entry_price * 1.03
-                                        self.console.print(f"[yellow]Created new position data for {coin['coin']}[/yellow]")
+                                        self.console.print(f"[yellow]No trade history found for {coin['coin']}, using current price: {current_price}[/yellow]")
+                                    
+                                    # Calculate stop loss and take profit
+                                    stop_loss = entry_price * (1 - self.stop_loss_percentage / 100)
+                                    take_profit = entry_price * (1 + self.take_profit_percentage / 100)
                                         
                                 except Exception as e:
                                     self.console.print(f"[yellow]Warning: Could not get price for {symbol}: {str(e)}[/yellow]")
+                                    continue
                             
                             positions[coin["coin"]] = {
-                                "free": wallet_balance - float(coin.get("locked", 0)),  # Available balance = Total - Locked
+                                "free": wallet_balance - float(coin.get("locked", 0)),
                                 "locked": float(coin.get("locked", 0)),
                                 "total": wallet_balance,
                                 "entry_price": entry_price,
@@ -128,7 +155,8 @@ class TradingBot:
                         self.console.print(f"[yellow]Warning: Could not process balance for coin: {coin.get('coin', 'UNKNOWN')} - Error: {str(e)}[/yellow]")
                         continue
             
-            # Save updated positions
+            # Save all positions immediately
+            self.positions = positions
             self.save_positions_to_file()
             return positions
             
@@ -357,26 +385,21 @@ class TradingBot:
                 return None
             
             if side == "Buy":
-                # Check USDT balance
-                usdt_balance = self.positions.get("USDT", {}).get("free", 0)
-                if usdt_balance < 5.1:
-                    self.console.print(f"[yellow]Insufficient USDT balance. Need: 5.1 USDT, Have: {usdt_balance:.2f} USDT[/yellow]")
+                # Check if we already have this coin
+                base_currency = symbol[:-4] if symbol.endswith('USDT') else symbol.split('USDT')[0]
+                current_qty = self.positions.get(base_currency, {}).get("free", 0)
+                current_value = current_qty * current_price
+                
+                if current_value > 2:
+                    self.console.print(f"[yellow]Already holding {current_qty} {base_currency} worth {current_value:.2f} USDT (>2 USDT), skipping buy[/yellow]")
                     return None
                 
-                # Simply calculate quantity by dividing 5.1 by price
-                qty = 5.1 / current_price
-                
-                # Round to correct decimal places
-                multiplier = 10 ** decimal_places
-                qty = math.floor(qty * multiplier) / multiplier
-                
-                # Calculate final value
-                final_value = qty * current_price
+                # For buy orders, always use 5.5
+                qty = 5.5
                 
                 self.console.print(f"[yellow]Placing Buy order for {symbol}:[/yellow]")
                 self.console.print(f"Price: {current_price:.8f}")
                 self.console.print(f"Quantity: {qty}")
-                self.console.print(f"Total Value: {final_value:.2f} USDT")
                 
             else:  # Sell order
                 # For sell orders, use the available balance
@@ -420,12 +443,24 @@ class TradingBot:
             # If it's a buy order, save the position data
             if side == "Buy":
                 base_currency = symbol[:-4] if symbol.endswith('USDT') else symbol.split('USDT')[0]
+                current_position = self.positions.get(base_currency, {})
+                current_total = float(current_position.get("total", 0))
+                
+                # Add new quantity to total
+                new_total = current_total + float(qty)
+                
                 self.positions[base_currency] = {
-                    **self.positions[base_currency],
+                    "total": new_total,
                     "entry_price": current_price,
                     "stop_loss": current_price * (1 - self.stop_loss_percentage / 100),
                     "take_profit": current_price * (1 + self.take_profit_percentage / 100)
                 }
+                
+                self.console.print(f"[green]Updated position for {base_currency}:[/green]")
+                self.console.print(f"Previous total: {current_total}")
+                self.console.print(f"New purchase: {qty}")
+                self.console.print(f"New total: {new_total}")
+                
                 self.save_positions_to_file()
             elif side == "Sell":
                 # If it's a sell order, remove the position data for this coin
