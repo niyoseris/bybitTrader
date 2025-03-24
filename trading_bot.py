@@ -233,8 +233,12 @@ class TradingBot:
             if side == "Buy":
                 # Check if we already have this coin
                 current_position = self.positions.get(base_currency, {}).get("total", 0)
-                if current_position > 0:
-                    self.console.print(f"[yellow]Already holding {current_position:.8f} {base_currency}, skipping buy order[/yellow]")
+                
+                # Check if we have any open orders for this symbol
+                has_open_orders = self.has_open_orders(symbol)
+                
+                if current_position > 0 or has_open_orders:
+                    self.console.print(f"[yellow]Already holding {current_position:.8f} {base_currency} or has open orders, skipping buy order[/yellow]")
                     return False, None
                 
                 # For buy orders, check USDT balance
@@ -440,7 +444,7 @@ class TradingBot:
             # Update positions after order
             self.positions = self.get_positions()
             
-            # If it's a buy order, save the position data
+            # If it's a buy order, save the position data and place a limit sell order at 5% above purchase price
             if side == "Buy":
                 base_currency = symbol[:-4] if symbol.endswith('USDT') else symbol.split('USDT')[0]
                 current_position = self.positions.get(base_currency, {})
@@ -461,10 +465,17 @@ class TradingBot:
                 self.console.print(f"New purchase: {qty}")
                 self.console.print(f"New total: {new_total}")
                 
+                # Place a limit sell order at 5% above purchase price
+                self.place_limit_sell_order(symbol, new_total, current_price * 1.05)
+                
                 self.save_positions_to_file()
             elif side == "Sell":
                 # If it's a sell order, remove the position data for this coin
                 base_currency = symbol[:-4] if symbol.endswith('USDT') else symbol.split('USDT')[0]
+                
+                # Cancel any existing limit sell orders for this symbol
+                self.cancel_all_orders(symbol)
+                
                 if base_currency in self.positions:
                     del self.positions[base_currency]
                     self.save_positions_to_file()
@@ -584,11 +595,15 @@ class TradingBot:
                     # Check stop loss
                     if current_price <= position["stop_loss"]:
                         self.console.print(f"[red]Stop Loss triggered for {symbol} at {current_price:.8f}[/red]")
+                        # Cancel existing limit sell orders before selling
+                        self.cancel_all_orders(symbol)
                         self.place_order(symbol, "Sell", position["total"])
                         
                     # Check take profit
                     elif current_price >= position["take_profit"]:
                         self.console.print(f"[green]Take Profit triggered for {symbol} at {current_price:.8f}[/green]")
+                        # Cancel existing limit sell orders before selling
+                        self.cancel_all_orders(symbol)
                         self.place_order(symbol, "Sell", position["total"])
                         
                 except Exception as e:
@@ -597,7 +612,7 @@ class TradingBot:
                     
         except Exception as e:
             self.console.print(f"[bold red]Error checking positions: {str(e)}[/bold red]")
-
+    
     def save_positions_to_file(self):
         """Save positions data to a JSON file"""
         try:
@@ -638,6 +653,93 @@ class TradingBot:
         except Exception as e:
             self.console.print(f"[bold red]Error loading positions: {str(e)}[/bold red]")
             return {}
+
+    def has_open_orders(self, symbol):
+        """Check if there are any open orders for a symbol"""
+        try:
+            orders = self.client.get_open_orders(
+                category="spot",
+                symbol=symbol
+            )
+            
+            if orders and orders.get("retCode") == 0 and orders.get("result", {}).get("list"):
+                return True
+            return False
+            
+        except Exception as e:
+            self.console.print(f"[yellow]Warning: Could not check open orders for {symbol}: {str(e)}[/yellow]")
+            return False
+
+    def place_limit_sell_order(self, symbol, qty, price):
+        """Place a limit sell order at specified price"""
+        try:
+            # Get minimum order size and decimal places
+            min_qty, min_order_amt, decimal_places = self.get_min_order_size(symbol)
+            if min_qty is None:
+                return None
+                
+            # Round to correct decimal places
+            multiplier = 10 ** decimal_places
+            qty = math.floor(qty * multiplier) / multiplier
+            
+            # Make sure quantity meets minimum requirements
+            if qty < min_qty:
+                self.console.print(f"[yellow]Quantity {qty} is below minimum {min_qty} for limit order[/yellow]")
+                return None
+                
+            # Check if value meets minimum order amount
+            value = qty * price
+            if value < min_order_amt:
+                self.console.print(f"[yellow]Limit order value {value:.2f} USDT is below minimum {min_order_amt} USDT[/yellow]")
+                return None
+                
+            # Place the limit sell order
+            order = self.client.place_order(
+                category="spot",
+                symbol=symbol,
+                side="Sell",
+                orderType="LIMIT",
+                qty=str(qty),
+                price=str(price),
+                timeInForce="GTC"  # Good Till Cancelled
+            )
+            
+            self.console.print(f"[bold green]✓ Limit Sell order placed for {qty} {symbol} at price {price:.8f} (5% above purchase)[/bold green]")
+            return order
+            
+        except Exception as e:
+            self.console.print(f"[bold red]Error placing limit sell order: {str(e)}[/bold red]")
+            return None
+            
+    def cancel_all_orders(self, symbol):
+        """Cancel all open orders for a symbol"""
+        try:
+            # Get open orders for the symbol
+            orders = self.client.get_open_orders(
+                category="spot",
+                symbol=symbol
+            )
+            
+            if orders and orders.get("retCode") == 0 and orders.get("result", {}).get("list"):
+                # Cancel all open orders
+                result = self.client.cancel_all_orders(
+                    category="spot",
+                    symbol=symbol
+                )
+                
+                if result and result.get("retCode") == 0:
+                    self.console.print(f"[green]Successfully cancelled all open orders for {symbol}[/green]")
+                    return True
+                else:
+                    self.console.print(f"[yellow]Failed to cancel orders for {symbol}: {result}[/yellow]")
+                    return False
+            else:
+                self.console.print(f"[cyan]No open orders to cancel for {symbol}[/cyan]")
+                return True
+                
+        except Exception as e:
+            self.console.print(f"[bold red]Error cancelling orders: {str(e)}[/bold red]")
+            return False
 
 if __name__ == "__main__":
     load_dotenv()
