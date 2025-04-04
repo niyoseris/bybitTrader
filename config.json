@@ -1,7 +1,7 @@
 {
     "indicators": {
         "RSI": {
-            "enabled": false,
+            "enabled": true,
             "parameters": {
                 "period": 14,
                 "oversold": 30,
@@ -9,14 +9,14 @@
             }
         },
         "SMA": {
-            "enabled": false,
+            "enabled": true,
             "parameters": {
                 "short_period": 20,
                 "long_period": 50
             }
         },
         "MACD": {
-            "enabled": false,
+            "enabled": true,
             "parameters": {
                 "fast_period": 12,
                 "slow_period": 26,
@@ -24,7 +24,7 @@
             }
         },
         "BBANDS": {
-            "enabled": false,
+            "enabled": true,
             "parameters": {
                 "period": 20,
                 "std_dev": 2

@@ -1,0 +1,7344 @@
+{
+  "market_data": {
+    "ATOMUSDT": {
+      "price": 4.995,
+      "volume": 8.56079485578,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "BUY"
+      },
+      "values": {
+        "RSI": 57.94,
+        "SMA_Short": 4.4116,
+        "SMA_Long": 4.3912,
+        "SMA_Diff": 0.0203,
+        "MACD_Line": 0.0399,
+        "MACD_Signal": 0.0354,
+        "MACD_Hist": 0.0045,
+        "BB_Upper": 4.6197,
+        "BB_Middle": 4.4116,
+        "BB_Lower": 4.2034,
+        "BB_Width": 9.44,
+        "FIB_0": 4.142,
+        "FIB_236": 4.3662,
+        "FIB_382": 4.5049,
+        "FIB_618": 4.7291,
+        "FIB_1000": 5.092
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 3,
+        "rel_strength": 0.6,
+        "buy_count": 3,
+        "sell_count": 0,
+        "neutral_count": 2
+      }
+    },
+    "DIAMUSDT": {
+      "price": 0.01093,
+      "volume": 1.47135760176,
+      "signals": {
+        "RSI": "SELL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 76.44,
+        "SMA_Short": 0.0111,
+        "SMA_Long": 0.0111,
+        "SMA_Diff": 0.0,
+        "MACD_Line": 0.0001,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0113,
+        "BB_Middle": 0.0111,
+        "BB_Lower": 0.0109,
+        "BB_Width": 3.69,
+        "FIB_0": 0.0107,
+        "FIB_236": 0.0109,
+        "FIB_382": 0.011,
+        "FIB_618": 0.0111,
+        "FIB_1000": 0.0114
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "RSI",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 2,
+        "sell_count": 2,
+        "neutral_count": 1
+      }
+    },
+    "SANDUSDT": {
+      "price": 0.2626,
+      "volume": 1.004898688768,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.26,
+        "SMA_Short": 0.2703,
+        "SMA_Long": 0.2657,
+        "SMA_Diff": 0.0046,
+        "MACD_Line": 0.0035,
+        "MACD_Signal": 0.0034,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.2844,
+        "BB_Middle": 0.2703,
+        "BB_Lower": 0.2563,
+        "BB_Width": 10.41,
+        "FIB_0": 0.2491,
+        "FIB_236": 0.2571,
+        "FIB_382": 0.2621,
+        "FIB_618": 0.2702,
+        "FIB_1000": 0.2832
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "BRETTUSDT": {
+      "price": 0.03067,
+      "volume": 3.342126102961,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 58.89,
+        "SMA_Short": 0.0311,
+        "SMA_Long": 0.0306,
+        "SMA_Diff": 0.0005,
+        "MACD_Line": 0.0005,
+        "MACD_Signal": 0.0004,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0331,
+        "BB_Middle": 0.0311,
+        "BB_Lower": 0.0291,
+        "BB_Width": 13.08,
+        "FIB_0": 0.0287,
+        "FIB_236": 0.0297,
+        "FIB_382": 0.0304,
+        "FIB_618": 0.0315,
+        "FIB_1000": 0.0332
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "FLOWUSDT": {
+      "price": 0.3734,
+      "volume": 1.6640778946460002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.54,
+        "SMA_Short": 0.385,
+        "SMA_Long": 0.3786,
+        "SMA_Diff": 0.0064,
+        "MACD_Line": 0.0042,
+        "MACD_Signal": 0.0043,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.4007,
+        "BB_Middle": 0.385,
+        "BB_Lower": 0.3693,
+        "BB_Width": 8.13,
+        "FIB_0": 0.3526,
+        "FIB_236": 0.3646,
+        "FIB_382": 0.372,
+        "FIB_618": 0.3841,
+        "FIB_1000": 0.4035
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "MASKUSDT": {
+      "price": 1.156,
+      "volume": 3.06068433636,
+      "signals": {
+        "RSI": "SELL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 75.88,
+        "SMA_Short": 1.2873,
+        "SMA_Long": 1.2597,
+        "SMA_Diff": 0.0276,
+        "MACD_Line": 0.0325,
+        "MACD_Signal": 0.0256,
+        "MACD_Hist": 0.0069,
+        "BB_Upper": 1.4001,
+        "BB_Middle": 1.2873,
+        "BB_Lower": 1.1746,
+        "BB_Width": 17.51,
+        "FIB_0": 1.114,
+        "FIB_236": 1.1732,
+        "FIB_382": 1.2099,
+        "FIB_618": 1.2691,
+        "FIB_1000": 1.365
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "RSI",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 2,
+        "sell_count": 2,
+        "neutral_count": 1
+      }
+    },
+    "SUSDT": {
+      "price": 0.5024,
+      "volume": 15.692559908159998,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.45,
+        "SMA_Short": 0.4936,
+        "SMA_Long": 0.4834,
+        "SMA_Diff": 0.0102,
+        "MACD_Line": 0.0081,
+        "MACD_Signal": 0.0079,
+        "MACD_Hist": 0.0002,
+        "BB_Upper": 0.5268,
+        "BB_Middle": 0.4936,
+        "BB_Lower": 0.4604,
+        "BB_Width": 13.45,
+        "FIB_0": 0.436,
+        "FIB_236": 0.4573,
+        "FIB_382": 0.4705,
+        "FIB_618": 0.4919,
+        "FIB_1000": 0.5264
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "GRASSUSDT": {
+      "price": 1.89,
+      "volume": 23.818680962999995,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.93,
+        "SMA_Short": 1.85,
+        "SMA_Long": 1.7257,
+        "SMA_Diff": 0.1243,
+        "MACD_Line": 0.0638,
+        "MACD_Signal": 0.0671,
+        "MACD_Hist": -0.0033,
+        "BB_Upper": 2.0382,
+        "BB_Middle": 1.85,
+        "BB_Lower": 1.6618,
+        "BB_Width": 20.35,
+        "FIB_0": 1.49,
+        "FIB_236": 1.6094,
+        "FIB_382": 1.6833,
+        "FIB_618": 1.8027,
+        "FIB_1000": 1.996
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "AEVOUSDT": {
+      "price": 0.0999,
+      "volume": 1.4714372468430001,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.27,
+        "SMA_Short": 0.1032,
+        "SMA_Long": 0.1014,
+        "SMA_Diff": 0.0019,
+        "MACD_Line": 0.0014,
+        "MACD_Signal": 0.0014,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.109,
+        "BB_Middle": 0.1032,
+        "BB_Lower": 0.0975,
+        "BB_Width": 11.17,
+        "FIB_0": 0.0932,
+        "FIB_236": 0.0968,
+        "FIB_382": 0.099,
+        "FIB_618": 0.1026,
+        "FIB_1000": 0.1084
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "SHIBUSDT": {
+      "price": 1.223e-05,
+      "volume": 4.55305043862452,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 56.02,
+        "SMA_Short": 0.0,
+        "SMA_Long": 0.0,
+        "SMA_Diff": 0.0,
+        "MACD_Line": 0.0,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0,
+        "BB_Middle": 0.0,
+        "BB_Lower": 0.0,
+        "BB_Width": 7.27,
+        "FIB_0": 0.0,
+        "FIB_236": 0.0,
+        "FIB_382": 0.0,
+        "FIB_618": 0.0,
+        "FIB_1000": 0.0
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "MNTUSDT": {
+      "price": 0.7366,
+      "volume": 111.472530763408,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 62.67,
+        "SMA_Short": 0.7935,
+        "SMA_Long": 0.7851,
+        "SMA_Diff": 0.0084,
+        "MACD_Line": 0.0062,
+        "MACD_Signal": 0.0059,
+        "MACD_Hist": 0.0004,
+        "BB_Upper": 0.8134,
+        "BB_Middle": 0.7935,
+        "BB_Lower": 0.7737,
+        "BB_Width": 5.0,
+        "FIB_0": 0.7268,
+        "FIB_236": 0.7459,
+        "FIB_382": 0.7577,
+        "FIB_618": 0.7768,
+        "FIB_1000": 0.8077
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "RUNEUSDT": {
+      "price": 1.127,
+      "volume": 1.3144895682799997,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 62.83,
+        "SMA_Short": 1.1729,
+        "SMA_Long": 1.1514,
+        "SMA_Diff": 0.0215,
+        "MACD_Line": 0.0137,
+        "MACD_Signal": 0.0135,
+        "MACD_Hist": 0.0002,
+        "BB_Upper": 1.2187,
+        "BB_Middle": 1.1729,
+        "BB_Lower": 1.1271,
+        "BB_Width": 7.81,
+        "FIB_0": 1.076,
+        "FIB_236": 1.1097,
+        "FIB_382": 1.1306,
+        "FIB_618": 1.1644,
+        "FIB_1000": 1.219
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "PUFFERUSDT": {
+      "price": 0.1841,
+      "volume": 1.0562399124200001,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "BUY"
+      },
+      "values": {
+        "RSI": 41.32,
+        "SMA_Short": 0.1864,
+        "SMA_Long": 0.1857,
+        "SMA_Diff": 0.0007,
+        "MACD_Line": -0.002,
+        "MACD_Signal": -0.0008,
+        "MACD_Hist": -0.0012,
+        "BB_Upper": 0.2026,
+        "BB_Middle": 0.1864,
+        "BB_Lower": 0.1702,
+        "BB_Width": 17.36,
+        "FIB_0": 0.1661,
+        "FIB_236": 0.1745,
+        "FIB_382": 0.1797,
+        "FIB_618": 0.188,
+        "FIB_1000": 0.2016
+      },
+      "buy_indicators": [
+        "SMA",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "SAFEUSDT": {
+      "price": 0.5187,
+      "volume": 1.085423616459,
+      "signals": {
+        "RSI": "SELL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 73.53,
+        "SMA_Short": 0.573,
+        "SMA_Long": 0.5553,
+        "SMA_Diff": 0.0176,
+        "MACD_Line": 0.0127,
+        "MACD_Signal": 0.0117,
+        "MACD_Hist": 0.001,
+        "BB_Upper": 0.6113,
+        "BB_Middle": 0.573,
+        "BB_Lower": 0.5346,
+        "BB_Width": 13.4,
+        "FIB_0": 0.491,
+        "FIB_236": 0.5174,
+        "FIB_382": 0.5337,
+        "FIB_618": 0.5602,
+        "FIB_1000": 0.6029
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "RSI",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 2,
+        "sell_count": 2,
+        "neutral_count": 1
+      }
+    },
+    "DOTUSDT": {
+      "price": 4.04,
+      "volume": 4.33092666604,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.4,
+        "SMA_Short": 4.0977,
+        "SMA_Long": 4.0602,
+        "SMA_Diff": 0.0375,
+        "MACD_Line": 0.033,
+        "MACD_Signal": 0.0305,
+        "MACD_Hist": 0.0026,
+        "BB_Upper": 4.2383,
+        "BB_Middle": 4.0977,
+        "BB_Lower": 3.9571,
+        "BB_Width": 6.86,
+        "FIB_0": 3.845,
+        "FIB_236": 3.9373,
+        "FIB_382": 3.9944,
+        "FIB_618": 4.0866,
+        "FIB_1000": 4.236
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "OMUSDT": {
+      "price": 6.227,
+      "volume": 3.3099676411100005,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 46.26,
+        "SMA_Short": 6.2616,
+        "SMA_Long": 6.271,
+        "SMA_Diff": -0.0094,
+        "MACD_Line": 0.0047,
+        "MACD_Signal": 0.0078,
+        "MACD_Hist": -0.0031,
+        "BB_Upper": 6.3894,
+        "BB_Middle": 6.2616,
+        "BB_Lower": 6.1338,
+        "BB_Width": 4.08,
+        "FIB_0": 6.1001,
+        "FIB_236": 6.1894,
+        "FIB_382": 6.2447,
+        "FIB_618": 6.334,
+        "FIB_1000": 6.4786
+      },
+      "buy_indicators": [],
+      "sell_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -2,
+        "rel_strength": -0.4,
+        "buy_count": 0,
+        "sell_count": 2,
+        "neutral_count": 3
+      }
+    },
+    "TONUSDT": {
+      "price": 3.392,
+      "volume": 23.90086738176,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 65.45,
+        "SMA_Short": 3.9596,
+        "SMA_Long": 3.8745,
+        "SMA_Diff": 0.0851,
+        "MACD_Line": 0.0375,
+        "MACD_Signal": 0.0413,
+        "MACD_Hist": -0.0038,
+        "BB_Upper": 4.0609,
+        "BB_Middle": 3.9596,
+        "BB_Lower": 3.8584,
+        "BB_Width": 5.12,
+        "FIB_0": 3.334,
+        "FIB_236": 3.506,
+        "FIB_382": 3.6125,
+        "FIB_618": 3.7845,
+        "FIB_1000": 4.063
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "STRKUSDT": {
+      "price": 0.1391,
+      "volume": 2.328541440459,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 56.73,
+        "SMA_Short": 0.1415,
+        "SMA_Long": 0.1399,
+        "SMA_Diff": 0.0016,
+        "MACD_Line": 0.0013,
+        "MACD_Signal": 0.0014,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.1472,
+        "BB_Middle": 0.1415,
+        "BB_Lower": 0.1359,
+        "BB_Width": 8.01,
+        "FIB_0": 0.127,
+        "FIB_236": 0.1318,
+        "FIB_382": 0.1348,
+        "FIB_618": 0.1395,
+        "FIB_1000": 0.1473
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "HMSTRUSDT": {
+      "price": 0.002361,
+      "volume": 2.81320223851125,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 60.47,
+        "SMA_Short": 0.0023,
+        "SMA_Long": 0.0022,
+        "SMA_Diff": 0.0,
+        "MACD_Line": 0.0,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0023,
+        "BB_Middle": 0.0023,
+        "BB_Lower": 0.0022,
+        "BB_Width": 5.88,
+        "FIB_0": 0.0021,
+        "FIB_236": 0.0022,
+        "FIB_382": 0.0022,
+        "FIB_618": 0.0023,
+        "FIB_1000": 0.0024
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 2,
+        "rel_strength": 0.4,
+        "buy_count": 2,
+        "sell_count": 0,
+        "neutral_count": 3
+      }
+    },
+    "SUNDOGUSDT": {
+      "price": 0.04712,
+      "volume": 1.0945087396904003,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.15,
+        "SMA_Short": 0.0573,
+        "SMA_Long": 0.0558,
+        "SMA_Diff": 0.0015,
+        "MACD_Line": 0.0009,
+        "MACD_Signal": 0.001,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.0604,
+        "BB_Middle": 0.0573,
+        "BB_Lower": 0.0541,
+        "BB_Width": 10.93,
+        "FIB_0": 0.0447,
+        "FIB_236": 0.0483,
+        "FIB_382": 0.0505,
+        "FIB_618": 0.0541,
+        "FIB_1000": 0.0599
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "TRUMPUSDT": {
+      "price": 9.34,
+      "volume": 35.699016990400004,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 68.31,
+        "SMA_Short": 10.102,
+        "SMA_Long": 9.635,
+        "SMA_Diff": 0.467,
+        "MACD_Line": 0.2587,
+        "MACD_Signal": 0.2666,
+        "MACD_Hist": -0.0079,
+        "BB_Upper": 11.0327,
+        "BB_Middle": 10.102,
+        "BB_Lower": 9.1713,
+        "BB_Width": 18.43,
+        "FIB_0": 8.74,
+        "FIB_236": 9.1931,
+        "FIB_382": 9.4734,
+        "FIB_618": 9.9266,
+        "FIB_1000": 10.66
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "POPCATUSDT": {
+      "price": 0.164,
+      "volume": 9.36232555908,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 66.24,
+        "SMA_Short": 0.1793,
+        "SMA_Long": 0.1718,
+        "SMA_Diff": 0.0075,
+        "MACD_Line": 0.0053,
+        "MACD_Signal": 0.0049,
+        "MACD_Hist": 0.0004,
+        "BB_Upper": 0.1963,
+        "BB_Middle": 0.1793,
+        "BB_Lower": 0.1623,
+        "BB_Width": 18.94,
+        "FIB_0": 0.1489,
+        "FIB_236": 0.1596,
+        "FIB_382": 0.1662,
+        "FIB_618": 0.1768,
+        "FIB_1000": 0.1941
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ZROUSDT": {
+      "price": 3.028,
+      "volume": 8.46655682584,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 53.15,
+        "SMA_Short": 2.8665,
+        "SMA_Long": 2.795,
+        "SMA_Diff": 0.0715,
+        "MACD_Line": 0.0365,
+        "MACD_Signal": 0.0442,
+        "MACD_Hist": -0.0077,
+        "BB_Upper": 3.0254,
+        "BB_Middle": 2.8665,
+        "BB_Lower": 2.7077,
+        "BB_Width": 11.09,
+        "FIB_0": 2.434,
+        "FIB_236": 2.5924,
+        "FIB_382": 2.6903,
+        "FIB_618": 2.8487,
+        "FIB_1000": 3.105
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "PLUMEUSDT": {
+      "price": 0.18683,
+      "volume": 6.227580046050999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 47.52,
+        "SMA_Short": 0.1788,
+        "SMA_Long": 0.1806,
+        "SMA_Diff": -0.0017,
+        "MACD_Line": 0.0004,
+        "MACD_Signal": 0.0004,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.1868,
+        "BB_Middle": 0.1788,
+        "BB_Lower": 0.1709,
+        "BB_Width": 8.88,
+        "FIB_0": 0.1681,
+        "FIB_236": 0.1737,
+        "FIB_382": 0.1772,
+        "FIB_618": 0.1828,
+        "FIB_1000": 0.1919
+      },
+      "buy_indicators": [],
+      "sell_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -2,
+        "rel_strength": -0.4,
+        "buy_count": 0,
+        "sell_count": 2,
+        "neutral_count": 3
+      }
+    },
+    "ROAMUSDT": {
+      "price": 0.1852,
+      "volume": 2.6190642213399995,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 54.55,
+        "SMA_Short": 0.1784,
+        "SMA_Long": 0.1788,
+        "SMA_Diff": -0.0004,
+        "MACD_Line": 0.0007,
+        "MACD_Signal": 0.0004,
+        "MACD_Hist": 0.0002,
+        "BB_Upper": 0.1838,
+        "BB_Middle": 0.1784,
+        "BB_Lower": 0.173,
+        "BB_Width": 6.1,
+        "FIB_0": 0.171,
+        "FIB_236": 0.175,
+        "FIB_382": 0.1775,
+        "FIB_618": 0.1815,
+        "FIB_1000": 0.188
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "JASMYUSDT": {
+      "price": 0.01041,
+      "volume": 1.5775188204519002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.55,
+        "SMA_Short": 0.0105,
+        "SMA_Long": 0.0103,
+        "SMA_Diff": 0.0002,
+        "MACD_Line": 0.0001,
+        "MACD_Signal": 0.0001,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0111,
+        "BB_Middle": 0.0105,
+        "BB_Lower": 0.0099,
+        "BB_Width": 11.02,
+        "FIB_0": 0.0093,
+        "FIB_236": 0.0098,
+        "FIB_382": 0.01,
+        "FIB_618": 0.0105,
+        "FIB_1000": 0.0112
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "ZKUSDT": {
+      "price": 0.06,
+      "volume": 2.5331051244,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.07,
+        "SMA_Short": 0.0634,
+        "SMA_Long": 0.0624,
+        "SMA_Diff": 0.001,
+        "MACD_Line": 0.0008,
+        "MACD_Signal": 0.0007,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0663,
+        "BB_Middle": 0.0634,
+        "BB_Lower": 0.0605,
+        "BB_Width": 9.25,
+        "FIB_0": 0.0577,
+        "FIB_236": 0.0598,
+        "FIB_382": 0.061,
+        "FIB_618": 0.0631,
+        "FIB_1000": 0.0664
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "JUPUSDT": {
+      "price": 0.4011,
+      "volume": 5.8920202073670005,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.85,
+        "SMA_Short": 0.4015,
+        "SMA_Long": 0.3919,
+        "SMA_Diff": 0.0096,
+        "MACD_Line": 0.0061,
+        "MACD_Signal": 0.0063,
+        "MACD_Hist": -0.0002,
+        "BB_Upper": 0.4249,
+        "BB_Middle": 0.4015,
+        "BB_Lower": 0.378,
+        "BB_Width": 11.68,
+        "FIB_0": 0.3575,
+        "FIB_236": 0.3738,
+        "FIB_382": 0.3839,
+        "FIB_618": 0.4003,
+        "FIB_1000": 0.4267
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "NEARUSDT": {
+      "price": 2.487,
+      "volume": 7.914304370849999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 58.46,
+        "SMA_Short": 2.588,
+        "SMA_Long": 2.5397,
+        "SMA_Diff": 0.0483,
+        "MACD_Line": 0.0363,
+        "MACD_Signal": 0.0366,
+        "MACD_Hist": -0.0003,
+        "BB_Upper": 2.7408,
+        "BB_Middle": 2.588,
+        "BB_Lower": 2.4353,
+        "BB_Width": 11.81,
+        "FIB_0": 2.363,
+        "FIB_236": 2.4515,
+        "FIB_382": 2.5063,
+        "FIB_618": 2.5947,
+        "FIB_1000": 2.738
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "GOATUSDT": {
+      "price": 0.0448,
+      "volume": 1.1387271168,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.15,
+        "SMA_Short": 0.0473,
+        "SMA_Long": 0.0464,
+        "SMA_Diff": 0.0009,
+        "MACD_Line": 0.0006,
+        "MACD_Signal": 0.0006,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0499,
+        "BB_Middle": 0.0473,
+        "BB_Lower": 0.0447,
+        "BB_Width": 10.89,
+        "FIB_0": 0.0422,
+        "FIB_236": 0.044,
+        "FIB_382": 0.0451,
+        "FIB_618": 0.0469,
+        "FIB_1000": 0.0498
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "LDOUSDT": {
+      "price": 0.836,
+      "volume": 3.25098844576,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.55,
+        "SMA_Short": 0.8604,
+        "SMA_Long": 0.8439,
+        "SMA_Diff": 0.0164,
+        "MACD_Line": 0.0126,
+        "MACD_Signal": 0.0123,
+        "MACD_Hist": 0.0003,
+        "BB_Upper": 0.9095,
+        "BB_Middle": 0.8604,
+        "BB_Lower": 0.8112,
+        "BB_Width": 11.43,
+        "FIB_0": 0.777,
+        "FIB_236": 0.8074,
+        "FIB_382": 0.8263,
+        "FIB_618": 0.8567,
+        "FIB_1000": 0.906
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "BERAUSDT": {
+      "price": 5.763,
+      "volume": 4.22283784659,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 65.03,
+        "SMA_Short": 6.9297,
+        "SMA_Long": 6.7511,
+        "SMA_Diff": 0.1786,
+        "MACD_Line": 0.1261,
+        "MACD_Signal": 0.1239,
+        "MACD_Hist": 0.0022,
+        "BB_Upper": 7.3769,
+        "BB_Middle": 6.9297,
+        "BB_Lower": 6.4824,
+        "BB_Width": 12.91,
+        "FIB_0": 5.438,
+        "FIB_236": 5.8885,
+        "FIB_382": 6.1671,
+        "FIB_618": 6.6176,
+        "FIB_1000": 7.3467
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "MOVEUSDT": {
+      "price": 0.3759,
+      "volume": 1.8867529905,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 56.53,
+        "SMA_Short": 0.3925,
+        "SMA_Long": 0.3898,
+        "SMA_Diff": 0.0028,
+        "MACD_Line": 0.0032,
+        "MACD_Signal": 0.003,
+        "MACD_Hist": 0.0002,
+        "BB_Upper": 0.4095,
+        "BB_Middle": 0.3925,
+        "BB_Lower": 0.3755,
+        "BB_Width": 8.67,
+        "FIB_0": 0.3653,
+        "FIB_236": 0.3788,
+        "FIB_382": 0.3871,
+        "FIB_618": 0.4006,
+        "FIB_1000": 0.4224
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 2,
+        "rel_strength": 0.4,
+        "buy_count": 2,
+        "sell_count": 0,
+        "neutral_count": 3
+      }
+    },
+    "TAIKOUSDT": {
+      "price": 0.5854,
+      "volume": 1.33775086994,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 66.21,
+        "SMA_Short": 0.6258,
+        "SMA_Long": 0.6104,
+        "SMA_Diff": 0.0154,
+        "MACD_Line": 0.0109,
+        "MACD_Signal": 0.0104,
+        "MACD_Hist": 0.0004,
+        "BB_Upper": 0.6623,
+        "BB_Middle": 0.6258,
+        "BB_Lower": 0.5894,
+        "BB_Width": 11.65,
+        "FIB_0": 0.56,
+        "FIB_236": 0.5822,
+        "FIB_382": 0.5959,
+        "FIB_618": 0.6182,
+        "FIB_1000": 0.6541
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "VANAUSDT": {
+      "price": 5.419,
+      "volume": 1.7016134704399999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.85,
+        "SMA_Short": 5.5817,
+        "SMA_Long": 5.4806,
+        "SMA_Diff": 0.1011,
+        "MACD_Line": 0.0861,
+        "MACD_Signal": 0.0787,
+        "MACD_Hist": 0.0074,
+        "BB_Upper": 5.922,
+        "BB_Middle": 5.5817,
+        "BB_Lower": 5.2414,
+        "BB_Width": 12.19,
+        "FIB_0": 5.209,
+        "FIB_236": 5.3697,
+        "FIB_382": 5.4691,
+        "FIB_618": 5.6299,
+        "FIB_1000": 5.89
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ANIMEUSDT": {
+      "price": 0.01632,
+      "volume": 1.8781997109119999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.07,
+        "SMA_Short": 0.0166,
+        "SMA_Long": 0.0165,
+        "SMA_Diff": 0.0001,
+        "MACD_Line": 0.0002,
+        "MACD_Signal": 0.0001,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0173,
+        "BB_Middle": 0.0166,
+        "BB_Lower": 0.0159,
+        "BB_Width": 8.64,
+        "FIB_0": 0.0157,
+        "FIB_236": 0.0161,
+        "FIB_382": 0.0163,
+        "FIB_618": 0.0167,
+        "FIB_1000": 0.0173
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "B3USDT": {
+      "price": 0.004037,
+      "volume": 3.0530404122349997,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.14,
+        "SMA_Short": 0.005,
+        "SMA_Long": 0.0049,
+        "SMA_Diff": 0.0001,
+        "MACD_Line": 0.0001,
+        "MACD_Signal": 0.0001,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0052,
+        "BB_Middle": 0.005,
+        "BB_Lower": 0.0048,
+        "BB_Width": 9.09,
+        "FIB_0": 0.0039,
+        "FIB_236": 0.0042,
+        "FIB_382": 0.0044,
+        "FIB_618": 0.0047,
+        "FIB_1000": 0.0052
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "RENDERUSDT": {
+      "price": 3.24,
+      "volume": 4.926915428399999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 63.96,
+        "SMA_Short": 3.5742,
+        "SMA_Long": 3.4458,
+        "SMA_Diff": 0.1284,
+        "MACD_Line": 0.0841,
+        "MACD_Signal": 0.0836,
+        "MACD_Hist": 0.0005,
+        "BB_Upper": 3.8649,
+        "BB_Middle": 3.5742,
+        "BB_Lower": 3.2834,
+        "BB_Width": 16.27,
+        "FIB_0": 3.084,
+        "FIB_236": 3.2593,
+        "FIB_382": 3.3678,
+        "FIB_618": 3.5432,
+        "FIB_1000": 3.827
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "AI16ZUSDT": {
+      "price": 0.138,
+      "volume": 9.31481088756,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 55.52,
+        "SMA_Short": 0.183,
+        "SMA_Long": 0.1785,
+        "SMA_Diff": 0.0045,
+        "MACD_Line": 0.0032,
+        "MACD_Signal": 0.0034,
+        "MACD_Hist": -0.0002,
+        "BB_Upper": 0.1965,
+        "BB_Middle": 0.183,
+        "BB_Lower": 0.1694,
+        "BB_Width": 14.82,
+        "FIB_0": 0.1324,
+        "FIB_236": 0.148,
+        "FIB_382": 0.1576,
+        "FIB_618": 0.1731,
+        "FIB_1000": 0.1983
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "SOSOUSDT": {
+      "price": 0.5645,
+      "volume": 101.95701515838499,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "STRONG_BUY"
+      },
+      "values": {
+        "RSI": 42.66,
+        "SMA_Short": 0.5502,
+        "SMA_Long": 0.5535,
+        "SMA_Diff": -0.0032,
+        "MACD_Line": -0.001,
+        "MACD_Signal": -0.0011,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.5547,
+        "BB_Middle": 0.5502,
+        "BB_Lower": 0.5458,
+        "BB_Width": 1.61,
+        "FIB_0": 0.5408,
+        "FIB_236": 0.553,
+        "FIB_382": 0.5605,
+        "FIB_618": 0.5728,
+        "FIB_1000": 0.5925
+      },
+      "buy_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 2,
+        "rel_strength": 0.4,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "BTC3LUSDT": {
+      "price": 4.2451,
+      "volume": 1.07844386630862,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 63.73,
+        "SMA_Short": 4.4724,
+        "SMA_Long": 4.2838,
+        "SMA_Diff": 0.1887,
+        "MACD_Line": 0.1231,
+        "MACD_Signal": 0.1179,
+        "MACD_Hist": 0.0052,
+        "BB_Upper": 4.8993,
+        "BB_Middle": 4.4724,
+        "BB_Lower": 4.0455,
+        "BB_Width": 19.09,
+        "FIB_0": 3.8342,
+        "FIB_236": 4.0987,
+        "FIB_382": 4.2623,
+        "FIB_618": 4.5269,
+        "FIB_1000": 4.955
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "YFIUSDT": {
+      "price": 4791.0,
+      "volume": 1.7629845144000003,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 55.61,
+        "SMA_Short": 4817.4,
+        "SMA_Long": 4760.6,
+        "SMA_Diff": 56.8,
+        "MACD_Line": 42.5357,
+        "MACD_Signal": 43.1332,
+        "MACD_Hist": -0.5975,
+        "BB_Upper": 5001.8629,
+        "BB_Middle": 4817.4,
+        "BB_Lower": 4632.9371,
+        "BB_Width": 7.66,
+        "FIB_0": 4571.0,
+        "FIB_236": 4669.176,
+        "FIB_382": 4729.912,
+        "FIB_618": 4828.088,
+        "FIB_1000": 4987.0
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "XUSDT": {
+      "price": 6.566e-05,
+      "volume": 1.6095489790608202,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.82,
+        "SMA_Short": 0.0001,
+        "SMA_Long": 0.0001,
+        "SMA_Diff": 0.0,
+        "MACD_Line": 0.0,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0001,
+        "BB_Middle": 0.0001,
+        "BB_Lower": 0.0001,
+        "BB_Width": 7.58,
+        "FIB_0": 0.0001,
+        "FIB_236": 0.0001,
+        "FIB_382": 0.0001,
+        "FIB_618": 0.0001,
+        "FIB_1000": 0.0001
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "LAYERUSDT": {
+      "price": 1.4652,
+      "volume": 1.92935147724,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "BUY"
+      },
+      "values": {
+        "RSI": 53.74,
+        "SMA_Short": 1.3821,
+        "SMA_Long": 1.4112,
+        "SMA_Diff": -0.0292,
+        "MACD_Line": -0.0028,
+        "MACD_Signal": -0.0076,
+        "MACD_Hist": 0.0047,
+        "BB_Upper": 1.416,
+        "BB_Middle": 1.3821,
+        "BB_Lower": 1.3481,
+        "BB_Width": 4.91,
+        "FIB_0": 1.3362,
+        "FIB_236": 1.3813,
+        "FIB_382": 1.4091,
+        "FIB_618": 1.4542,
+        "FIB_1000": 1.5271
+      },
+      "buy_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "AEROUSDT": {
+      "price": 0.3609,
+      "volume": 1.6940858245289998,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 58.22,
+        "SMA_Short": 0.4159,
+        "SMA_Long": 0.4108,
+        "SMA_Diff": 0.0051,
+        "MACD_Line": 0.0034,
+        "MACD_Signal": 0.0036,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.4305,
+        "BB_Middle": 0.4159,
+        "BB_Lower": 0.4013,
+        "BB_Width": 7.01,
+        "FIB_0": 0.3469,
+        "FIB_236": 0.3674,
+        "FIB_382": 0.38,
+        "FIB_618": 0.4005,
+        "FIB_1000": 0.4336
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "PENGUUSDT": {
+      "price": 0.0047,
+      "volume": 1.6611181659,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 55.05,
+        "SMA_Short": 0.005,
+        "SMA_Long": 0.0049,
+        "SMA_Diff": 0.0001,
+        "MACD_Line": 0.0001,
+        "MACD_Signal": 0.0001,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0053,
+        "BB_Middle": 0.005,
+        "BB_Lower": 0.0048,
+        "BB_Width": 9.11,
+        "FIB_0": 0.0045,
+        "FIB_236": 0.0047,
+        "FIB_382": 0.0048,
+        "FIB_618": 0.0049,
+        "FIB_1000": 0.0052
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "COOKIEUSDT": {
+      "price": 0.0945,
+      "volume": 1.3660162223399999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 58.24,
+        "SMA_Short": 0.1004,
+        "SMA_Long": 0.0987,
+        "SMA_Diff": 0.0017,
+        "MACD_Line": 0.0012,
+        "MACD_Signal": 0.0012,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.1056,
+        "BB_Middle": 0.1004,
+        "BB_Lower": 0.0952,
+        "BB_Width": 10.35,
+        "FIB_0": 0.0898,
+        "FIB_236": 0.0935,
+        "FIB_382": 0.0958,
+        "FIB_618": 0.0995,
+        "FIB_1000": 0.1055
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "AGIUSDT": {
+      "price": 0.06151,
+      "volume": 1.0519446763117002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 64.87,
+        "SMA_Short": 0.0634,
+        "SMA_Long": 0.0617,
+        "SMA_Diff": 0.0018,
+        "MACD_Line": 0.0011,
+        "MACD_Signal": 0.001,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0663,
+        "BB_Middle": 0.0634,
+        "BB_Lower": 0.0605,
+        "BB_Width": 9.19,
+        "FIB_0": 0.0571,
+        "FIB_236": 0.0593,
+        "FIB_382": 0.0607,
+        "FIB_618": 0.0629,
+        "FIB_1000": 0.0664
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "PUMPUSDT": {
+      "price": 0.04482,
+      "volume": 1.9282468870979999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 48.66,
+        "SMA_Short": 0.054,
+        "SMA_Long": 0.0541,
+        "SMA_Diff": -0.0001,
+        "MACD_Line": 0.0004,
+        "MACD_Signal": 0.0003,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.0569,
+        "BB_Middle": 0.054,
+        "BB_Lower": 0.0511,
+        "BB_Width": 10.88,
+        "FIB_0": 0.0402,
+        "FIB_236": 0.0465,
+        "FIB_382": 0.0504,
+        "FIB_618": 0.0568,
+        "FIB_1000": 0.067
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "USDCUSDT": {
+      "price": 1.0003,
+      "volume": 102.325572005062,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "STRONG_BUY"
+      },
+      "values": {
+        "RSI": 50.85,
+        "SMA_Short": 1.0,
+        "SMA_Long": 1.0,
+        "SMA_Diff": -0.0001,
+        "MACD_Line": -0.0,
+        "MACD_Signal": -0.0,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 1.0001,
+        "BB_Middle": 1.0,
+        "BB_Lower": 0.9998,
+        "BB_Width": 0.03,
+        "FIB_0": 0.9999,
+        "FIB_236": 1.0001,
+        "FIB_382": 1.0002,
+        "FIB_618": 1.0003,
+        "FIB_1000": 1.0006
+      },
+      "buy_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 2,
+        "rel_strength": 0.4,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "AIXBTUSDT": {
+      "price": 0.0838,
+      "volume": 2.5674863505720005,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 50.26,
+        "SMA_Short": 0.0831,
+        "SMA_Long": 0.0827,
+        "SMA_Diff": 0.0004,
+        "MACD_Line": 0.0008,
+        "MACD_Signal": 0.0009,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0885,
+        "BB_Middle": 0.0831,
+        "BB_Lower": 0.0777,
+        "BB_Width": 12.98,
+        "FIB_0": 0.0751,
+        "FIB_236": 0.0785,
+        "FIB_382": 0.0805,
+        "FIB_618": 0.0839,
+        "FIB_1000": 0.0893
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "PONKEUSDT": {
+      "price": 0.08431,
+      "volume": 1.2751990619561,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.78,
+        "SMA_Short": 0.0874,
+        "SMA_Long": 0.0856,
+        "SMA_Diff": 0.0018,
+        "MACD_Line": 0.0013,
+        "MACD_Signal": 0.0013,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0928,
+        "BB_Middle": 0.0874,
+        "BB_Lower": 0.082,
+        "BB_Width": 12.34,
+        "FIB_0": 0.0764,
+        "FIB_236": 0.0802,
+        "FIB_382": 0.0825,
+        "FIB_618": 0.0863,
+        "FIB_1000": 0.0924
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "KASUSDT": {
+      "price": 0.0654,
+      "volume": 4.745734557132,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.92,
+        "SMA_Short": 0.0658,
+        "SMA_Long": 0.0648,
+        "SMA_Diff": 0.001,
+        "MACD_Line": 0.0008,
+        "MACD_Signal": 0.0008,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0691,
+        "BB_Middle": 0.0658,
+        "BB_Lower": 0.0625,
+        "BB_Width": 10.11,
+        "FIB_0": 0.0605,
+        "FIB_236": 0.0625,
+        "FIB_382": 0.0638,
+        "FIB_618": 0.0658,
+        "FIB_1000": 0.0692
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ICPUSDT": {
+      "price": 5.041,
+      "volume": 1.96619925191,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.3,
+        "SMA_Short": 5.2564,
+        "SMA_Long": 5.1942,
+        "SMA_Diff": 0.0622,
+        "MACD_Line": 0.0604,
+        "MACD_Signal": 0.0561,
+        "MACD_Hist": 0.0043,
+        "BB_Upper": 5.5055,
+        "BB_Middle": 5.2564,
+        "BB_Lower": 5.0073,
+        "BB_Width": 9.48,
+        "FIB_0": 4.925,
+        "FIB_236": 5.0595,
+        "FIB_382": 5.1427,
+        "FIB_618": 5.2773,
+        "FIB_1000": 5.495
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "KMNOUSDT": {
+      "price": 0.04538,
+      "volume": 1.5615513652767998,
+      "signals": {
+        "RSI": "SELL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 70.88,
+        "SMA_Short": 0.0485,
+        "SMA_Long": 0.0467,
+        "SMA_Diff": 0.0019,
+        "MACD_Line": 0.0012,
+        "MACD_Signal": 0.0012,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0525,
+        "BB_Middle": 0.0485,
+        "BB_Lower": 0.0446,
+        "BB_Width": 16.33,
+        "FIB_0": 0.0428,
+        "FIB_236": 0.0448,
+        "FIB_382": 0.046,
+        "FIB_618": 0.048,
+        "FIB_1000": 0.0513
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "RSI",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 2,
+        "sell_count": 2,
+        "neutral_count": 1
+      }
+    },
+    "CPOOLUSDT": {
+      "price": 0.11999,
+      "volume": 1.4890544973836999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 63.05,
+        "SMA_Short": 0.1264,
+        "SMA_Long": 0.123,
+        "SMA_Diff": 0.0034,
+        "MACD_Line": 0.0026,
+        "MACD_Signal": 0.0025,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.1366,
+        "BB_Middle": 0.1264,
+        "BB_Lower": 0.1162,
+        "BB_Width": 16.12,
+        "FIB_0": 0.107,
+        "FIB_236": 0.1137,
+        "FIB_382": 0.1178,
+        "FIB_618": 0.1245,
+        "FIB_1000": 0.1353
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "PEPEUSDT": {
+      "price": 7.08e-06,
+      "volume": 23.423730286471198,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.72,
+        "SMA_Short": 0.0,
+        "SMA_Long": 0.0,
+        "SMA_Diff": 0.0,
+        "MACD_Line": 0.0,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0,
+        "BB_Middle": 0.0,
+        "BB_Lower": 0.0,
+        "BB_Width": 14.09,
+        "FIB_0": 0.0,
+        "FIB_236": 0.0,
+        "FIB_382": 0.0,
+        "FIB_618": 0.0,
+        "FIB_1000": 0.0
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ONDOUSDT": {
+      "price": 0.8215,
+      "volume": 22.38806927579,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 57.35,
+        "SMA_Short": 0.8294,
+        "SMA_Long": 0.8165,
+        "SMA_Diff": 0.0129,
+        "MACD_Line": 0.0105,
+        "MACD_Signal": 0.0105,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.8794,
+        "BB_Middle": 0.8294,
+        "BB_Lower": 0.7793,
+        "BB_Width": 12.07,
+        "FIB_0": 0.7714,
+        "FIB_236": 0.7987,
+        "FIB_382": 0.8156,
+        "FIB_618": 0.8428,
+        "FIB_1000": 0.887
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "INJUSDT": {
+      "price": 8.33,
+      "volume": 1.8768804474,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.12,
+        "SMA_Short": 8.719,
+        "SMA_Long": 8.62,
+        "SMA_Diff": 0.099,
+        "MACD_Line": 0.0871,
+        "MACD_Signal": 0.0885,
+        "MACD_Hist": -0.0014,
+        "BB_Upper": 9.1336,
+        "BB_Middle": 8.719,
+        "BB_Lower": 8.3044,
+        "BB_Width": 9.51,
+        "FIB_0": 7.96,
+        "FIB_236": 8.2385,
+        "FIB_382": 8.4108,
+        "FIB_618": 8.6892,
+        "FIB_1000": 9.14
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "FILUSDT": {
+      "price": 2.783,
+      "volume": 20.45321480631,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "BUY"
+      },
+      "values": {
+        "RSI": 58.22,
+        "SMA_Short": 2.798,
+        "SMA_Long": 2.7677,
+        "SMA_Diff": 0.0303,
+        "MACD_Line": 0.0267,
+        "MACD_Signal": 0.0254,
+        "MACD_Hist": 0.0013,
+        "BB_Upper": 2.9167,
+        "BB_Middle": 2.798,
+        "BB_Lower": 2.6792,
+        "BB_Width": 8.49,
+        "FIB_0": 2.606,
+        "FIB_236": 2.8226,
+        "FIB_382": 2.9567,
+        "FIB_618": 3.1733,
+        "FIB_1000": 3.524
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 3,
+        "rel_strength": 0.6,
+        "buy_count": 3,
+        "sell_count": 0,
+        "neutral_count": 2
+      }
+    },
+    "POLUSDT": {
+      "price": 0.1899,
+      "volume": 1.7635945034790002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.65,
+        "SMA_Short": 0.1929,
+        "SMA_Long": 0.19,
+        "SMA_Diff": 0.0028,
+        "MACD_Line": 0.0022,
+        "MACD_Signal": 0.0021,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.2015,
+        "BB_Middle": 0.1929,
+        "BB_Lower": 0.1842,
+        "BB_Width": 8.95,
+        "FIB_0": 0.1781,
+        "FIB_236": 0.1834,
+        "FIB_382": 0.1866,
+        "FIB_618": 0.1919,
+        "FIB_1000": 0.2004
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "LTCUSDT": {
+      "price": 84.33,
+      "volume": 9.525122440915501,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 53.07,
+        "SMA_Short": 85.3535,
+        "SMA_Long": 84.022,
+        "SMA_Diff": 1.3315,
+        "MACD_Line": 0.7456,
+        "MACD_Signal": 0.8408,
+        "MACD_Hist": -0.0952,
+        "BB_Upper": 88.6521,
+        "BB_Middle": 85.3535,
+        "BB_Lower": 82.0549,
+        "BB_Width": 7.73,
+        "FIB_0": 80.13,
+        "FIB_236": 82.1218,
+        "FIB_382": 83.3541,
+        "FIB_618": 85.3459,
+        "FIB_1000": 88.57
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "HBARUSDT": {
+      "price": 0.16536,
+      "volume": 15.6843537124872,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.88,
+        "SMA_Short": 0.1693,
+        "SMA_Long": 0.1664,
+        "SMA_Diff": 0.0029,
+        "MACD_Line": 0.0022,
+        "MACD_Signal": 0.0022,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.1789,
+        "BB_Middle": 0.1693,
+        "BB_Lower": 0.1598,
+        "BB_Width": 11.31,
+        "FIB_0": 0.1532,
+        "FIB_236": 0.1597,
+        "FIB_382": 0.1637,
+        "FIB_618": 0.1701,
+        "FIB_1000": 0.1806
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "ALGOUSDT": {
+      "price": 0.1879,
+      "volume": 5.551929494471,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 64.73,
+        "SMA_Short": 0.1863,
+        "SMA_Long": 0.1821,
+        "SMA_Diff": 0.0042,
+        "MACD_Line": 0.0029,
+        "MACD_Signal": 0.0028,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.1969,
+        "BB_Middle": 0.1863,
+        "BB_Lower": 0.1757,
+        "BB_Width": 11.37,
+        "FIB_0": 0.1682,
+        "FIB_236": 0.1747,
+        "FIB_382": 0.1787,
+        "FIB_618": 0.1851,
+        "FIB_1000": 0.1956
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "XRPUSDT": {
+      "price": 2.1236,
+      "volume": 167.87179508144803,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.26,
+        "SMA_Short": 2.1098,
+        "SMA_Long": 2.0771,
+        "SMA_Diff": 0.0327,
+        "MACD_Line": 0.0241,
+        "MACD_Signal": 0.0237,
+        "MACD_Hist": 0.0004,
+        "BB_Upper": 2.2099,
+        "BB_Middle": 2.1098,
+        "BB_Lower": 2.0096,
+        "BB_Width": 9.49,
+        "FIB_0": 1.9603,
+        "FIB_236": 2.0248,
+        "FIB_382": 2.0647,
+        "FIB_618": 2.1293,
+        "FIB_1000": 2.2337
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "XDCUSDT": {
+      "price": 0.06767,
+      "volume": 1.1532003147989998,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 66.96,
+        "SMA_Short": 0.0672,
+        "SMA_Long": 0.0667,
+        "SMA_Diff": 0.0005,
+        "MACD_Line": 0.0005,
+        "MACD_Signal": 0.0004,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.069,
+        "BB_Middle": 0.0672,
+        "BB_Lower": 0.0654,
+        "BB_Width": 5.33,
+        "FIB_0": 0.0643,
+        "FIB_236": 0.0653,
+        "FIB_382": 0.0658,
+        "FIB_618": 0.0668,
+        "FIB_1000": 0.0683
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "STXUSDT": {
+      "price": 0.601,
+      "volume": 1.00956440366,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 62.41,
+        "SMA_Short": 0.6034,
+        "SMA_Long": 0.5953,
+        "SMA_Diff": 0.0081,
+        "MACD_Line": 0.0082,
+        "MACD_Signal": 0.0075,
+        "MACD_Hist": 0.0008,
+        "BB_Upper": 0.6363,
+        "BB_Middle": 0.6034,
+        "BB_Lower": 0.5706,
+        "BB_Width": 10.88,
+        "FIB_0": 0.555,
+        "FIB_236": 0.5741,
+        "FIB_382": 0.5859,
+        "FIB_618": 0.6051,
+        "FIB_1000": 0.636
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "UNIUSDT": {
+      "price": 5.902,
+      "volume": 5.432562875896,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 54.67,
+        "SMA_Short": 6.1235,
+        "SMA_Long": 6.036,
+        "SMA_Diff": 0.0875,
+        "MACD_Line": 0.0595,
+        "MACD_Signal": 0.0628,
+        "MACD_Hist": -0.0033,
+        "BB_Upper": 6.3834,
+        "BB_Middle": 6.1235,
+        "BB_Lower": 5.8636,
+        "BB_Width": 8.49,
+        "FIB_0": 5.653,
+        "FIB_236": 5.8338,
+        "FIB_382": 5.9456,
+        "FIB_618": 6.1264,
+        "FIB_1000": 6.419
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "PARTIUSDT": {
+      "price": 0.19118,
+      "volume": 3.7361227041819993,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "BUY"
+      },
+      "values": {
+        "RSI": 42.27,
+        "SMA_Short": 0.1928,
+        "SMA_Long": 0.1936,
+        "SMA_Diff": -0.0008,
+        "MACD_Line": -0.0001,
+        "MACD_Signal": 0.0002,
+        "MACD_Hist": -0.0003,
+        "BB_Upper": 0.1988,
+        "BB_Middle": 0.1928,
+        "BB_Lower": 0.1868,
+        "BB_Width": 6.25,
+        "FIB_0": 0.1828,
+        "FIB_236": 0.1886,
+        "FIB_382": 0.1922,
+        "FIB_618": 0.198,
+        "FIB_1000": 0.2074
+      },
+      "buy_indicators": [
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "GALAUSDT": {
+      "price": 0.01502,
+      "volume": 3.2632199749614,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.21,
+        "SMA_Short": 0.0153,
+        "SMA_Long": 0.0151,
+        "SMA_Diff": 0.0002,
+        "MACD_Line": 0.0002,
+        "MACD_Signal": 0.0002,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0163,
+        "BB_Middle": 0.0153,
+        "BB_Lower": 0.0144,
+        "BB_Width": 12.21,
+        "FIB_0": 0.014,
+        "FIB_236": 0.0145,
+        "FIB_382": 0.0148,
+        "FIB_618": 0.0153,
+        "FIB_1000": 0.0161
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "OPUSDT": {
+      "price": 0.709,
+      "volume": 2.79773486587,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 58.58,
+        "SMA_Short": 0.7255,
+        "SMA_Long": 0.7195,
+        "SMA_Diff": 0.006,
+        "MACD_Line": 0.0072,
+        "MACD_Signal": 0.0068,
+        "MACD_Hist": 0.0004,
+        "BB_Upper": 0.7565,
+        "BB_Middle": 0.7255,
+        "BB_Lower": 0.6945,
+        "BB_Width": 8.55,
+        "FIB_0": 0.657,
+        "FIB_236": 0.6813,
+        "FIB_382": 0.6963,
+        "FIB_618": 0.7207,
+        "FIB_1000": 0.76
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "XLMUSDT": {
+      "price": 0.2587,
+      "volume": 5.1906294947,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.91,
+        "SMA_Short": 0.2674,
+        "SMA_Long": 0.2646,
+        "SMA_Diff": 0.0028,
+        "MACD_Line": 0.0024,
+        "MACD_Signal": 0.0023,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.2779,
+        "BB_Middle": 0.2674,
+        "BB_Lower": 0.2569,
+        "BB_Width": 7.87,
+        "FIB_0": 0.2501,
+        "FIB_236": 0.2569,
+        "FIB_382": 0.2611,
+        "FIB_618": 0.2678,
+        "FIB_1000": 0.2788
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "MOCAUSDT": {
+      "price": 0.07984,
+      "volume": 1.0724944261728,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 56.09,
+        "SMA_Short": 0.0819,
+        "SMA_Long": 0.0809,
+        "SMA_Diff": 0.001,
+        "MACD_Line": 0.0008,
+        "MACD_Signal": 0.0008,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0852,
+        "BB_Middle": 0.0819,
+        "BB_Lower": 0.0785,
+        "BB_Width": 8.19,
+        "FIB_0": 0.0767,
+        "FIB_236": 0.0788,
+        "FIB_382": 0.08,
+        "FIB_618": 0.0821,
+        "FIB_1000": 0.0854
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ALCHUSDT": {
+      "price": 0.07549,
+      "volume": 8.6247313359442,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 52.88,
+        "SMA_Short": 0.0932,
+        "SMA_Long": 0.0926,
+        "SMA_Diff": 0.0006,
+        "MACD_Line": 0.0002,
+        "MACD_Signal": 0.0003,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.095,
+        "BB_Middle": 0.0932,
+        "BB_Lower": 0.0914,
+        "BB_Width": 3.86,
+        "FIB_0": 0.0754,
+        "FIB_236": 0.0809,
+        "FIB_382": 0.0843,
+        "FIB_618": 0.0898,
+        "FIB_1000": 0.0988
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "MEWUSDT": {
+      "price": 0.002856,
+      "volume": 3.5710085603858404,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 55.75,
+        "SMA_Short": 0.0032,
+        "SMA_Long": 0.0032,
+        "SMA_Diff": 0.0,
+        "MACD_Line": 0.0,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0034,
+        "BB_Middle": 0.0032,
+        "BB_Lower": 0.003,
+        "BB_Width": 11.49,
+        "FIB_0": 0.0026,
+        "FIB_236": 0.0028,
+        "FIB_382": 0.0029,
+        "FIB_618": 0.0031,
+        "FIB_1000": 0.0034
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "SPXUSDT": {
+      "price": 0.5288,
+      "volume": 13.216540220240002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 67.18,
+        "SMA_Short": 0.4938,
+        "SMA_Long": 0.4693,
+        "SMA_Diff": 0.0244,
+        "MACD_Line": 0.0174,
+        "MACD_Signal": 0.0166,
+        "MACD_Hist": 0.0008,
+        "BB_Upper": 0.5572,
+        "BB_Middle": 0.4938,
+        "BB_Lower": 0.4304,
+        "BB_Width": 25.68,
+        "FIB_0": 0.4034,
+        "FIB_236": 0.4384,
+        "FIB_382": 0.46,
+        "FIB_618": 0.4949,
+        "FIB_1000": 0.5515
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "WUSDT": {
+      "price": 0.0882,
+      "volume": 8.090886452418,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "STRONG_BUY"
+      },
+      "values": {
+        "RSI": 42.4,
+        "SMA_Short": 0.0782,
+        "SMA_Long": 0.0808,
+        "SMA_Diff": -0.0026,
+        "MACD_Line": -0.0005,
+        "MACD_Signal": -0.0006,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.0805,
+        "BB_Middle": 0.0782,
+        "BB_Lower": 0.0759,
+        "BB_Width": 5.81,
+        "FIB_0": 0.0756,
+        "FIB_236": 0.0797,
+        "FIB_382": 0.0822,
+        "FIB_618": 0.0864,
+        "FIB_1000": 0.093
+      },
+      "buy_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 2,
+        "rel_strength": 0.4,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "CTCUSDT": {
+      "price": 0.5927,
+      "volume": 1.5180630635130001,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 63.25,
+        "SMA_Short": 0.6248,
+        "SMA_Long": 0.6166,
+        "SMA_Diff": 0.0082,
+        "MACD_Line": 0.0074,
+        "MACD_Signal": 0.0067,
+        "MACD_Hist": 0.0007,
+        "BB_Upper": 0.6535,
+        "BB_Middle": 0.6248,
+        "BB_Lower": 0.5961,
+        "BB_Width": 9.19,
+        "FIB_0": 0.5776,
+        "FIB_236": 0.5943,
+        "FIB_382": 0.6047,
+        "FIB_618": 0.6214,
+        "FIB_1000": 0.6485
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "KILOUSDT": {
+      "price": 0.05826,
+      "volume": 3.6366694065420004,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.04,
+        "SMA_Short": 0.0673,
+        "SMA_Long": 0.0657,
+        "SMA_Diff": 0.0016,
+        "MACD_Line": 0.0015,
+        "MACD_Signal": 0.0014,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.0731,
+        "BB_Middle": 0.0673,
+        "BB_Lower": 0.0615,
+        "BB_Width": 17.31,
+        "FIB_0": 0.053,
+        "FIB_236": 0.0572,
+        "FIB_382": 0.0598,
+        "FIB_618": 0.064,
+        "FIB_1000": 0.0708
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "NOTUSDT": {
+      "price": 0.002033,
+      "volume": 2.35544824767714,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.7,
+        "SMA_Short": 0.0022,
+        "SMA_Long": 0.0022,
+        "SMA_Diff": 0.0,
+        "MACD_Line": 0.0,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0023,
+        "BB_Middle": 0.0022,
+        "BB_Lower": 0.0021,
+        "BB_Width": 9.94,
+        "FIB_0": 0.002,
+        "FIB_236": 0.0021,
+        "FIB_382": 0.0021,
+        "FIB_618": 0.0022,
+        "FIB_1000": 0.0023
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ZEREBROUSDT": {
+      "price": 0.025,
+      "volume": 1.419066875,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 55.65,
+        "SMA_Short": 0.0279,
+        "SMA_Long": 0.0273,
+        "SMA_Diff": 0.0006,
+        "MACD_Line": 0.0005,
+        "MACD_Signal": 0.0005,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0296,
+        "BB_Middle": 0.0279,
+        "BB_Lower": 0.0261,
+        "BB_Width": 12.61,
+        "FIB_0": 0.0231,
+        "FIB_236": 0.0246,
+        "FIB_382": 0.0255,
+        "FIB_618": 0.0271,
+        "FIB_1000": 0.0295
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "WLDUSDT": {
+      "price": 0.756,
+      "volume": 3.6128556349200003,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 56.19,
+        "SMA_Short": 0.7655,
+        "SMA_Long": 0.7542,
+        "SMA_Diff": 0.0114,
+        "MACD_Line": 0.0099,
+        "MACD_Signal": 0.0099,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.8108,
+        "BB_Middle": 0.7655,
+        "BB_Lower": 0.7203,
+        "BB_Width": 11.82,
+        "FIB_0": 0.705,
+        "FIB_236": 0.73,
+        "FIB_382": 0.7455,
+        "FIB_618": 0.7705,
+        "FIB_1000": 0.811
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "SOLVUSDT": {
+      "price": 0.02723,
+      "volume": 3.0933834566179996,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 56.29,
+        "SMA_Short": 0.0286,
+        "SMA_Long": 0.0284,
+        "SMA_Diff": 0.0002,
+        "MACD_Line": 0.0002,
+        "MACD_Signal": 0.0002,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0298,
+        "BB_Middle": 0.0286,
+        "BB_Lower": 0.0274,
+        "BB_Width": 8.37,
+        "FIB_0": 0.0268,
+        "FIB_236": 0.0275,
+        "FIB_382": 0.028,
+        "FIB_618": 0.0287,
+        "FIB_1000": 0.0299
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "WIFUSDT": {
+      "price": 0.381,
+      "volume": 6.99988589733,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.88,
+        "SMA_Short": 0.4052,
+        "SMA_Long": 0.3935,
+        "SMA_Diff": 0.0117,
+        "MACD_Line": 0.0075,
+        "MACD_Signal": 0.0078,
+        "MACD_Hist": -0.0003,
+        "BB_Upper": 0.434,
+        "BB_Middle": 0.4052,
+        "BB_Lower": 0.3764,
+        "BB_Width": 14.23,
+        "FIB_0": 0.353,
+        "FIB_236": 0.3714,
+        "FIB_382": 0.3828,
+        "FIB_618": 0.4012,
+        "FIB_1000": 0.431
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "BRUSDT": {
+      "price": 0.09297,
+      "volume": 3.63524367735,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 55.05,
+        "SMA_Short": 0.1087,
+        "SMA_Long": 0.1088,
+        "SMA_Diff": -0.0002,
+        "MACD_Line": 0.0005,
+        "MACD_Signal": 0.0003,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.111,
+        "BB_Middle": 0.1087,
+        "BB_Lower": 0.1064,
+        "BB_Width": 4.23,
+        "FIB_0": 0.09,
+        "FIB_236": 0.0951,
+        "FIB_382": 0.0983,
+        "FIB_618": 0.1034,
+        "FIB_1000": 0.1116
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "MORPHOUSDT": {
+      "price": 1.1527,
+      "volume": 1.50485434553,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 58.52,
+        "SMA_Short": 1.183,
+        "SMA_Long": 1.1633,
+        "SMA_Diff": 0.0197,
+        "MACD_Line": 0.0161,
+        "MACD_Signal": 0.0161,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 1.2477,
+        "BB_Middle": 1.183,
+        "BB_Lower": 1.1183,
+        "BB_Width": 10.94,
+        "FIB_0": 1.0597,
+        "FIB_236": 1.1043,
+        "FIB_382": 1.1318,
+        "FIB_618": 1.1764,
+        "FIB_1000": 1.2485
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "AMIUSDT": {
+      "price": 0.07998,
+      "volume": 8.430550883237999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 53.57,
+        "SMA_Short": 0.083,
+        "SMA_Long": 0.0869,
+        "SMA_Diff": -0.0039,
+        "MACD_Line": 0.0011,
+        "MACD_Signal": 0.0005,
+        "MACD_Hist": 0.0007,
+        "BB_Upper": 0.0941,
+        "BB_Middle": 0.083,
+        "BB_Lower": 0.0719,
+        "BB_Width": 26.78,
+        "FIB_0": 0.0729,
+        "FIB_236": 0.0793,
+        "FIB_382": 0.0832,
+        "FIB_618": 0.0896,
+        "FIB_1000": 0.1
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "ADAUSDT": {
+      "price": 0.6599,
+      "volume": 29.259160994589,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.78,
+        "SMA_Short": 0.6741,
+        "SMA_Long": 0.6601,
+        "SMA_Diff": 0.014,
+        "MACD_Line": 0.009,
+        "MACD_Signal": 0.009,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.7071,
+        "BB_Middle": 0.6741,
+        "BB_Lower": 0.6411,
+        "BB_Width": 9.79,
+        "FIB_0": 0.6132,
+        "FIB_236": 0.6361,
+        "FIB_382": 0.6502,
+        "FIB_618": 0.6731,
+        "FIB_1000": 0.7101
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "C98USDT": {
+      "price": 0.05604,
+      "volume": 3.3074766261408004,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.02,
+        "SMA_Short": 0.0613,
+        "SMA_Long": 0.0603,
+        "SMA_Diff": 0.001,
+        "MACD_Line": 0.0008,
+        "MACD_Signal": 0.0008,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0645,
+        "BB_Middle": 0.0613,
+        "BB_Lower": 0.0581,
+        "BB_Width": 10.39,
+        "FIB_0": 0.0519,
+        "FIB_236": 0.0548,
+        "FIB_382": 0.0566,
+        "FIB_618": 0.0595,
+        "FIB_1000": 0.0641
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "EIGENUSDT": {
+      "price": 0.831,
+      "volume": 1.05033452226,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.95,
+        "SMA_Short": 0.8743,
+        "SMA_Long": 0.8569,
+        "SMA_Diff": 0.0174,
+        "MACD_Line": 0.0138,
+        "MACD_Signal": 0.0138,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.9279,
+        "BB_Middle": 0.8743,
+        "BB_Lower": 0.8207,
+        "BB_Width": 12.25,
+        "FIB_0": 0.761,
+        "FIB_236": 0.7985,
+        "FIB_382": 0.8217,
+        "FIB_618": 0.8593,
+        "FIB_1000": 0.92
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "HFTUSDT": {
+      "price": 0.0526,
+      "volume": 2.84945607625,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 56.34,
+        "SMA_Short": 0.0562,
+        "SMA_Long": 0.0554,
+        "SMA_Diff": 0.0008,
+        "MACD_Line": 0.0007,
+        "MACD_Signal": 0.0007,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0589,
+        "BB_Middle": 0.0562,
+        "BB_Lower": 0.0535,
+        "BB_Width": 9.66,
+        "FIB_0": 0.0506,
+        "FIB_236": 0.0525,
+        "FIB_382": 0.0537,
+        "FIB_618": 0.0557,
+        "FIB_1000": 0.0588
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "FLOCKUSDT": {
+      "price": 0.04462,
+      "volume": 3.1442128936967997,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 48.44,
+        "SMA_Short": 0.0575,
+        "SMA_Long": 0.055,
+        "SMA_Diff": 0.0025,
+        "MACD_Line": 0.0008,
+        "MACD_Signal": 0.0011,
+        "MACD_Hist": -0.0004,
+        "BB_Upper": 0.0602,
+        "BB_Middle": 0.0575,
+        "BB_Lower": 0.0549,
+        "BB_Width": 9.23,
+        "FIB_0": 0.0401,
+        "FIB_236": 0.045,
+        "FIB_382": 0.048,
+        "FIB_618": 0.0528,
+        "FIB_1000": 0.0607
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "QNTUSDT": {
+      "price": 68.15,
+      "volume": 2.4180574100000003,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.89,
+        "SMA_Short": 68.273,
+        "SMA_Long": 67.3002,
+        "SMA_Diff": 0.9728,
+        "MACD_Line": 0.6467,
+        "MACD_Signal": 0.6449,
+        "MACD_Hist": 0.0018,
+        "BB_Upper": 70.8722,
+        "BB_Middle": 68.273,
+        "BB_Lower": 65.6738,
+        "BB_Width": 7.61,
+        "FIB_0": 65.15,
+        "FIB_236": 66.4716,
+        "FIB_382": 67.2892,
+        "FIB_618": 68.6108,
+        "FIB_1000": 70.75
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "CAKEUSDT": {
+      "price": 1.822,
+      "volume": 1.482433029168,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 55.36,
+        "SMA_Short": 1.8797,
+        "SMA_Long": 1.8626,
+        "SMA_Diff": 0.0171,
+        "MACD_Line": 0.0145,
+        "MACD_Signal": 0.0148,
+        "MACD_Hist": -0.0003,
+        "BB_Upper": 1.9474,
+        "BB_Middle": 1.8797,
+        "BB_Lower": 1.812,
+        "BB_Width": 7.21,
+        "FIB_0": 1.738,
+        "FIB_236": 1.7904,
+        "FIB_382": 1.8228,
+        "FIB_618": 1.8752,
+        "FIB_1000": 1.96
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "CRVUSDT": {
+      "price": 0.5,
+      "volume": 7.9020153650000005,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 53.78,
+        "SMA_Short": 0.5157,
+        "SMA_Long": 0.517,
+        "SMA_Diff": -0.0013,
+        "MACD_Line": 0.0052,
+        "MACD_Signal": 0.0047,
+        "MACD_Hist": 0.0005,
+        "BB_Upper": 0.5531,
+        "BB_Middle": 0.5157,
+        "BB_Lower": 0.4783,
+        "BB_Width": 14.5,
+        "FIB_0": 0.4815,
+        "FIB_236": 0.4999,
+        "FIB_382": 0.5113,
+        "FIB_618": 0.5296,
+        "FIB_1000": 0.5594
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "SUPRAUSDT": {
+      "price": 0.00598,
+      "volume": 2.05434122556,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "BUY"
+      },
+      "values": {
+        "RSI": 57.09,
+        "SMA_Short": 0.0057,
+        "SMA_Long": 0.0056,
+        "SMA_Diff": 0.0001,
+        "MACD_Line": 0.0001,
+        "MACD_Signal": 0.0001,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0061,
+        "BB_Middle": 0.0057,
+        "BB_Lower": 0.0053,
+        "BB_Width": 13.35,
+        "FIB_0": 0.0052,
+        "FIB_236": 0.0057,
+        "FIB_382": 0.006,
+        "FIB_618": 0.0065,
+        "FIB_1000": 0.0074
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 3,
+        "rel_strength": 0.6,
+        "buy_count": 3,
+        "sell_count": 0,
+        "neutral_count": 2
+      }
+    },
+    "DRIFTUSDT": {
+      "price": 0.5217,
+      "volume": 1.22701466265,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.57,
+        "SMA_Short": 0.5434,
+        "SMA_Long": 0.5355,
+        "SMA_Diff": 0.0079,
+        "MACD_Line": 0.006,
+        "MACD_Signal": 0.006,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.5678,
+        "BB_Middle": 0.5434,
+        "BB_Lower": 0.5191,
+        "BB_Width": 8.95,
+        "FIB_0": 0.5,
+        "FIB_236": 0.5154,
+        "FIB_382": 0.525,
+        "FIB_618": 0.5404,
+        "FIB_1000": 0.5654
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "BONKUSDT": {
+      "price": 1.117e-05,
+      "volume": 2.796398237474422,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.53,
+        "SMA_Short": 0.0,
+        "SMA_Long": 0.0,
+        "SMA_Diff": 0.0,
+        "MACD_Line": 0.0,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0,
+        "BB_Middle": 0.0,
+        "BB_Lower": 0.0,
+        "BB_Width": 15.68,
+        "FIB_0": 0.0,
+        "FIB_236": 0.0,
+        "FIB_382": 0.0,
+        "FIB_618": 0.0,
+        "FIB_1000": 0.0
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "DOGEUSDT": {
+      "price": 0.1693,
+      "volume": 33.46299197404,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.48,
+        "SMA_Short": 0.1707,
+        "SMA_Long": 0.1677,
+        "SMA_Diff": 0.0029,
+        "MACD_Line": 0.0019,
+        "MACD_Signal": 0.002,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.1783,
+        "BB_Middle": 0.1707,
+        "BB_Lower": 0.1631,
+        "BB_Width": 8.92,
+        "FIB_0": 0.1554,
+        "FIB_236": 0.1612,
+        "FIB_382": 0.1649,
+        "FIB_618": 0.1707,
+        "FIB_1000": 0.1801
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "JTOUSDT": {
+      "price": 1.899,
+      "volume": 1.01957091615,
+      "signals": {
+        "RSI": "SELL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 70.49,
+        "SMA_Short": 2.2261,
+        "SMA_Long": 2.1537,
+        "SMA_Diff": 0.0724,
+        "MACD_Line": 0.0461,
+        "MACD_Signal": 0.0442,
+        "MACD_Hist": 0.0019,
+        "BB_Upper": 2.3722,
+        "BB_Middle": 2.2261,
+        "BB_Lower": 2.08,
+        "BB_Width": 13.13,
+        "FIB_0": 1.855,
+        "FIB_236": 1.9702,
+        "FIB_382": 2.0414,
+        "FIB_618": 2.1566,
+        "FIB_1000": 2.343
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "RSI",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 2,
+        "sell_count": 2,
+        "neutral_count": 1
+      }
+    },
+    "SOLUSDT": {
+      "price": 122.34,
+      "volume": 195.89404156854002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 63.34,
+        "SMA_Short": 127.159,
+        "SMA_Long": 122.6418,
+        "SMA_Diff": 4.5172,
+        "MACD_Line": 2.5367,
+        "MACD_Signal": 2.6181,
+        "MACD_Hist": -0.0814,
+        "BB_Upper": 135.3535,
+        "BB_Middle": 127.159,
+        "BB_Lower": 118.9645,
+        "BB_Width": 12.89,
+        "FIB_0": 112.24,
+        "FIB_236": 117.9158,
+        "FIB_382": 121.4271,
+        "FIB_618": 127.1029,
+        "FIB_1000": 136.29
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "ORDIUSDT": {
+      "price": 7.13,
+      "volume": 3.3897375413,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 53.51,
+        "SMA_Short": 7.3295,
+        "SMA_Long": 7.2568,
+        "SMA_Diff": 0.0727,
+        "MACD_Line": 0.0709,
+        "MACD_Signal": 0.0741,
+        "MACD_Hist": -0.0032,
+        "BB_Upper": 7.7192,
+        "BB_Middle": 7.3295,
+        "BB_Lower": 6.9398,
+        "BB_Width": 10.63,
+        "FIB_0": 6.81,
+        "FIB_236": 7.0248,
+        "FIB_382": 7.1576,
+        "FIB_618": 7.3724,
+        "FIB_1000": 7.72
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "ENSUSDT": {
+      "price": 15.09,
+      "volume": 1.2607989254999998,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.27,
+        "SMA_Short": 15.976,
+        "SMA_Long": 15.5878,
+        "SMA_Diff": 0.3882,
+        "MACD_Line": 0.2322,
+        "MACD_Signal": 0.2431,
+        "MACD_Hist": -0.0109,
+        "BB_Upper": 16.8229,
+        "BB_Middle": 15.976,
+        "BB_Lower": 15.1291,
+        "BB_Width": 10.6,
+        "FIB_0": 14.42,
+        "FIB_236": 14.9888,
+        "FIB_382": 15.3406,
+        "FIB_618": 15.9094,
+        "FIB_1000": 16.83
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "BNBUSDT": {
+      "price": 596.88,
+      "volume": 5.106381273079201,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 53.58,
+        "SMA_Short": 600.0605,
+        "SMA_Long": 600.2344,
+        "SMA_Diff": -0.1739,
+        "MACD_Line": 1.8705,
+        "MACD_Signal": 1.6276,
+        "MACD_Hist": 0.2429,
+        "BB_Upper": 611.9644,
+        "BB_Middle": 600.0605,
+        "BB_Lower": 588.1566,
+        "BB_Width": 3.97,
+        "FIB_0": 578.51,
+        "FIB_236": 586.5434,
+        "FIB_382": 591.5133,
+        "FIB_618": 599.5467,
+        "FIB_1000": 612.55
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "ARBUSDT": {
+      "price": 0.3116,
+      "volume": 3.63507903138,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.59,
+        "SMA_Short": 0.3238,
+        "SMA_Long": 0.3172,
+        "SMA_Diff": 0.0066,
+        "MACD_Line": 0.0042,
+        "MACD_Signal": 0.0043,
+        "MACD_Hist": -0.0002,
+        "BB_Upper": 0.3402,
+        "BB_Middle": 0.3238,
+        "BB_Lower": 0.3075,
+        "BB_Width": 10.1,
+        "FIB_0": 0.2935,
+        "FIB_236": 0.3042,
+        "FIB_382": 0.3109,
+        "FIB_618": 0.3216,
+        "FIB_1000": 0.339
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "EOSUSDT": {
+      "price": 0.7838,
+      "volume": 12.913585916166001,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 54.32,
+        "SMA_Short": 0.8239,
+        "SMA_Long": 0.8217,
+        "SMA_Diff": 0.0022,
+        "MACD_Line": 0.0038,
+        "MACD_Signal": 0.0035,
+        "MACD_Hist": 0.0002,
+        "BB_Upper": 0.856,
+        "BB_Middle": 0.8239,
+        "BB_Lower": 0.7917,
+        "BB_Width": 7.81,
+        "FIB_0": 0.7769,
+        "FIB_236": 0.8018,
+        "FIB_382": 0.8171,
+        "FIB_618": 0.842,
+        "FIB_1000": 0.8822
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 2,
+        "rel_strength": 0.4,
+        "buy_count": 2,
+        "sell_count": 0,
+        "neutral_count": 3
+      }
+    },
+    "SEIUSDT": {
+      "price": 0.1651,
+      "volume": 5.435433083392,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.72,
+        "SMA_Short": 0.1711,
+        "SMA_Long": 0.1684,
+        "SMA_Diff": 0.0027,
+        "MACD_Line": 0.0021,
+        "MACD_Signal": 0.0021,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.1804,
+        "BB_Middle": 0.1711,
+        "BB_Lower": 0.1619,
+        "BB_Width": 10.82,
+        "FIB_0": 0.1575,
+        "FIB_236": 0.1626,
+        "FIB_382": 0.1658,
+        "FIB_618": 0.1708,
+        "FIB_1000": 0.1791
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "DEEPUSDT": {
+      "price": 0.06088,
+      "volume": 2.43863083152,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 63.58,
+        "SMA_Short": 0.0659,
+        "SMA_Long": 0.0642,
+        "SMA_Diff": 0.0017,
+        "MACD_Line": 0.0012,
+        "MACD_Signal": 0.0012,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0705,
+        "BB_Middle": 0.0659,
+        "BB_Lower": 0.0614,
+        "BB_Width": 13.75,
+        "FIB_0": 0.0566,
+        "FIB_236": 0.0598,
+        "FIB_382": 0.0618,
+        "FIB_618": 0.065,
+        "FIB_1000": 0.0702
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "PENDLEUSDT": {
+      "price": 3.186,
+      "volume": 3.3429719898,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 52.72,
+        "SMA_Short": 3.1508,
+        "SMA_Long": 3.0699,
+        "SMA_Diff": 0.0809,
+        "MACD_Line": 0.0477,
+        "MACD_Signal": 0.0531,
+        "MACD_Hist": -0.0054,
+        "BB_Upper": 3.3312,
+        "BB_Middle": 3.1508,
+        "BB_Lower": 2.9704,
+        "BB_Width": 11.45,
+        "FIB_0": 2.707,
+        "FIB_236": 2.8587,
+        "FIB_382": 2.9526,
+        "FIB_618": 3.1044,
+        "FIB_1000": 3.35
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "CMETHUSDT": {
+      "price": 1923.85,
+      "volume": 2.199169672495,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.26,
+        "SMA_Short": 1991.6595,
+        "SMA_Long": 1957.4586,
+        "SMA_Diff": 34.2009,
+        "MACD_Line": 21.5572,
+        "MACD_Signal": 21.8365,
+        "MACD_Hist": -0.2794,
+        "BB_Upper": 2069.5341,
+        "BB_Middle": 1991.6595,
+        "BB_Lower": 1913.7849,
+        "BB_Width": 7.82,
+        "FIB_0": 1861.31,
+        "FIB_236": 1909.2038,
+        "FIB_382": 1938.8331,
+        "FIB_618": 1986.7269,
+        "FIB_1000": 2064.25
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "VIRTUALUSDT": {
+      "price": 0.5493,
+      "volume": 6.402221068884,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.91,
+        "SMA_Short": 0.585,
+        "SMA_Long": 0.5724,
+        "SMA_Diff": 0.0126,
+        "MACD_Line": 0.0097,
+        "MACD_Signal": 0.0094,
+        "MACD_Hist": 0.0003,
+        "BB_Upper": 0.6235,
+        "BB_Middle": 0.585,
+        "BB_Lower": 0.5466,
+        "BB_Width": 13.14,
+        "FIB_0": 0.5157,
+        "FIB_236": 0.5402,
+        "FIB_382": 0.5554,
+        "FIB_618": 0.58,
+        "FIB_1000": 0.6197
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ZKJUSDT": {
+      "price": 2.2774,
+      "volume": 2.8140341924920005,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "BUY"
+      },
+      "values": {
+        "RSI": 49.33,
+        "SMA_Short": 2.2345,
+        "SMA_Long": 2.2471,
+        "SMA_Diff": -0.0126,
+        "MACD_Line": -0.0004,
+        "MACD_Signal": -0.0021,
+        "MACD_Hist": 0.0017,
+        "BB_Upper": 2.2542,
+        "BB_Middle": 2.2345,
+        "BB_Lower": 2.2148,
+        "BB_Width": 1.76,
+        "FIB_0": 2.2143,
+        "FIB_236": 2.2375,
+        "FIB_382": 2.2519,
+        "FIB_618": 2.275,
+        "FIB_1000": 2.3126
+      },
+      "buy_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "NEIROUSDT": {
+      "price": 0.02786,
+      "volume": 2.5092195279634,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 47.26,
+        "SMA_Short": 0.0271,
+        "SMA_Long": 0.0272,
+        "SMA_Diff": -0.0001,
+        "MACD_Line": 0.0001,
+        "MACD_Signal": 0.0001,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0284,
+        "BB_Middle": 0.0271,
+        "BB_Lower": 0.0258,
+        "BB_Width": 9.62,
+        "FIB_0": 0.0243,
+        "FIB_236": 0.0254,
+        "FIB_382": 0.026,
+        "FIB_618": 0.0271,
+        "FIB_1000": 0.0289
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "ETHUSDT": {
+      "price": 1810.53,
+      "volume": 219.80981608903258,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.41,
+        "SMA_Short": 1874.996,
+        "SMA_Long": 1843.0026,
+        "SMA_Diff": 31.9934,
+        "MACD_Line": 19.3938,
+        "MACD_Signal": 20.1107,
+        "MACD_Hist": -0.717,
+        "BB_Upper": 1947.3762,
+        "BB_Middle": 1874.996,
+        "BB_Lower": 1802.6158,
+        "BB_Width": 7.72,
+        "FIB_0": 1749.2,
+        "FIB_236": 1798.1983,
+        "FIB_382": 1828.5108,
+        "FIB_618": 1877.5092,
+        "FIB_1000": 1956.82
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "USDEUSDT": {
+      "price": 0.9997,
+      "volume": 21.603514690693004,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 54.86,
+        "SMA_Short": 1.0,
+        "SMA_Long": 1.0001,
+        "SMA_Diff": -0.0001,
+        "MACD_Line": -0.0,
+        "MACD_Signal": -0.0,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 1.0002,
+        "BB_Middle": 1.0,
+        "BB_Lower": 0.9999,
+        "BB_Width": 0.03,
+        "FIB_0": 0.9995,
+        "FIB_236": 0.9998,
+        "FIB_382": 1.0,
+        "FIB_618": 1.0003,
+        "FIB_1000": 1.0008
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "XTERUSDT": {
+      "price": 0.30263,
+      "volume": 3.2593339670590002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 55.45,
+        "SMA_Short": 0.299,
+        "SMA_Long": 0.2995,
+        "SMA_Diff": -0.0005,
+        "MACD_Line": 0.0011,
+        "MACD_Signal": 0.0009,
+        "MACD_Hist": 0.0003,
+        "BB_Upper": 0.3062,
+        "BB_Middle": 0.299,
+        "BB_Lower": 0.2919,
+        "BB_Width": 4.79,
+        "FIB_0": 0.2896,
+        "FIB_236": 0.2948,
+        "FIB_382": 0.2981,
+        "FIB_618": 0.3034,
+        "FIB_1000": 0.3119
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "BTCUSDT": {
+      "price": 83858.6,
+      "volume": 1518.1831642669904,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 63.75,
+        "SMA_Short": 85374.48,
+        "SMA_Long": 84148.91,
+        "SMA_Diff": 1225.57,
+        "MACD_Line": 795.9659,
+        "MACD_Signal": 763.8155,
+        "MACD_Hist": 32.1503,
+        "BB_Upper": 88116.0585,
+        "BB_Middle": 85374.48,
+        "BB_Lower": 82632.9015,
+        "BB_Width": 6.42,
+        "FIB_0": 81200.0,
+        "FIB_236": 82929.1484,
+        "FIB_382": 83998.8758,
+        "FIB_618": 85728.0242,
+        "FIB_1000": 88526.9
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "GAMEUSDT": {
+      "price": 0.0131,
+      "volume": 1.029692538042,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 67.52,
+        "SMA_Short": 0.0145,
+        "SMA_Long": 0.0139,
+        "SMA_Diff": 0.0006,
+        "MACD_Line": 0.0003,
+        "MACD_Signal": 0.0003,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0156,
+        "BB_Middle": 0.0145,
+        "BB_Lower": 0.0133,
+        "BB_Width": 16.18,
+        "FIB_0": 0.0121,
+        "FIB_236": 0.0129,
+        "FIB_382": 0.0134,
+        "FIB_618": 0.0142,
+        "FIB_1000": 0.0155
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "APTUSDT": {
+      "price": 4.88,
+      "volume": 4.9400263423999995,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.99,
+        "SMA_Short": 5.3125,
+        "SMA_Long": 5.2612,
+        "SMA_Diff": 0.0513,
+        "MACD_Line": 0.0536,
+        "MACD_Signal": 0.0508,
+        "MACD_Hist": 0.0028,
+        "BB_Upper": 5.5578,
+        "BB_Middle": 5.3125,
+        "BB_Lower": 5.0672,
+        "BB_Width": 9.24,
+        "FIB_0": 4.74,
+        "FIB_236": 4.9217,
+        "FIB_382": 5.0341,
+        "FIB_618": 5.2159,
+        "FIB_1000": 5.51
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "SQTUSDT": {
+      "price": 0.002033,
+      "volume": 1.02269617967696,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "SELL",
+        "BBANDS": "BUY",
+        "FIBONACCI": "STRONG_BUY"
+      },
+      "values": {
+        "RSI": 30.4,
+        "SMA_Short": 0.0021,
+        "SMA_Long": 0.0022,
+        "SMA_Diff": -0.0002,
+        "MACD_Line": -0.0002,
+        "MACD_Signal": -0.0001,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.0027,
+        "BB_Middle": 0.0021,
+        "BB_Lower": 0.0014,
+        "BB_Width": 62.27,
+        "FIB_0": 0.0014,
+        "FIB_236": 0.002,
+        "FIB_382": 0.0024,
+        "FIB_618": 0.0031,
+        "FIB_1000": 0.0042
+      },
+      "buy_indicators": [
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 2,
+        "neutral_count": 1
+      }
+    },
+    "JUSDT": {
+      "price": 0.1982,
+      "volume": 1.352208446386,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 35.19,
+        "SMA_Short": 0.2404,
+        "SMA_Long": 0.242,
+        "SMA_Diff": -0.0016,
+        "MACD_Line": -0.0026,
+        "MACD_Signal": -0.0014,
+        "MACD_Hist": -0.0012,
+        "BB_Upper": 0.2531,
+        "BB_Middle": 0.2404,
+        "BB_Lower": 0.2277,
+        "BB_Width": 10.55,
+        "FIB_0": 0.1865,
+        "FIB_236": 0.2039,
+        "FIB_382": 0.2147,
+        "FIB_618": 0.2322,
+        "FIB_1000": 0.2604
+      },
+      "buy_indicators": [],
+      "sell_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -2,
+        "rel_strength": -0.4,
+        "buy_count": 0,
+        "sell_count": 2,
+        "neutral_count": 3
+      }
+    },
+    "IOUSDT": {
+      "price": 0.638,
+      "volume": 1.5323850339599998,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.17,
+        "SMA_Short": 0.6919,
+        "SMA_Long": 0.6753,
+        "SMA_Diff": 0.0166,
+        "MACD_Line": 0.0122,
+        "MACD_Signal": 0.0123,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.7368,
+        "BB_Middle": 0.6919,
+        "BB_Lower": 0.647,
+        "BB_Width": 12.98,
+        "FIB_0": 0.602,
+        "FIB_236": 0.6317,
+        "FIB_382": 0.6501,
+        "FIB_618": 0.6799,
+        "FIB_1000": 0.728
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "CATIUSDT": {
+      "price": 0.1015,
+      "volume": 3.2174056862850002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.83,
+        "SMA_Short": 0.1377,
+        "SMA_Long": 0.1293,
+        "SMA_Diff": 0.0085,
+        "MACD_Line": 0.0021,
+        "MACD_Signal": 0.0029,
+        "MACD_Hist": -0.0008,
+        "BB_Upper": 0.1392,
+        "BB_Middle": 0.1377,
+        "BB_Lower": 0.1363,
+        "BB_Width": 2.16,
+        "FIB_0": 0.0928,
+        "FIB_236": 0.1038,
+        "FIB_382": 0.1106,
+        "FIB_618": 0.1216,
+        "FIB_1000": 0.1394
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "ETHFIUSDT": {
+      "price": 0.513,
+      "volume": 2.74670128089,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.6,
+        "SMA_Short": 0.5499,
+        "SMA_Long": 0.5349,
+        "SMA_Diff": 0.015,
+        "MACD_Line": 0.0093,
+        "MACD_Signal": 0.0097,
+        "MACD_Hist": -0.0003,
+        "BB_Upper": 0.5838,
+        "BB_Middle": 0.5499,
+        "BB_Lower": 0.5159,
+        "BB_Width": 12.36,
+        "FIB_0": 0.484,
+        "FIB_236": 0.5074,
+        "FIB_382": 0.5218,
+        "FIB_618": 0.5452,
+        "FIB_1000": 0.583
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "OBTUSDT": {
+      "price": 0.01153,
+      "volume": 1.5559315573190002,
+      "signals": {
+        "RSI": "SELL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 76.58,
+        "SMA_Short": 0.0121,
+        "SMA_Long": 0.0118,
+        "SMA_Diff": 0.0002,
+        "MACD_Line": 0.0002,
+        "MACD_Signal": 0.0001,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0126,
+        "BB_Middle": 0.0121,
+        "BB_Lower": 0.0116,
+        "BB_Width": 8.55,
+        "FIB_0": 0.0112,
+        "FIB_236": 0.0115,
+        "FIB_382": 0.0117,
+        "FIB_618": 0.012,
+        "FIB_1000": 0.0125
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "RSI",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 2,
+        "sell_count": 2,
+        "neutral_count": 1
+      }
+    },
+    "TOSHIUSDT": {
+      "price": 0.00023382,
+      "volume": 1.23700310877312,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 65.38,
+        "SMA_Short": 0.0003,
+        "SMA_Long": 0.0003,
+        "SMA_Diff": 0.0,
+        "MACD_Line": 0.0,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0003,
+        "BB_Middle": 0.0003,
+        "BB_Lower": 0.0003,
+        "BB_Width": 12.3,
+        "FIB_0": 0.0002,
+        "FIB_236": 0.0002,
+        "FIB_382": 0.0002,
+        "FIB_618": 0.0003,
+        "FIB_1000": 0.0003
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "ZRCUSDT": {
+      "price": 0.03023,
+      "volume": 1.8401094713000001,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 68.05,
+        "SMA_Short": 0.0387,
+        "SMA_Long": 0.0375,
+        "SMA_Diff": 0.0012,
+        "MACD_Line": 0.0007,
+        "MACD_Signal": 0.0007,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0406,
+        "BB_Middle": 0.0387,
+        "BB_Lower": 0.0368,
+        "BB_Width": 9.7,
+        "FIB_0": 0.0289,
+        "FIB_236": 0.0316,
+        "FIB_382": 0.0332,
+        "FIB_618": 0.036,
+        "FIB_1000": 0.0403
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "IPUSDT": {
+      "price": 4.174,
+      "volume": 2.0992955605000003,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 53.62,
+        "SMA_Short": 4.4969,
+        "SMA_Long": 4.4632,
+        "SMA_Diff": 0.0337,
+        "MACD_Line": 0.0312,
+        "MACD_Signal": 0.0311,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 4.6259,
+        "BB_Middle": 4.4969,
+        "BB_Lower": 4.3678,
+        "BB_Width": 5.74,
+        "FIB_0": 3.948,
+        "FIB_236": 4.1385,
+        "FIB_382": 4.2563,
+        "FIB_618": 4.4467,
+        "FIB_1000": 4.755
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "CELOUSDT": {
+      "price": 0.3045,
+      "volume": 1.2071375349599998,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 64.12,
+        "SMA_Short": 0.3284,
+        "SMA_Long": 0.3203,
+        "SMA_Diff": 0.0081,
+        "MACD_Line": 0.0049,
+        "MACD_Signal": 0.0049,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.3437,
+        "BB_Middle": 0.3284,
+        "BB_Lower": 0.3131,
+        "BB_Width": 9.33,
+        "FIB_0": 0.29,
+        "FIB_236": 0.3028,
+        "FIB_382": 0.3107,
+        "FIB_618": 0.3235,
+        "FIB_1000": 0.3442
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "BCHUSDT": {
+      "price": 299.0,
+      "volume": 3.1889671579999996,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.31,
+        "SMA_Short": 304.885,
+        "SMA_Long": 302.46,
+        "SMA_Diff": 2.425,
+        "MACD_Line": 2.8295,
+        "MACD_Signal": 2.5169,
+        "MACD_Hist": 0.3126,
+        "BB_Upper": 317.5705,
+        "BB_Middle": 304.885,
+        "BB_Lower": 292.1995,
+        "BB_Width": 8.32,
+        "FIB_0": 290.1,
+        "FIB_236": 296.4956,
+        "FIB_382": 300.4522,
+        "FIB_618": 306.8478,
+        "FIB_1000": 317.2
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "FETUSDT": {
+      "price": 0.444,
+      "volume": 2.04163391796,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 58.27,
+        "SMA_Short": 0.4544,
+        "SMA_Long": 0.4477,
+        "SMA_Diff": 0.0067,
+        "MACD_Line": 0.006,
+        "MACD_Signal": 0.0059,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.4798,
+        "BB_Middle": 0.4544,
+        "BB_Lower": 0.429,
+        "BB_Width": 11.18,
+        "FIB_0": 0.411,
+        "FIB_236": 0.427,
+        "FIB_382": 0.437,
+        "FIB_618": 0.453,
+        "FIB_1000": 0.479
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "AVAXUSDT": {
+      "price": 18.07,
+      "volume": 15.7522060943,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.27,
+        "SMA_Short": 19.043,
+        "SMA_Long": 18.747,
+        "SMA_Diff": 0.296,
+        "MACD_Line": 0.2412,
+        "MACD_Signal": 0.2354,
+        "MACD_Hist": 0.0058,
+        "BB_Upper": 20.0176,
+        "BB_Middle": 19.043,
+        "BB_Lower": 18.0684,
+        "BB_Width": 10.24,
+        "FIB_0": 17.58,
+        "FIB_236": 18.1299,
+        "FIB_382": 18.4701,
+        "FIB_618": 19.0199,
+        "FIB_1000": 19.91
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "AVLUSDT": {
+      "price": 0.2509,
+      "volume": 1.98610641047,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 64.77,
+        "SMA_Short": 0.291,
+        "SMA_Long": 0.2827,
+        "SMA_Diff": 0.0083,
+        "MACD_Line": 0.007,
+        "MACD_Signal": 0.0061,
+        "MACD_Hist": 0.0009,
+        "BB_Upper": 0.314,
+        "BB_Middle": 0.291,
+        "BB_Lower": 0.268,
+        "BB_Width": 15.81,
+        "FIB_0": 0.2418,
+        "FIB_236": 0.2578,
+        "FIB_382": 0.2677,
+        "FIB_618": 0.2836,
+        "FIB_1000": 0.3095
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "DYDXUSDT": {
+      "price": 0.6232,
+      "volume": 3.0442378818432,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 56.05,
+        "SMA_Short": 0.6208,
+        "SMA_Long": 0.6154,
+        "SMA_Diff": 0.0053,
+        "MACD_Line": 0.0062,
+        "MACD_Signal": 0.0056,
+        "MACD_Hist": 0.0005,
+        "BB_Upper": 0.6495,
+        "BB_Middle": 0.6208,
+        "BB_Lower": 0.592,
+        "BB_Width": 9.27,
+        "FIB_0": 0.5831,
+        "FIB_236": 0.5989,
+        "FIB_382": 0.6087,
+        "FIB_618": 0.6245,
+        "FIB_1000": 0.6501
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ENAUSDT": {
+      "price": 0.3108,
+      "volume": 12.938083897956,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.6,
+        "SMA_Short": 0.3583,
+        "SMA_Long": 0.3452,
+        "SMA_Diff": 0.013,
+        "MACD_Line": 0.0054,
+        "MACD_Signal": 0.0067,
+        "MACD_Hist": -0.0012,
+        "BB_Upper": 0.3771,
+        "BB_Middle": 0.3583,
+        "BB_Lower": 0.3395,
+        "BB_Width": 10.5,
+        "FIB_0": 0.2907,
+        "FIB_236": 0.313,
+        "FIB_382": 0.3267,
+        "FIB_618": 0.349,
+        "FIB_1000": 0.385
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "BLASTUSDT": {
+      "price": 0.002979,
+      "volume": 1.75669336205748,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "NEUTRAL"
+      },
+      "values": {
+        "RSI": 55.69,
+        "SMA_Short": 0.003,
+        "SMA_Long": 0.0029,
+        "SMA_Diff": 0.0001,
+        "MACD_Line": 0.0,
+        "MACD_Signal": 0.0,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 0.0031,
+        "BB_Middle": 0.003,
+        "BB_Lower": 0.0028,
+        "BB_Width": 11.11,
+        "FIB_0": 0.0027,
+        "FIB_236": 0.0028,
+        "FIB_382": 0.0029,
+        "FIB_618": 0.003,
+        "FIB_1000": 0.0032
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS",
+        "FIBONACCI"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 0,
+        "rel_strength": 0.0,
+        "buy_count": 1,
+        "sell_count": 1,
+        "neutral_count": 3
+      }
+    },
+    "AAVEUSDT": {
+      "price": 151.41,
+      "volume": 5.73735899247,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 59.76,
+        "SMA_Short": 159.38,
+        "SMA_Long": 156.3536,
+        "SMA_Diff": 3.0264,
+        "MACD_Line": 2.2007,
+        "MACD_Signal": 2.2066,
+        "MACD_Hist": -0.0059,
+        "BB_Upper": 168.0825,
+        "BB_Middle": 159.38,
+        "BB_Lower": 150.6775,
+        "BB_Width": 10.92,
+        "FIB_0": 144.39,
+        "FIB_236": 150.198,
+        "FIB_382": 153.791,
+        "FIB_618": 159.599,
+        "FIB_1000": 169.0
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "WALUSDT": {
+      "price": 0.5374,
+      "volume": 10.921778178159999,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 63.27,
+        "SMA_Short": 0.5681,
+        "SMA_Long": 0.5698,
+        "SMA_Diff": -0.0017,
+        "MACD_Line": 0.0076,
+        "MACD_Signal": 0.0054,
+        "MACD_Hist": 0.0022,
+        "BB_Upper": 0.6082,
+        "BB_Middle": 0.5681,
+        "BB_Lower": 0.528,
+        "BB_Width": 14.12,
+        "FIB_0": 0.4891,
+        "FIB_236": 0.5173,
+        "FIB_382": 0.5347,
+        "FIB_618": 0.5629,
+        "FIB_1000": 0.6085
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "MKRUSDT": {
+      "price": 1361.0,
+      "volume": 3.7687249572,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 61.04,
+        "SMA_Short": 1354.3,
+        "SMA_Long": 1326.26,
+        "SMA_Diff": 28.04,
+        "MACD_Line": 16.7459,
+        "MACD_Signal": 17.0337,
+        "MACD_Hist": -0.2878,
+        "BB_Upper": 1409.4329,
+        "BB_Middle": 1354.3,
+        "BB_Lower": 1299.1671,
+        "BB_Width": 8.14,
+        "FIB_0": 1228.0,
+        "FIB_236": 1272.132,
+        "FIB_382": 1299.434,
+        "FIB_618": 1343.566,
+        "FIB_1000": 1415.0
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "UXLINKUSDT": {
+      "price": 0.5086,
+      "volume": 5.1407094611640005,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "BUY"
+      },
+      "values": {
+        "RSI": 53.05,
+        "SMA_Short": 0.4246,
+        "SMA_Long": 0.4241,
+        "SMA_Diff": 0.0006,
+        "MACD_Line": 0.0027,
+        "MACD_Signal": 0.0019,
+        "MACD_Hist": 0.0008,
+        "BB_Upper": 0.4446,
+        "BB_Middle": 0.4246,
+        "BB_Lower": 0.4046,
+        "BB_Width": 9.43,
+        "FIB_0": 0.3991,
+        "FIB_236": 0.4283,
+        "FIB_382": 0.4464,
+        "FIB_618": 0.4756,
+        "FIB_1000": 0.5229
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 3,
+        "rel_strength": 0.6,
+        "buy_count": 3,
+        "sell_count": 0,
+        "neutral_count": 2
+      }
+    },
+    "TIAUSDT": {
+      "price": 2.745,
+      "volume": 4.203957727800001,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 65.03,
+        "SMA_Short": 3.0644,
+        "SMA_Long": 2.9876,
+        "SMA_Diff": 0.0768,
+        "MACD_Line": 0.0545,
+        "MACD_Signal": 0.0526,
+        "MACD_Hist": 0.0019,
+        "BB_Upper": 3.2509,
+        "BB_Middle": 3.0644,
+        "BB_Lower": 2.878,
+        "BB_Width": 12.17,
+        "FIB_0": 2.628,
+        "FIB_236": 2.7715,
+        "FIB_382": 2.8603,
+        "FIB_618": 3.0037,
+        "FIB_1000": 3.236
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ATHUSDT": {
+      "price": 0.029914,
+      "volume": 3.4253381703522603,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.67,
+        "SMA_Short": 0.0298,
+        "SMA_Long": 0.0294,
+        "SMA_Diff": 0.0004,
+        "MACD_Line": 0.0003,
+        "MACD_Signal": 0.0003,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.0315,
+        "BB_Middle": 0.0298,
+        "BB_Lower": 0.0282,
+        "BB_Width": 10.93,
+        "FIB_0": 0.0276,
+        "FIB_236": 0.0285,
+        "FIB_382": 0.0291,
+        "FIB_618": 0.03,
+        "FIB_1000": 0.0315
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "TRXUSDT": {
+      "price": 0.2401,
+      "volume": 9.274190421377002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.13,
+        "SMA_Short": 0.2373,
+        "SMA_Long": 0.2366,
+        "SMA_Diff": 0.0006,
+        "MACD_Line": 0.0007,
+        "MACD_Signal": 0.0007,
+        "MACD_Hist": 0.0,
+        "BB_Upper": 0.241,
+        "BB_Middle": 0.2373,
+        "BB_Lower": 0.2336,
+        "BB_Width": 3.11,
+        "FIB_0": 0.2304,
+        "FIB_236": 0.2331,
+        "FIB_382": 0.2348,
+        "FIB_618": 0.2376,
+        "FIB_1000": 0.242
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "STETHUSDT": {
+      "price": 1811.07,
+      "volume": 1.0971858503223002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.29,
+        "SMA_Short": 1874.314,
+        "SMA_Long": 1842.2262,
+        "SMA_Diff": 32.0878,
+        "MACD_Line": 19.6888,
+        "MACD_Signal": 20.3036,
+        "MACD_Hist": -0.6148,
+        "BB_Upper": 1947.249,
+        "BB_Middle": 1874.314,
+        "BB_Lower": 1801.379,
+        "BB_Width": 7.78,
+        "FIB_0": 1748.71,
+        "FIB_236": 1797.1278,
+        "FIB_382": 1827.0811,
+        "FIB_618": 1875.4989,
+        "FIB_1000": 1953.87
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "SAROSUSDT": {
+      "price": 0.150338,
+      "volume": 2.5844390641761406,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "STRONG_BUY"
+      },
+      "values": {
+        "RSI": 51.39,
+        "SMA_Short": 0.1012,
+        "SMA_Long": 0.1035,
+        "SMA_Diff": -0.0022,
+        "MACD_Line": -0.0004,
+        "MACD_Signal": -0.0008,
+        "MACD_Hist": 0.0004,
+        "BB_Upper": 0.1027,
+        "BB_Middle": 0.1012,
+        "BB_Lower": 0.0998,
+        "BB_Width": 2.79,
+        "FIB_0": 0.1,
+        "FIB_236": 0.1151,
+        "FIB_382": 0.1244,
+        "FIB_618": 0.1395,
+        "FIB_1000": 0.164
+      },
+      "buy_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 2,
+        "rel_strength": 0.4,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "PPTUSDT": {
+      "price": 0.23911,
+      "volume": 1.4758843358051,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 46.12,
+        "SMA_Short": 0.2433,
+        "SMA_Long": 0.2448,
+        "SMA_Diff": -0.0015,
+        "MACD_Line": -0.0003,
+        "MACD_Signal": -0.0004,
+        "MACD_Hist": 0.0001,
+        "BB_Upper": 0.2441,
+        "BB_Middle": 0.2433,
+        "BB_Lower": 0.2426,
+        "BB_Width": 0.61,
+        "FIB_0": 0.2304,
+        "FIB_236": 0.2344,
+        "FIB_382": 0.2369,
+        "FIB_618": 0.241,
+        "FIB_1000": 0.2475
+      },
+      "buy_indicators": [
+        "MACD"
+      ],
+      "sell_indicators": [
+        "SMA",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "PNUTUSDT": {
+      "price": 0.1495,
+      "volume": 1.8847168391999998,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 62.01,
+        "SMA_Short": 0.1507,
+        "SMA_Long": 0.1488,
+        "SMA_Diff": 0.0019,
+        "MACD_Line": 0.0018,
+        "MACD_Signal": 0.0016,
+        "MACD_Hist": 0.0002,
+        "BB_Upper": 0.1578,
+        "BB_Middle": 0.1507,
+        "BB_Lower": 0.1436,
+        "BB_Width": 9.41,
+        "FIB_0": 0.1379,
+        "FIB_236": 0.1429,
+        "FIB_382": 0.146,
+        "FIB_618": 0.1511,
+        "FIB_1000": 0.1592
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "ARKMUSDT": {
+      "price": 0.498,
+      "volume": 2.4329652153600003,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 57.02,
+        "SMA_Short": 0.5022,
+        "SMA_Long": 0.496,
+        "SMA_Diff": 0.0063,
+        "MACD_Line": 0.0048,
+        "MACD_Signal": 0.0049,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.5243,
+        "BB_Middle": 0.5022,
+        "BB_Lower": 0.4802,
+        "BB_Width": 8.77,
+        "FIB_0": 0.465,
+        "FIB_236": 0.4796,
+        "FIB_382": 0.4887,
+        "FIB_618": 0.5033,
+        "FIB_1000": 0.527
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "PYTHUSDT": {
+      "price": 0.1332,
+      "volume": 5.492662557948001,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 62.77,
+        "SMA_Short": 0.1425,
+        "SMA_Long": 0.1383,
+        "SMA_Diff": 0.0042,
+        "MACD_Line": 0.0025,
+        "MACD_Signal": 0.0026,
+        "MACD_Hist": -0.0001,
+        "BB_Upper": 0.1511,
+        "BB_Middle": 0.1425,
+        "BB_Lower": 0.1339,
+        "BB_Width": 12.05,
+        "FIB_0": 0.1261,
+        "FIB_236": 0.1319,
+        "FIB_382": 0.1354,
+        "FIB_618": 0.1412,
+        "FIB_1000": 0.1505
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "APEXUSDT": {
+      "price": 0.7698,
+      "volume": 21.910313789142002,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "SELL",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "STRONG_BUY"
+      },
+      "values": {
+        "RSI": 47.11,
+        "SMA_Short": 0.774,
+        "SMA_Long": 0.7751,
+        "SMA_Diff": -0.0011,
+        "MACD_Line": 0.0,
+        "MACD_Signal": -0.0002,
+        "MACD_Hist": 0.0002,
+        "BB_Upper": 0.7851,
+        "BB_Middle": 0.774,
+        "BB_Lower": 0.7628,
+        "BB_Width": 2.88,
+        "FIB_0": 0.7608,
+        "FIB_236": 0.7724,
+        "FIB_382": 0.7796,
+        "FIB_618": 0.7912,
+        "FIB_1000": 0.81
+      },
+      "buy_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "sell_indicators": [
+        "SMA"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 2,
+        "rel_strength": 0.4,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    },
+    "LINKUSDT": {
+      "price": 12.91,
+      "volume": 7.69985560626,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 60.68,
+        "SMA_Short": 13.656,
+        "SMA_Long": 13.3548,
+        "SMA_Diff": 0.3012,
+        "MACD_Line": 0.1948,
+        "MACD_Signal": 0.1992,
+        "MACD_Hist": -0.0045,
+        "BB_Upper": 14.3848,
+        "BB_Middle": 13.656,
+        "BB_Lower": 12.9272,
+        "BB_Width": 10.67,
+        "FIB_0": 12.31,
+        "FIB_236": 12.8032,
+        "FIB_382": 13.1084,
+        "FIB_618": 13.6016,
+        "FIB_1000": 14.4
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "SUIUSDT": {
+      "price": 2.2672,
+      "volume": 37.801652208736,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "SELL",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 55.39,
+        "SMA_Short": 2.4039,
+        "SMA_Long": 2.3884,
+        "SMA_Diff": 0.0155,
+        "MACD_Line": 0.0247,
+        "MACD_Signal": 0.0248,
+        "MACD_Hist": -0.0,
+        "BB_Upper": 2.5437,
+        "BB_Middle": 2.4039,
+        "BB_Lower": 2.2641,
+        "BB_Width": 11.63,
+        "FIB_0": 2.1292,
+        "FIB_236": 2.228,
+        "FIB_382": 2.2891,
+        "FIB_618": 2.388,
+        "FIB_1000": 2.5479
+      },
+      "buy_indicators": [
+        "SMA"
+      ],
+      "sell_indicators": [
+        "MACD",
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": -1,
+        "rel_strength": -0.2,
+        "buy_count": 1,
+        "sell_count": 2,
+        "neutral_count": 2
+      }
+    },
+    "KAIAUSDT": {
+      "price": 0.1106,
+      "volume": 1.4592308514,
+      "signals": {
+        "RSI": "NEUTRAL",
+        "SMA": "BUY",
+        "MACD": "BUY",
+        "BBANDS": "NEUTRAL",
+        "FIBONACCI": "SELL"
+      },
+      "values": {
+        "RSI": 67.06,
+        "SMA_Short": 0.1066,
+        "SMA_Long": 0.1059,
+        "SMA_Diff": 0.0007,
+        "MACD_Line": 0.0011,
+        "MACD_Signal": 0.0009,
+        "MACD_Hist": 0.0003,
+        "BB_Upper": 0.1109,
+        "BB_Middle": 0.1066,
+        "BB_Lower": 0.1024,
+        "BB_Width": 7.99,
+        "FIB_0": 0.1014,
+        "FIB_236": 0.1042,
+        "FIB_382": 0.1059,
+        "FIB_618": 0.1088,
+        "FIB_1000": 0.1133
+      },
+      "buy_indicators": [
+        "SMA",
+        "MACD"
+      ],
+      "sell_indicators": [
+        "FIBONACCI"
+      ],
+      "neutral_indicators": [
+        "RSI",
+        "BBANDS"
+      ],
+      "combined_signal": "NEUTRAL",
+      "signal_strength": {
+        "strength": 1,
+        "rel_strength": 0.2,
+        "buy_count": 2,
+        "sell_count": 1,
+        "neutral_count": 2
+      }
+    }
+  },
+  "summary": {
+    "buy_signals": 0,
+    "sell_signals": 0,
+    "neutral_signals": 153,
+    "total_markets": 153
+  }
+}

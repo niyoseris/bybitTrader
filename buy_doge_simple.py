@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 from pybit.unified_trading import HTTP
 import json
+import time
+
 
 # Load environment variables
 load_dotenv()
@@ -70,13 +72,20 @@ if confirmation.lower() != "yes":
 
 try:
     # Place order
-    order = client.place_order(
+   
+    time.sleep(3)
+
+    client.set_trading_stop(
         category="spot",
         symbol="DOGEUSDT",
         side="Buy",
         orderType="MARKET",
-        qty=str(qty_to_buy)
+        qty=str(5.5),
+        takeProfit=str(current_price * 1.05),
+        stopLoss=str(current_price * 0.95)
     )
+
+
     
     print("\nOrder placed successfully:")
     print(json.dumps(order, indent=2))
