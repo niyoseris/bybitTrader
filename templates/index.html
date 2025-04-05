@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,7 +107,7 @@
                 <tbody>
                     {% for symbol, data in market_data.market_data.items() %}
                     <tr>
-                        <td>{{ symbol }}</td>
+                        <td><a href="/chart/{{ symbol }}" class="text-decoration-none">{{ symbol }}</a></td>
                         <td>${{ "%.4f"|format(data.price) }}</td>
                         <td>${{ "%.2f"|format(data.volume) }}M</td>
                         

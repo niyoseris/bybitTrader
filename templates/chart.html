@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ symbol }} - Fiyat ve Sinyal Grafiği</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+    <style>
+        .buy { color: green; font-weight: bold; }
+        .sell { color: red; font-weight: bold; }
+        .neutral { color: gray; }
+        
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .indicator-card {
+            border-left: 4px solid #ccc;
+        }
+        
+        .buy-card { border-left-color: green; }
+        .sell-card { border-left-color: red; }
+        .neutral-card { border-left-color: gray; }
+        
+        .chart-container {
+            position: relative;
+            height: 60vh;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .indicator-value {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .signal-history {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #pointDetails {
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            max-width: 300px;
+        }
+        
+        .point-details-header {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .point-indicator {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>{{ symbol }} - Fiyat ve Sinyal Grafiği</h1>
+            <div>
+                <a href="/" class="btn btn-outline-secondary">Ana Sayfaya Dön</a>
+                <button class="btn btn-outline-primary ms-2" onclick="window.location.reload()">Yenile</button>
+            </div>
+        </div>
+        
+        <!-- Coin Bilgileri -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Fiyat Bilgisi</h5>
+                        <h2 class="card-text">${{ "%.4f"|format(coin_data.price) }}</h2>
+                        <p>Günlük İşlem Hacmi: ${{ "%.2f"|format(coin_data.volume) }}M</p>
+                        <p class="text-muted">Son güncelleme: {{ last_update }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sinyal Gücü Bilgisi -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Sinyal Gücü</h5>
+                        {% if coin_data and coin_data.signal_strength %}
+                            {% set strength = coin_data.signal_strength.strength %}
+                            {% set rel_strength = coin_data.signal_strength.rel_strength %}
+                            
+                            <h2 class="
+                                {% if strength > 0 %}buy
+                                {% elif strength < 0 %}sell
+                                {% else %}neutral{% endif %}
+                            ">
+                                {{ strength }} ({{ rel_strength }})
+                            </h2>
+                            
+                            <!-- Görsel gösterge ekle -->
+                            <div class="progress mt-3 mb-2" style="height: 10px;">
+                                {% if strength > 0 %}
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ strength * 10 }}%" aria-valuenow="{{ strength }}" aria-valuemin="0" aria-valuemax="10"></div>
+                                {% elif strength < 0 %}
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ strength * -10 }}%" aria-valuenow="{{ strength }}" aria-valuemin="-10" aria-valuemax="0"></div>
+                                {% else %}
+                                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 50%" aria-valuenow="0" aria-valuemin="-10" aria-valuemax="10"></div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <span>Alım: {{ coin_data.signal_strength.buy_count }}</span>
+                                <span>Nötr: {{ coin_data.signal_strength.neutral_count }}</span>
+                                <span>Satım: {{ coin_data.signal_strength.sell_count }}</span>
+                            </div>
+                        {% else %}
+                            <p>Sinyal gücü verisi bulunamadı</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Özet -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">İndikatör Özeti</h5>
+                        <ul class="list-group list-group-flush">
+                            {% for indicator, signal in coin_data.signals.items() %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ indicator }}
+                                    <span class="
+                                        {% if signal == 'BUY' or signal == 'STRONG_BUY' %}buy
+                                        {% elif signal == 'SELL' or signal == 'STRONG_SELL' %}sell
+                                        {% else %}neutral{% endif %}
+                                    ">
+                                        {{ signal }}
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Genel Bilgiler -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Coin Bilgileri</h5>
+                        <p><strong>Sembol:</strong> {{ symbol }}</p>
+                        <p><strong>Fiyat:</strong> ${{ coin_data.price }}</p>
+                        <p><strong>24s Hacim:</strong> ${{ coin_data.volume }}M</p>
+                        <p><strong>Son güncelleme:</strong> {{ last_update }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Sinyal Performans Analizi</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="signalPerformance">
+                            <p class="text-center text-muted">Analiz edilmemiş. Analizleri görmek için butona tıklayın.</p>
+                        </div>
+                        <button id="analyzeSignalBtn" class="btn btn-primary w-100 mt-2">Sinyal Performansını Analiz Et</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Grafik -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Fiyat Grafiği ve Alım/Satım Sinyalleri</h5>
+                <p class="text-muted small">Config ayarları: Interval: {{ interval }}, Limit: {{ limit }}</p>
+                
+                <!-- Sinyal Kontrol Paneli -->
+                <div class="card mb-3">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="mb-2 buy">Alım Sinyalleri</h6>
+                                <div class="d-flex flex-wrap mb-2" id="buy-signals-container">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="buy-rsi" value="RSI">
+                                        <label class="form-check-label" for="buy-rsi">RSI</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="buy-macd" value="MACD">
+                                        <label class="form-check-label" for="buy-macd">MACD</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="buy-bbands" value="BBANDS">
+                                        <label class="form-check-label" for="buy-bbands">BBANDS</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="buy-sma" value="SMA">
+                                        <label class="form-check-label" for="buy-sma">SMA</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="buy-fibonacci" value="FIBONACCI">
+                                        <label class="form-check-label" for="buy-fibonacci">FIBONACCI</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="buy-all" value="ALL">
+                                        <label class="form-check-label" for="buy-all">Tümü</label>
+                                    </div>
+                                </div>
+                                <button id="show-buy-signals" class="btn btn-sm btn-success">Alım Sinyallerini Göster</button>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="mb-2 sell">Satım Sinyalleri</h6>
+                                <div class="d-flex flex-wrap mb-2" id="sell-signals-container">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="sell-rsi" value="RSI">
+                                        <label class="form-check-label" for="sell-rsi">RSI</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="sell-macd" value="MACD">
+                                        <label class="form-check-label" for="sell-macd">MACD</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="sell-bbands" value="BBANDS">
+                                        <label class="form-check-label" for="sell-bbands">BBANDS</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="sell-sma" value="SMA">
+                                        <label class="form-check-label" for="sell-sma">SMA</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="sell-fibonacci" value="FIBONACCI">
+                                        <label class="form-check-label" for="sell-fibonacci">FIBONACCI</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="sell-all" value="ALL">
+                                        <label class="form-check-label" for="sell-all">Tümü</label>
+                                    </div>
+                                </div>
+                                <button id="show-sell-signals" class="btn btn-sm btn-danger">Satım Sinyallerini Göster</button>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <button id="clear-signals" class="btn btn-sm btn-outline-secondary">Sinyalleri Temizle</button>
+                            <div>
+                                <button id="resetZoom" class="btn btn-sm btn-outline-secondary">Yakınlaştırmayı Sıfırla</button>
+                                <span class="ms-2 text-muted small">Yakınlaştırmak için tekerleği, kaydırmak için sürükleyin</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                    <div id="pointDetails"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- İndikatörler -->
+        <div class="row">
+            <!-- RSI -->
+            <div class="col-md-4">
+                <div class="card indicator-card 
+                    {% if coin_data.signals.RSI == 'BUY' or coin_data.signals.RSI == 'STRONG_BUY' %}buy-card
+                    {% elif coin_data.signals.RSI == 'SELL' or coin_data.signals.RSI == 'STRONG_SELL' %}sell-card
+                    {% else %}neutral-card{% endif %}
+                ">
+                    <div class="card-body">
+                        <h5 class="card-title">RSI</h5>
+                        <p class="
+                            {% if coin_data.signals.RSI == 'BUY' or coin_data.signals.RSI == 'STRONG_BUY' %}buy
+                            {% elif coin_data.signals.RSI == 'SELL' or coin_data.signals.RSI == 'STRONG_SELL' %}sell
+                            {% else %}neutral{% endif %}
+                        ">
+                            Sinyal: {{ coin_data.signals.RSI }}
+                        </p>
+                        {% if coin_data.values and coin_data.values.RSI is defined %}
+                            <div class="indicator-value">
+                                <p>Değer: {{ coin_data.values.RSI }}</p>
+                                <p>
+                                    {% if coin_data.values.RSI < 30 %}
+                                        <span class="buy">Aşırı Satım Bölgesi</span>
+                                    {% elif coin_data.values.RSI > 70 %}
+                                        <span class="sell">Aşırı Alım Bölgesi</span>
+                                    {% else %}
+                                        <span class="neutral">Nötr Bölge</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MACD -->
+            <div class="col-md-4">
+                <div class="card indicator-card 
+                    {% if coin_data.signals.MACD == 'BUY' or coin_data.signals.MACD == 'STRONG_BUY' %}buy-card
+                    {% elif coin_data.signals.MACD == 'SELL' or coin_data.signals.MACD == 'STRONG_SELL' %}sell-card
+                    {% else %}neutral-card{% endif %}
+                ">
+                    <div class="card-body">
+                        <h5 class="card-title">MACD</h5>
+                        <p class="
+                            {% if coin_data.signals.MACD == 'BUY' or coin_data.signals.MACD == 'STRONG_BUY' %}buy
+                            {% elif coin_data.signals.MACD == 'SELL' or coin_data.signals.MACD == 'STRONG_SELL' %}sell
+                            {% else %}neutral{% endif %}
+                        ">
+                            Sinyal: {{ coin_data.signals.MACD }}
+                        </p>
+                        {% if coin_data.values %}
+                            <div class="indicator-value">
+                                {% if coin_data.values.MACD_Line %}MACD Çizgisi: {{ coin_data.values.MACD_Line }}<br>{% endif %}
+                                {% if coin_data.values.MACD_Signal %}Sinyal Çizgisi: {{ coin_data.values.MACD_Signal }}<br>{% endif %}
+                                {% if coin_data.values.MACD_Hist %}Histogram: {{ coin_data.values.MACD_Hist }}{% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bollinger Bands -->
+            <div class="col-md-4">
+                <div class="card indicator-card 
+                    {% if coin_data.signals.BBANDS == 'BUY' or coin_data.signals.BBANDS == 'STRONG_BUY' %}buy-card
+                    {% elif coin_data.signals.BBANDS == 'SELL' or coin_data.signals.BBANDS == 'STRONG_SELL' %}sell-card
+                    {% else %}neutral-card{% endif %}
+                ">
+                    <div class="card-body">
+                        <h5 class="card-title">Bollinger Bands</h5>
+                        <p class="
+                            {% if coin_data.signals.BBANDS == 'BUY' or coin_data.signals.BBANDS == 'STRONG_BUY' %}buy
+                            {% elif coin_data.signals.BBANDS == 'SELL' or coin_data.signals.BBANDS == 'STRONG_SELL' %}sell
+                            {% else %}neutral{% endif %}
+                        ">
+                            Sinyal: {{ coin_data.signals.BBANDS }}
+                        </p>
+                        {% if coin_data.values %}
+                            <div class="indicator-value">
+                                {% if coin_data.values.BB_Upper %}Üst Bant: {{ coin_data.values.BB_Upper }}<br>{% endif %}
+                                {% if coin_data.values.BB_Middle %}Orta Bant: {{ coin_data.values.BB_Middle }}<br>{% endif %}
+                                {% if coin_data.values.BB_Lower %}Alt Bant: {{ coin_data.values.BB_Lower }}<br>{% endif %}
+                                {% if coin_data.values.BB_Width %}Bant Genişliği: {{ coin_data.values.BB_Width }}%{% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        // Sayfa yüklendiğinde çalışacak kod
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chart.js için veri hazırlama
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            const pointDetailsElement = document.getElementById('pointDetails');
+            
+            // Config.json'daki kline ayarlarını kullan
+            const configInterval = '{{ interval }}'; // Flask'tan gelen interval
+            const configLimit = parseInt('{{ limit }}'); // Flask'tan gelen limit
+            
+            // ByBit API'sinden gelen tarihsel verileri al
+            const historicalData = [
+                {% if historical_data %}
+                    {% for item in historical_data %}
+                        {
+                            date: new Date("{{ item.date }}"),
+                            price: {{ item.close }},
+                            open: {{ item.open }},
+                            high: {{ item.high }},
+                            low: {{ item.low }},
+                            volume: {{ item.volume }},
+                            indicators: {}
+                        }{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                {% endif %}
+            ];
+
+            // Verileri hazırla
+            const dates = [];
+            const prices = [];
+            
+            // Mevcut verileri doldur
+            if (historicalData.length > 0) {
+                // İndikatör değerlerini hesapla
+                calculateIndicators(historicalData);
+                
+                // Grafik verilerini doldur
+                historicalData.forEach(data => {
+                    dates.push(data.date);
+                    prices.push(data.price);
+                });
+            } else {
+                // API'den veri alınamadıysa, son 30 gün için test verisi oluştur
+                const today = new Date();
+                let basePrice = {{ coin_data.price }};
+                
+                for (let i = 30; i >= 0; i--) {
+                    const date = new Date(today);
+                    date.setDate(today.getDate() - i);
+                    
+                    // Test verisi oluştur
+                    const change = (Math.random() - 0.5) * 0.1;
+                    basePrice = basePrice * (1 + change);
+                    
+                    const dailyData = {
+                        date: date,
+                        price: basePrice,
+                        open: basePrice * (1 - Math.random() * 0.02),
+                        high: basePrice * (1 + Math.random() * 0.03),
+                        low: basePrice * (1 - Math.random() * 0.03),
+                        volume: basePrice * Math.random() * 1000,
+                        indicators: {}
+                    };
+                    
+                    historicalData.push(dailyData);
+                    dates.push(date);
+                    prices.push(basePrice);
+                }
+                
+                // Test verisi için indikatörleri hesapla
+                calculateIndicators(historicalData);
+            }
+            
+            // Güncel verileri ekle (eğer son tarihsel veri güncel değilse)
+            const lastDate = historicalData.length > 0 ? historicalData[historicalData.length - 1].date : new Date();
+            const today = new Date();
+            
+            // Eğer son tarihsel veri bugün değilse güncel veriyi ekle
+            if (lastDate.toDateString() !== today.toDateString()) {
+                const currentDate = new Date();
+                dates.push(currentDate);
+                prices.push({{ coin_data.price }});
+                
+                // Güncel veriyi historicalData'ya ekle
+                historicalData.push({
+                    date: currentDate,
+                    price: {{ coin_data.price }},
+                    open: {{ coin_data.price }} * 0.98,
+                    high: {{ coin_data.price }} * 1.02,
+                    low: {{ coin_data.price }} * 0.97,
+                    volume: {{ coin_data.volume }} * 1000000,
+                    indicators: {
+                        {% if coin_data.values %}
+                        RSI: {{ coin_data.values.RSI or 50 }},
+                        MACD: {
+                            line: {{ coin_data.values.MACD_Line or 0 }},
+                            signal: {{ coin_data.values.MACD_Signal or 0 }},
+                            histogram: {{ coin_data.values.MACD_Hist or 0 }}
+                        },
+                        BBANDS: {
+                            upper: {{ coin_data.values.BB_Upper or coin_data.price * 1.05 }},
+                            middle: {{ coin_data.values.BB_Middle or coin_data.price }},
+                            lower: {{ coin_data.values.BB_Lower or coin_data.price * 0.95 }},
+                            width: {{ coin_data.values.BB_Width or 5 }}
+                        },
+                        SMA: {
+                            short: {{ coin_data.values.SMA_Short or coin_data.price * 1.02 }},
+                            long: {{ coin_data.values.SMA_Long or coin_data.price }}
+                        }
+                        {% else %}
+                        RSI: 50,
+                        MACD: {
+                            line: 0,
+                            signal: 0,
+                            histogram: 0
+                        },
+                        BBANDS: {
+                            upper: {{ coin_data.price * 1.05 }},
+                            middle: {{ coin_data.price }},
+                            lower: {{ coin_data.price * 0.95 }},
+                            width: 5
+                        },
+                        SMA: {
+                            short: {{ coin_data.price * 1.02 }},
+                            long: {{ coin_data.price }}
+                        }
+                        {% endif %}
+                    },
+                    signals: {
+                        {% for indicator, signal in coin_data.signals.items() %}
+                        {{ indicator }}: '{{ signal }}',
+                        {% endfor %}
+                    }
+                });
+            }
+            
+            // İndikatörleri hesaplama fonksiyonu
+            function calculateIndicators(dataArray) {
+                // RSI hesapla (14 günlük)
+                calculateRSI(dataArray, 14);
+                
+                // SMA hesapla (kısa: 9, uzun: 21)
+                calculateSMA(dataArray, 9, 21);
+                
+                // MACD hesapla (12, 26, 9)
+                calculateMACD(dataArray, 12, 26, 9);
+                
+                // Bollinger Bands hesapla (20, 2)
+                calculateBollingerBands(dataArray, 20, 2);
+                
+                // Fibonacci seviyelerini hesapla
+                calculateFibonacciLevels(dataArray, 20);
+                
+                // İndikatörlere göre sinyalleri belirle
+                determineSignals(dataArray);
+            }
+            
+            // RSI hesaplama
+            function calculateRSI(dataArray, period) {
+                if (dataArray.length < period + 1) {
+                    console.warn('RSI hesaplaması için yeterli veri yok');
+                    return;
+                }
+                
+                for (let i = period; i < dataArray.length; i++) {
+                    let gains = 0;
+                    let losses = 0;
+                    
+                    // Önceki period kadar değişimleri topla
+                    for (let j = i - period; j < i; j++) {
+                        const change = dataArray[j + 1].price - dataArray[j].price;
+                        
+                        if (change >= 0) {
+                            gains += change;
+                        } else {
+                            losses -= change;
+                        }
+                    }
+                    
+                    const avgGain = gains / period;
+                    const avgLoss = losses / period;
+                    
+                    // RSI hesapla
+                    if (avgLoss === 0) {
+                        dataArray[i].indicators.RSI = 100;
+                    } else {
+                        const rs = avgGain / avgLoss;
+                        dataArray[i].indicators.RSI = 100 - (100 / (1 + rs));
+                    }
+                }
+            }
+            
+            // SMA hesaplama
+            function calculateSMA(dataArray, shortPeriod, longPeriod) {
+                if (dataArray.length < longPeriod) {
+                    console.warn('SMA hesaplaması için yeterli veri yok');
+                    return;
+                }
+                
+                for (let i = longPeriod - 1; i < dataArray.length; i++) {
+                    // Kısa SMA
+                    let shortSum = 0;
+                    for (let j = i - shortPeriod + 1; j <= i; j++) {
+                        shortSum += dataArray[j].price;
+                    }
+                    
+                    // Uzun SMA
+                    let longSum = 0;
+                    for (let j = i - longPeriod + 1; j <= i; j++) {
+                        longSum += dataArray[j].price;
+                    }
+                    
+                    if (!dataArray[i].indicators.SMA) {
+                        dataArray[i].indicators.SMA = {};
+                    }
+                    
+                    dataArray[i].indicators.SMA.short = shortSum / shortPeriod;
+                    dataArray[i].indicators.SMA.long = longSum / longPeriod;
+                    dataArray[i].indicators.SMA.diff = dataArray[i].indicators.SMA.short - dataArray[i].indicators.SMA.long;
+                }
+            }
+            
+            // MACD hesaplama
+            function calculateMACD(dataArray, fastPeriod, slowPeriod, signalPeriod) {
+                if (dataArray.length < slowPeriod + signalPeriod) {
+                    console.warn('MACD hesaplaması için yeterli veri yok');
+                    return;
+                }
+                
+                // Önce EMA'ları hesapla
+                calculateEMA(dataArray, fastPeriod, 'fastEMA');
+                calculateEMA(dataArray, slowPeriod, 'slowEMA');
+                
+                // MACD Line = fastEMA - slowEMA
+                for (let i = slowPeriod - 1; i < dataArray.length; i++) {
+                    if (!dataArray[i].indicators.MACD) {
+                        dataArray[i].indicators.MACD = {};
+                    }
+                    
+                    dataArray[i].indicators.MACD.line = dataArray[i].fastEMA - dataArray[i].slowEMA;
+                }
+                
+                // Signal Line (MACD'nin EMA'sı)
+                for (let i = slowPeriod + signalPeriod - 2; i < dataArray.length; i++) {
+                    let sum = 0;
+                    for (let j = i - signalPeriod + 1; j <= i; j++) {
+                        sum += dataArray[j].indicators.MACD.line;
+                    }
+                    
+                    dataArray[i].indicators.MACD.signal = sum / signalPeriod;
+                    dataArray[i].indicators.MACD.histogram = dataArray[i].indicators.MACD.line - dataArray[i].indicators.MACD.signal;
+                }
+            }
+            
+            // EMA hesaplama
+            function calculateEMA(dataArray, period, fieldName) {
+                if (dataArray.length < period) {
+                    return;
+                }
+                
+                // İlk EMA için SMA kullan
+                let sum = 0;
+                for (let i = 0; i < period; i++) {
+                    sum += dataArray[i].price;
+                }
+                
+                const multiplier = 2 / (period + 1);
+                dataArray[period - 1][fieldName] = sum / period;
+                
+                // Sonraki EMA'ları hesapla
+                for (let i = period; i < dataArray.length; i++) {
+                    dataArray[i][fieldName] = (dataArray[i].price - dataArray[i - 1][fieldName]) * multiplier + dataArray[i - 1][fieldName];
+                }
+            }
+            
+            // Bollinger Bands hesaplama
+            function calculateBollingerBands(dataArray, period, stdDev) {
+                if (dataArray.length < period) {
+                    console.warn('Bollinger Bands hesaplaması için yeterli veri yok');
+                    return;
+                }
+                
+                for (let i = period - 1; i < dataArray.length; i++) {
+                    // SMA hesapla
+                    let sum = 0;
+                    for (let j = i - period + 1; j <= i; j++) {
+                        sum += dataArray[j].price;
+                    }
+                    
+                    const middle = sum / period;
+                    
+                    // Standart sapma hesapla
+                    let sqrSum = 0;
+                    for (let j = i - period + 1; j <= i; j++) {
+                        sqrSum += Math.pow(dataArray[j].price - middle, 2);
+                    }
+                    
+                    const stdDeviation = Math.sqrt(sqrSum / period);
+                    
+                    if (!dataArray[i].indicators.BBANDS) {
+                        dataArray[i].indicators.BBANDS = {};
+                    }
+                    
+                    dataArray[i].indicators.BBANDS.middle = middle;
+                    dataArray[i].indicators.BBANDS.upper = middle + (stdDeviation * stdDev);
+                    dataArray[i].indicators.BBANDS.lower = middle - (stdDeviation * stdDev);
+                    dataArray[i].indicators.BBANDS.width = ((dataArray[i].indicators.BBANDS.upper - dataArray[i].indicators.BBANDS.lower) / middle) * 100;
+                }
+            }
+            
+            // Fibonacci seviyeleri hesaplama
+            function calculateFibonacciLevels(dataArray, period) {
+                if (dataArray.length < period) {
+                    console.warn('Fibonacci hesaplaması için yeterli veri yok');
+                    return;
+                }
+                
+                // Fibonacci oranları
+                const fibLevels = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1];
+                
+                for (let i = period; i < dataArray.length; i++) {
+                    // Son 'period' kadar veri içinde yüksek ve düşük noktaları bul
+                    let high = -Infinity;
+                    let low = Infinity;
+                    
+                    for (let j = i - period; j <= i; j++) {
+                        high = Math.max(high, dataArray[j].high || dataArray[j].price);
+                        low = Math.min(low, dataArray[j].low || dataArray[j].price);
+                    }
+                    
+                    // Yüksek-düşük aralığı
+                    const range = high - low;
+                    
+                    if (!dataArray[i].indicators.FIBONACCI) {
+                        dataArray[i].indicators.FIBONACCI = {};
+                    }
+                    
+                    // Fibonacci seviyelerini hesapla
+                    fibLevels.forEach(level => {
+                        // Düşüş trendi için (yüksekten düşüğe)
+                        // "_" yerine "." kullan - uyumluluk için
+                        const levelStr = level.toString().replace('.', '_');
+                        dataArray[i].indicators.FIBONACCI[`FIB_${levelStr}`] = high - (range * level);
+                    });
+                }
+            }
+            
+            // İndikatörlere göre sinyalleri belirle
+            function determineSignals(dataArray) {
+                for (let i = 0; i < dataArray.length; i++) {
+                    if (!dataArray[i].signals) {
+                        dataArray[i].signals = {};
+                    }
+                    
+                    const data = dataArray[i];
+                    
+                    // RSI sinyali
+                    if (data.indicators.RSI !== undefined) {
+                        if (data.indicators.RSI < 30) {
+                            data.signals.RSI = 'BUY';
+                        } else if (data.indicators.RSI > 70) {
+                            data.signals.RSI = 'SELL';
+                        } else {
+                            data.signals.RSI = 'NEUTRAL';
+                        }
+                    }
+                    
+                    // SMA sinyali
+                    if (data.indicators.SMA) {
+                        if (data.indicators.SMA.short > data.indicators.SMA.long) {
+                            data.signals.SMA = 'BUY';
+                        } else {
+                            data.signals.SMA = 'SELL';
+                        }
+                    }
+                    
+                    // MACD sinyali
+                    if (data.indicators.MACD) {
+                        if (data.indicators.MACD.line > data.indicators.MACD.signal) {
+                            data.signals.MACD = 'BUY';
+                        } else {
+                            data.signals.MACD = 'SELL';
+                        }
+                    }
+                    
+                    // Bollinger Bands sinyali
+                    if (data.indicators.BBANDS) {
+                        if (data.price < data.indicators.BBANDS.lower) {
+                            data.signals.BBANDS = 'BUY';
+                        } else if (data.price > data.indicators.BBANDS.upper) {
+                            data.signals.BBANDS = 'SELL';
+                        } else {
+                            data.signals.BBANDS = 'NEUTRAL';
+                        }
+                    }
+                    
+                    // Fibonacci sinyali
+                    if (data.indicators.FIBONACCI) {
+                        // Fiyat, 0.382 seviyesinin altında ise alım sinyali
+                        if (data.price < data.indicators.FIBONACCI.FIB_0_382) {
+                            data.signals.FIBONACCI = 'BUY';
+                        }
+                        // Fiyat, 0.618 seviyesinin üstünde ise satım sinyali
+                        else if (data.price > data.indicators.FIBONACCI.FIB_0_618) {
+                            data.signals.FIBONACCI = 'SELL';
+                        }
+                        else {
+                            data.signals.FIBONACCI = 'NEUTRAL';
+                        }
+                    }
+                }
+            }
+            
+            // Chart.js ile grafik oluştur
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: '{{ symbol }} Fiyat',
+                        data: prices,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1,
+                        pointRadius: 1,
+                        pointHoverRadius: 5
+                    },
+                    // Alım sinyalleri için boş dataset
+                    {
+                        label: 'Alım Sinyalleri',
+                        data: [],
+                        backgroundColor: 'rgba(0, 255, 0, 0.7)',
+                        borderColor: 'darkgreen',
+                        pointRadius: 6,
+                        pointStyle: 'circle',
+                        showLine: false,
+                        hidden: true
+                    },
+                    // Satım sinyalleri için boş dataset
+                    {
+                        label: 'Satım Sinyalleri',
+                        data: [],
+                        backgroundColor: 'rgba(255, 0, 0, 0.7)',
+                        borderColor: 'darkred',
+                        pointRadius: 6,
+                        pointStyle: 'circle',
+                        showLine: false,
+                        hidden: true
+                    },
+                    // Tam eşleşen sinyaller için mavi dataset
+                    {
+                        label: 'Tam Eşleşen Sinyaller',
+                        data: [],
+                        backgroundColor: 'rgba(0, 0, 255, 0.7)',
+                        borderColor: 'darkblue',
+                        pointRadius: 6,
+                        pointStyle: 'star',
+                        showLine: false,
+                        hidden: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day',
+                                displayFormats: {
+                                    day: 'dd MMM'
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Tarih'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Fiyat (USDT)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        zoom: {
+                            pan: {
+                                enabled: true,
+                                mode: 'xy'
+                            },
+                            zoom: {
+                                wheel: {
+                                    enabled: true,
+                                },
+                                pinch: {
+                                    enabled: true
+                                },
+                                mode: 'xy'
+                            },
+                            onZoom: updateSignalMarkers,
+                            onPan: updateSignalMarkers
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    // Veri setine göre farklı tooltip içeriği göster
+                                    if (context.datasetIndex === 0) {
+                                        return `Fiyat: ${context.parsed.y.toFixed(4)} USDT`;
+                                    } else if (context.datasetIndex === 1 || context.datasetIndex === 2) {
+                                        // Sinyal noktaları için tooltip
+                                        const dataPoint = context.raw;
+                                        if (dataPoint && dataPoint.indicators) {
+                                            return `${dataPoint.signalInfo} (${context.datasetIndex === 1 ? 'Alım' : 'Satım'} Sinyali)`;
+                                        }
+                                        return `${context.datasetIndex === 1 ? 'Alım' : 'Satım'} Sinyali`;
+                                    }
+                                    return context.formattedValue;
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    onClick: function(e) {
+                        const points = myChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+                        
+                        if (points.length) {
+                            const firstPoint = points[0];
+                            const datasetIndex = firstPoint.datasetIndex;
+                            const index = firstPoint.index;
+                            
+                            let data;
+                            if (datasetIndex === 0) {
+                                // Ana fiyat grafiği
+                                data = historicalData[index];
+                            } else {
+                                // Sinyal noktası
+                                data = myChart.data.datasets[datasetIndex].data[index].originalData;
+                            }
+                            
+                            if (data) {
+                                // Tıklanan noktadaki indikatör değerleri
+                                showPointDetails(e, data, myChart.canvas);
+                            }
+                        } else {
+                            // Boş alana tıklandığında detayları gizle
+                            pointDetailsElement.style.display = 'none';
+                        }
+                    }
+                }
+            });
+            
+            // Tıklanılan noktadaki indikatör değerlerini göster
+            function showPointDetails(event, data, canvas) {
+                // Pozisyonu hesapla
+                const rect = canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                
+                // İçerik oluştur
+                let content = `
+                    <div class="point-details-header">
+                        ${new Date(data.date).toLocaleString()} - $${data.price.toFixed(4)}
+                    </div>
+                `;
+                
+                // İndikatör değerlerini ekle
+                if (data.indicators) {
+                    if (data.indicators.RSI !== undefined) {
+                        const rsiClass = data.signals && data.signals.RSI === 'BUY' ? 'buy' : 
+                                        data.signals && data.signals.RSI === 'SELL' ? 'sell' : 'neutral';
+                        content += `
+                            <div class="point-indicator">
+                                <strong>RSI:</strong> ${data.indicators.RSI.toFixed(2)}
+                                <span class="${rsiClass}"> (${data.signals ? data.signals.RSI : 'N/A'})</span>
+                            </div>
+                        `;
+                    }
+                    
+                    if (data.indicators.MACD) {
+                        const macdClass = data.signals && data.signals.MACD === 'BUY' ? 'buy' : 
+                                          data.signals && data.signals.MACD === 'SELL' ? 'sell' : 'neutral';
+                        content += `
+                            <div class="point-indicator">
+                                <strong>MACD:</strong>
+                                <span class="${macdClass}"> (${data.signals ? data.signals.MACD : 'N/A'})</span><br>
+                                <small>Line: ${data.indicators.MACD.line ? data.indicators.MACD.line.toFixed(4) : 'N/A'}</small><br>
+                                <small>Signal: ${data.indicators.MACD.signal ? data.indicators.MACD.signal.toFixed(4) : 'N/A'}</small><br>
+                                <small>Hist: ${data.indicators.MACD.histogram ? data.indicators.MACD.histogram.toFixed(4) : 'N/A'}</small>
+                            </div>
+                        `;
+                    }
+                    
+                    if (data.indicators.BBANDS) {
+                        const bbClass = data.signals && data.signals.BBANDS === 'BUY' ? 'buy' : 
+                                        data.signals && data.signals.BBANDS === 'SELL' ? 'sell' : 'neutral';
+                        content += `
+                            <div class="point-indicator">
+                                <strong>Bollinger Bands:</strong>
+                                <span class="${bbClass}"> (${data.signals ? data.signals.BBANDS : 'N/A'})</span><br>
+                                <small>Upper: ${data.indicators.BBANDS.upper.toFixed(4)}</small><br>
+                                <small>Middle: ${data.indicators.BBANDS.middle.toFixed(4)}</small><br>
+                                <small>Lower: ${data.indicators.BBANDS.lower.toFixed(4)}</small><br>
+                                <small>Width: ${data.indicators.BBANDS.width.toFixed(2)}%</small>
+                            </div>
+                        `;
+                    }
+                    
+                    if (data.indicators.SMA) {
+                        const smaClass = data.signals && data.signals.SMA === 'BUY' ? 'buy' : 
+                                         data.signals && data.signals.SMA === 'SELL' ? 'sell' : 'neutral';
+                        content += `
+                            <div class="point-indicator">
+                                <strong>SMA:</strong>
+                                <span class="${smaClass}"> (${data.signals ? data.signals.SMA : 'N/A'})</span><br>
+                                <small>Short: ${data.indicators.SMA.short.toFixed(4)}</small><br>
+                                <small>Long: ${data.indicators.SMA.long.toFixed(4)}</small>
+                            </div>
+                        `;
+                    }
+                    
+                    if (data.indicators.FIBONACCI) {
+                        const fibClass = data.signals && data.signals.FIBONACCI === 'BUY' ? 'buy' : 
+                                        data.signals && data.signals.FIBONACCI === 'SELL' ? 'sell' : 'neutral';
+                        content += `
+                            <div class="point-indicator">
+                                <strong>FIBONACCI:</strong>
+                                <span class="${fibClass}"> (${data.signals ? data.signals.FIBONACCI : 'N/A'})</span><br>
+                        `;
+                        
+                        // Fibonacci seviyelerini göster
+                        for (const key in data.indicators.FIBONACCI) {
+                            if (key.startsWith('FIB_')) {
+                                const level = key.replace('FIB_', '');
+                                content += `<small>Level ${level}: ${data.indicators.FIBONACCI[key].toFixed(4)}</small><br>`;
+                            }
+                        }
+                        
+                        content += `</div>`;
+                    }
+                }
+                
+                // Mum bilgilerini ekle
+                content += `
+                    <div class="point-indicator">
+                        <strong>OHLC:</strong><br>
+                        <small>Open: ${data.open ? data.open.toFixed(4) : 'N/A'}</small><br>
+                        <small>High: ${data.high ? data.high.toFixed(4) : 'N/A'}</small><br>
+                        <small>Low: ${data.low ? data.low.toFixed(4) : 'N/A'}</small><br>
+                        <small>Close: ${data.price.toFixed(4)}</small><br>
+                        <small>Volume: ${data.volume ? (data.volume/1000000).toFixed(2) + 'M' : 'N/A'}</small>
+                    </div>
+                `;
+                
+                // İçeriği göster
+                pointDetailsElement.innerHTML = content;
+                pointDetailsElement.style.left = `${x + 10}px`;
+                pointDetailsElement.style.top = `${y + 10}px`;
+                pointDetailsElement.style.display = 'block';
+                
+                // Pencere sınırlarının dışına taşmasını önle
+                const detailsRect = pointDetailsElement.getBoundingClientRect();
+                const containerRect = canvas.parentNode.getBoundingClientRect();
+                
+                if (detailsRect.right > containerRect.right) {
+                    pointDetailsElement.style.left = `${x - detailsRect.width - 10}px`;
+                }
+                
+                if (detailsRect.bottom > containerRect.bottom) {
+                    pointDetailsElement.style.top = `${y - detailsRect.height - 10}px`;
+                }
+            }
+            
+            // Grafiğin dışına tıklandığında detayları gizle
+            document.addEventListener('click', function(e) {
+                if (!myChart.canvas.contains(e.target) && !pointDetailsElement.contains(e.target)) {
+                    pointDetailsElement.style.display = 'none';
+                }
+            });
+            
+            // Sinyal işaretleyicilerinin pozisyonlarını güncelle
+            function updateSignalMarkers() {
+                // Bu fonksiyon artık gerekli değil çünkü Chart.js'in kendi işaretleme sistemi kullanılıyor
+                // ve otomatik olarak güncelleniyor.
+            }
+            
+            // Yakınlaştırmayı sıfırla butonu
+            document.getElementById('resetZoom').addEventListener('click', function() {
+                myChart.resetZoom();
+            });
+            
+            // Alım ve satım sinyalleri yönetimi
+            const signalMarkers = {
+                buy: [],
+                sell: []
+            };
+            
+            // "Tümü" checkbox'larını dinle
+            document.getElementById('buy-all').addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('#buy-signals-container input[type="checkbox"]');
+                checkboxes.forEach(cb => {
+                    if (cb.id !== 'buy-all') {
+                        cb.checked = this.checked;
+                    }
+                });
+            });
+            
+            document.getElementById('sell-all').addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('#sell-signals-container input[type="checkbox"]');
+                checkboxes.forEach(cb => {
+                    if (cb.id !== 'sell-all') {
+                        cb.checked = this.checked;
+                    }
+                });
+            });
+            
+            // Alım sinyallerini göster butonu
+            document.getElementById('show-buy-signals').addEventListener('click', function() {
+                // Önce eski alım sinyallerini temizle
+                clearSignalMarkers('buy');
+                
+                // Seçili indikatörleri al
+                const selectedIndicators = getSelectedIndicators('buy');
+                if (selectedIndicators.length === 0) {
+                    alert('Lütfen en az bir indikatör seçin');
+                    return;
+                }
+                
+                // Seçili indikatörler için sinyalleri göster
+                showSignals('buy', selectedIndicators);
+            });
+            
+            // Satım sinyallerini göster butonu
+            document.getElementById('show-sell-signals').addEventListener('click', function() {
+                // Önce eski satım sinyallerini temizle
+                clearSignalMarkers('sell');
+                
+                // Seçili indikatörleri al
+                const selectedIndicators = getSelectedIndicators('sell');
+                if (selectedIndicators.length === 0) {
+                    alert('Lütfen en az bir indikatör seçin');
+                    return;
+                }
+                
+                // Seçili indikatörler için sinyalleri göster
+                showSignals('sell', selectedIndicators);
+            });
+            
+            // Sinyalleri temizle butonu
+            document.getElementById('clear-signals').addEventListener('click', function() {
+                clearSignalMarkers('buy');
+                clearSignalMarkers('sell');
+            });
+            
+            // Seçili indikatörleri al
+            function getSelectedIndicators(type) {
+                const checkboxes = document.querySelectorAll(`#${type}-signals-container input[type="checkbox"]:checked`);
+                const indicators = [];
+                checkboxes.forEach(cb => {
+                    if (cb.value !== 'ALL') {
+                        indicators.push(cb.value);
+                    }
+                });
+                return indicators;
+            }
+            
+            // Sinyal işaretleyicilerini temizle
+            function clearSignalMarkers(type) {
+                if (type === 'buy') {
+                    // Alım sinyallerini temizle (dataset index 1)
+                    myChart.data.datasets[1].data = [];
+                    signalMarkers.buy = [];
+                } else {
+                    // Satım sinyallerini temizle (dataset index 2)
+                    myChart.data.datasets[2].data = [];
+                    signalMarkers.sell = [];
+                }
+                myChart.update();
+            }
+            
+            // Sinyalleri göster
+            function showSignals(type, indicators) {
+                const signalType = type === 'buy' ? 'BUY' : 'SELL';
+                const datasetIndex = type === 'buy' ? 1 : 2;
+                const signalPoints = [];
+                
+                // Tüm veri noktaları için kontrol et
+                historicalData.forEach((data, index) => {
+                    if (!data.signals) return;
+                    
+                    // AND mantığı uygula - tüm seçili indikatörlerin sinyali aynı olmalı
+                    let allSignalsMatch = true;
+                    let matchingIndicators = [];
+                    
+                    indicators.forEach(indicator => {
+                        if (data.signals[indicator] === signalType || 
+                            data.signals[indicator] === 'STRONG_' + signalType) {
+                            matchingIndicators.push(indicator);
+                        } else {
+                            allSignalsMatch = false;
+                        }
+                    });
+                    
+                    // Tüm seçili indikatörler aynı sinyali veriyorsa göster
+                    if (allSignalsMatch && matchingIndicators.length === indicators.length) {
+                        // Sinyal bilgisi
+                        const signalInfo = matchingIndicators.join(', ');
+                        
+                        // Veri noktası oluştur
+                        const point = {
+                            x: data.date,
+                            y: data.price,
+                            // Tooltip ve diğer özellikler için ek veri
+                            originalData: data,
+                            signalInfo: signalInfo,
+                            indicators: data.indicators,
+                            signals: data.signals
+                        };
+                        
+                        signalPoints.push(point);
+                        signalMarkers[type].push(point);
+                    }
+                });
+                
+                // Dataset'i güncelle
+                myChart.data.datasets[datasetIndex].data = signalPoints;
+                myChart.data.datasets[datasetIndex].hidden = false;
+                myChart.update();
+            }
+            
+            // Tam eşleşen sinyal noktalarını göster
+            function showExactMatchingSignals(currentSignals) {
+                // Tam eşleşen sinyaller için dataset indeksi
+                const datasetIndex = 3; // 4. dataset (0'dan başlar)
+                const exactMatchPoints = [];
+                
+                // Tüm veri noktaları için kontrol et
+                historicalData.forEach((data, index) => {
+                    if (!data.signals) return;
+                    
+                    // Mevcut tüm sinyal değerlerinin geçmiş noktadaki değerlerle tam eşleşip eşleşmediğini kontrol et
+                    let allSignalsExactlyMatch = true;
+                    
+                    // Coin_data'daki tüm sinyalleri kontrol et
+                    {% for indicator, signal in coin_data.signals.items() %}
+                        // Geçmiş veride bu indikatör yoksa veya değeri farklıysa eşleşme yok
+                        if (!data.signals['{{ indicator }}'] || data.signals['{{ indicator }}'] !== '{{ signal }}') {
+                            allSignalsExactlyMatch = false;
+                        }
+                    {% endfor %}
+                    
+                    // Tüm sinyaller tam eşleşirse göster
+                    if (allSignalsExactlyMatch) {
+                        // Veri noktası oluştur
+                        const point = {
+                            x: data.date,
+                            y: data.price,
+                            // Tooltip ve diğer özellikler için ek veri
+                            originalData: data,
+                            signalInfo: 'Tam Eşleşen Sinyaller',
+                            indicators: data.indicators,
+                            signals: data.signals
+                        };
+                        
+                        exactMatchPoints.push(point);
+                    }
+                });
+                
+                console.log(`Tam eşleşen ${exactMatchPoints.length} nokta bulundu`);
+                
+                // Dataset'i güncelle
+                myChart.data.datasets[datasetIndex].data = exactMatchPoints;
+                myChart.data.datasets[datasetIndex].hidden = false;
+                myChart.update();
+            }
+            
+            // Sayfa yüklendiğinde mevcut sinyalleri göster
+            function showCurrentSignals() {
+                // Önce sinyal işaretleyicilerini temizle
+                clearSignalMarkers('buy');
+                clearSignalMarkers('sell');
+                
+                // Mavi renkli tam eşleşen sinyalleri temizle
+                myChart.data.datasets[3].data = [];
+                
+                // Mevcut coin verisindeki sinyalleri al
+                const currentSignals = {
+                    BUY: [],
+                    SELL: []
+                };
+                
+                // Güncel sinyalleri topla
+                {% for indicator, signal in coin_data.signals.items() %}
+                    {% if signal == 'BUY' or signal == 'STRONG_BUY' %}
+                        currentSignals.BUY.push('{{ indicator }}');
+                    {% elif signal == 'SELL' or signal == 'STRONG_SELL' %}
+                        currentSignals.SELL.push('{{ indicator }}');
+                    {% endif %}
+                {% endfor %}
+                
+                console.log("Alım sinyalleri:", currentSignals.BUY);
+                console.log("Satım sinyalleri:", currentSignals.SELL);
+                
+                // Eğer alım sinyali varsa, geçmişteki benzer sinyalleri göster
+                if (currentSignals.BUY.length > 0) {
+                    // "Alım Sinyallerini Göster" butonunun seçeneklerini güncelle
+                    updateCheckboxes('buy', currentSignals.BUY);
+                    
+                    // AND mantığı ile alım sinyallerini göster
+                    showSignals('buy', currentSignals.BUY);
+                }
+                
+                // Eğer satım sinyali varsa, geçmişteki benzer sinyalleri göster
+                if (currentSignals.SELL.length > 0) {
+                    // "Satım Sinyallerini Göster" butonunun seçeneklerini güncelle
+                    updateCheckboxes('sell', currentSignals.SELL);
+                    
+                    // AND mantığı ile satım sinyallerini göster
+                    showSignals('sell', currentSignals.SELL);
+                }
+                
+                // Tam eşleşen sinyal noktalarını mavi renk ile göster
+                showExactMatchingSignals(currentSignals);
+            }
+            
+            // Checkbox'ları mevcut sinyallere göre güncelle
+            function updateCheckboxes(type, indicators) {
+                indicators.forEach(indicator => {
+                    const checkbox = document.getElementById(`${type}-${indicator.toLowerCase()}`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    } else {
+                        console.warn(`${indicator} checkbox'ı bulunamadı`);
+                    }
+                });
+            }
+            
+            // Sayfa yüklendiğinde mevcut sinyalleri göster
+            showCurrentSignals();
+            
+            // Sinyal performansını analiz et
+            document.getElementById('analyzeSignalBtn').addEventListener('click', function() {
+                const performanceData = analyzeSignalPerformance();
+                displayPerformanceResults(performanceData);
+            });
+            
+            // Sinyal performansını analiz et
+            function analyzeSignalPerformance() {
+                // Eşleşen nokta yoksa
+                if (myChart.data.datasets[3].data.length === 0) {
+                    return {
+                        error: "Mevcut sinyal kombinasyonuna uyan geçmiş veri noktası bulunamadı."
+                    };
+                }
+                
+                // Tam eşleşen noktaları al
+                const matchingPoints = myChart.data.datasets[3].data;
+                console.log(`Performans analizi için ${matchingPoints.length} eşleşen nokta bulundu.`);
+                
+                const results = {
+                    totalMatches: matchingPoints.length,
+                    periods: [1, 3, 7, 14, 30], // Sonraki x gün için performans
+                    performance: {},
+                    avgPerformance: {},
+                    maxGain: {},
+                    maxLoss: {},
+                    volatility: {},
+                    current: {
+                        signals: {}
+                    }
+                };
+                
+                // Güncel sinyal değerlerini kaydet
+                {% for indicator, signal in coin_data.signals.items() %}
+                    results.current.signals['{{ indicator }}'] = '{{ signal }}';
+                {% endfor %}
+                
+                // Her periyot için performans hesapla
+                results.periods.forEach(period => {
+                    results.performance[period] = [];
+                    
+                    matchingPoints.forEach(point => {
+                        const currentIndex = historicalData.findIndex(d => d.date === point.x);
+                        if (currentIndex < 0 || currentIndex + period >= historicalData.length) return;
+                        
+                        const currentPrice = point.y;
+                        const futurePrice = historicalData[currentIndex + period].price;
+                        const priceChange = ((futurePrice - currentPrice) / currentPrice) * 100;
+                        
+                        // İlgili dönemdeki en yüksek ve en düşük fiyatları bul
+                        let highestPrice = currentPrice;
+                        let lowestPrice = currentPrice;
+                        
+                        for (let i = currentIndex + 1; i <= currentIndex + period; i++) {
+                            if (i < historicalData.length) {
+                                highestPrice = Math.max(highestPrice, historicalData[i].price);
+                                lowestPrice = Math.min(lowestPrice, historicalData[i].price);
+                            }
+                        }
+                        
+                        const maxPotentialGain = ((highestPrice - currentPrice) / currentPrice) * 100;
+                        const maxPotentialLoss = ((lowestPrice - currentPrice) / currentPrice) * 100;
+                        
+                        results.performance[period].push({
+                            date: point.x,
+                            startPrice: currentPrice,
+                            endPrice: futurePrice,
+                            change: priceChange,
+                            maxGain: maxPotentialGain,
+                            maxLoss: maxPotentialLoss
+                        });
+                    });
+                    
+                    // İstatistikleri hesapla
+                    if (results.performance[period].length > 0) {
+                        // Ortalama değişim
+                        const totalChange = results.performance[period].reduce((sum, item) => sum + item.change, 0);
+                        results.avgPerformance[period] = totalChange / results.performance[period].length;
+                        
+                        // Maksimum kazanç/kayıp
+                        const totalMaxGain = results.performance[period].reduce((sum, item) => sum + item.maxGain, 0);
+                        const totalMaxLoss = results.performance[period].reduce((sum, item) => sum + item.maxLoss, 0);
+                        results.maxGain[period] = totalMaxGain / results.performance[period].length;
+                        results.maxLoss[period] = totalMaxLoss / results.performance[period].length;
+                        
+                        // Volatilite (standart sapma)
+                        const squaredDiffs = results.performance[period].map(item => 
+                            Math.pow(item.change - results.avgPerformance[period], 2)
+                        );
+                        const avgSquaredDiff = squaredDiffs.reduce((sum, item) => sum + item, 0) / squaredDiffs.length;
+                        results.volatility[period] = Math.sqrt(avgSquaredDiff);
+                    } else {
+                        results.avgPerformance[period] = 0;
+                        results.maxGain[period] = 0;
+                        results.maxLoss[period] = 0;
+                        results.volatility[period] = 0;
+                    }
+                });
+                
+                return results;
+            }
+            
+            // Performans sonuçlarını görüntüle
+            function displayPerformanceResults(data) {
+                const performanceContainer = document.getElementById('signalPerformance');
+                
+                if (data.error) {
+                    performanceContainer.innerHTML = `<div class="alert alert-warning">${data.error}</div>`;
+                    return;
+                }
+                
+                // Sonuçları HTML olarak hazırla
+                let html = `
+                    <div class="mb-3">
+                        <h6>Tam Eşleşen Sinyal Kombinasyonu:</h6>
+                        <p class="small text-muted mb-1">Tüm indikatörlerin şu anki değerleri ile tam eşleşen durumlar analiz edildi.</p>
+                        <div class="d-flex flex-wrap small">
+                            {% for indicator, signal in coin_data.signals.items() %}
+                                <div class="me-2 mb-1 p-1 border rounded 
+                                    {% if signal == 'BUY' or signal == 'STRONG_BUY' %}bg-success text-white
+                                    {% elif signal == 'SELL' or signal == 'STRONG_SELL' %}bg-danger text-white
+                                    {% else %}bg-secondary text-white{% endif %}">
+                                    {{ indicator }}: {{ signal }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Geçmiş Fiyat Etkisi Analizi:</h6>
+                        <p class="small text-muted mb-1">Bu tam eşleşen sinyal kombinasyonu geçmişte ${data.totalMatches} kez görüldü.</p>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Periyot</th>
+                                    <th>Ort. Değişim</th>
+                                    <th>Maks. Kazanç</th>
+                                    <th>Maks. Kayıp</th>
+                                    <th>Volatilite</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                
+                // Her periyot için sonuçları tabloya ekle
+                data.periods.forEach(period => {
+                    const avgChange = data.avgPerformance[period];
+                    const maxGain = data.maxGain[period];
+                    const maxLoss = data.maxLoss[period];
+                    const volatility = data.volatility[period];
+                    
+                    const changeClass = avgChange > 0 ? 'text-success' : avgChange < 0 ? 'text-danger' : 'text-secondary';
+                    const changeIcon = avgChange > 0 ? '▲' : avgChange < 0 ? '▼' : '■';
+                    
+                    html += `
+                        <tr>
+                            <td>${period} gün</td>
+                            <td class="${changeClass}">${changeIcon} ${avgChange.toFixed(2)}%</td>
+                            <td class="text-success">▲ ${maxGain.toFixed(2)}%</td>
+                            <td class="text-danger">▼ ${maxLoss.toFixed(2)}%</td>
+                            <td>${volatility.toFixed(2)}%</td>
+                        </tr>`;
+                });
+                
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="small text-muted">
+                        <p class="mb-1"><strong>Not:</strong> Bu analiz, tüm indikatörlerin mevcut değerleri ile tam eşleşen sinyal kombinasyonu geçmişte görüldüğünde fiyatın nasıl hareket ettiğini gösterir:</p>
+                        <ul class="mb-0 ps-3">
+                            <li>Ort. Değişim: İlgili gün sonundaki ortalama fiyat değişimi</li>
+                            <li>Maks. Kazanç: Periyot içindeki ortalama maksimum yükseliş</li>
+                            <li>Maks. Kayıp: Periyot içindeki ortalama maksimum düşüş</li>
+                            <li>Volatilite: Fiyat değişimlerinin standart sapması</li>
+                        </ul>
+                    </div>`;
+                
+                performanceContainer.innerHTML = html;
+            }
+        });
+    </script>
+</body>
+</html> 

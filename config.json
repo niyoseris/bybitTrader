@@ -45,7 +45,7 @@
         "stop_loss_percentage": 1,
         "take_profit_percentage": 0.5,
         "kline": {
-            "interval": "15",
+            "interval": "240",
             "limit": 200
         }
     }

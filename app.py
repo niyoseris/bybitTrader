@@ -1,13 +1,17 @@
-from flask import Flask, request, jsonify, render_template, send_from_directory
+from flask import Flask, request, jsonify, render_template, send_from_directory, redirect, url_for
 import json
 import os
 from datetime import datetime
 from rich.console import Console
 from rich.table import Table
 import io
+import requests
+import time
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # Verileri saklamak için global değişkenler
 latest_market_data = {}
@@ -525,6 +529,224 @@ def receive_data():
         return jsonify({"status": "success", "message": "Data received successfully"})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/static/<path:path>')
+def serve_static(path):
+    return send_from_directory('static', path)
+
+@app.route('/chart/<symbol>')
+def chart(symbol):
+    # Market verilerini oku
+    market_data = {}
+    try:
+        if os.path.exists('latest_market_data.json'):
+            with open('latest_market_data.json', 'r') as f:
+                market_data = json.load(f)
+    except Exception as e:
+        print(f"Veri okuma hatası: {e}")
+    
+    # Sembolü kontrol et
+    if symbol not in market_data.get('market_data', {}):
+        return redirect(url_for('index'))
+    
+    # Coin verilerini al
+    coin_data = market_data.get('market_data', {}).get(symbol, {})
+    
+    # Config.json dosyasından kline ayarlarını oku
+    interval = '15'  # Varsayılan değer
+    limit = 365      # Varsayılan değer (1 yıl)
+    
+    try:
+        if os.path.exists('config.json'):
+            with open('config.json', 'r') as f:
+                config = json.load(f)
+                interval = config.get('trading', {}).get('kline', {}).get('interval', interval)
+                config_limit = config.get('trading', {}).get('kline', {}).get('limit', 200)
+                
+                # Interval'e göre 1 yıllık veri için gereken limit hesabı
+                if interval == 'D':
+                    limit = 365  # Günlük veri için son 365 gün
+                elif interval == 'W':
+                    limit = 52   # Haftalık veri için son 52 hafta
+                elif interval == 'M':
+                    limit = 12   # Aylık veri için son 12 ay
+                elif interval in ['60', '120', '240', '360', '720']:
+                    # Saatlik ve üzeri periyotlar için 1 yıllık veri
+                    # 1 gün = 24 saat
+                    hours_in_day = 24
+                    days_in_year = 365
+                    total_hours = hours_in_day * days_in_year
+                    hours_per_interval = int(interval) / 60
+                    limit = min(int(total_hours / hours_per_interval), 1000)  # Makul bir limit
+                elif interval == '30':
+                    # 30 dakikalık periyot için 1 yıllık veri
+                    # 1 gün = 48 adet 30dk
+                    limit = min(48 * 365, 1000)  # Makul bir limit
+                elif interval == '15':
+                    # 15 dakikalık periyot için 1 yıllık veri
+                    # 1 gün = 96 adet 15dk
+                    limit = min(96 * 365, 1000)  # Makul bir limit
+                else:
+                    # Diğer kısa intervallar için
+                    limit = min(config_limit, 1000)  # Makul bir limit
+    except Exception as e:
+        print(f"Config dosyası okuma hatası: {e}")
+    
+    # ByBit'ten geçmiş fiyat verilerini al
+    historical_data = get_historical_data(symbol, interval, limit)
+    
+    return render_template('chart.html', 
+                          symbol=symbol, 
+                          coin_data=coin_data,
+                          historical_data=historical_data,
+                          interval=interval,
+                          limit=limit,
+                          last_update=market_data.get('last_update', ''))
+
+def get_historical_data(symbol, interval=None, limit=None):
+    """
+    ByBit API'sinden geçmiş fiyat verilerini al
+    
+    Args:
+        symbol: Coin sembolü (örn. BTCUSDT)
+        interval: Zaman aralığı (1, 3, 5, 15, 30, 60, 120, 240, 360, 720, D, W, M)
+        limit: Kaç veri noktası alınacak (max 200)
+    
+    Returns:
+        Tarih, açılış, kapanış, yüksek, düşük ve hacim verilerini içeren liste
+    """
+    try:
+        # Config.json'dan kline ayarlarını oku
+        config = {}
+        try:
+            with open('config.json', 'r') as f:
+                config = json.load(f)
+        except Exception as e:
+            print(f"Config dosyası okuma hatası: {e}")
+        
+        # Varsayılan değerleri config.json'dan al veya varsayılan değerleri kullan
+        if interval is None:
+            interval = config.get('trading', {}).get('kline', {}).get('interval', 'D')
+        
+        # Son 1 yıllık veri için ayarlar
+        # ByBit API tek seferde maksimum 200 veri noktası döndürür
+        # Yıllık veri için birkaç istek yapmamız gerekebilir
+        if limit is None:
+            if interval == 'D':
+                limit = 365  # Günlük veri için son 365 gün
+            elif interval == 'W':
+                limit = 52   # Haftalık veri için son 52 hafta
+            elif interval == 'M':
+                limit = 12   # Aylık veri için son 12 ay
+            elif interval in ['60', '120', '240', '360', '720']:
+                # Saatlik ve üzeri periyotlar için API limiti nedeniyle 200 nokta alalım
+                limit = 200
+            elif interval == '30':
+                # 30 dakikalık periyot için (günlük 48 nokta) - son ~4 ay
+                limit = 200  
+            elif interval == '15':
+                # 15 dakikalık periyot için son ~2 ay
+                limit = 200
+            else:
+                # Diğer kısa intervallar için API limiti
+                limit = 200
+        
+        print(f"Tarihsel veri alınıyor - Symbol: {symbol}, Interval: {interval}, Requested Limit: {limit}")
+        
+        # ByBit API'si tek seferde maximum 200 veri noktası döndürür
+        # Birden fazla istek yaparak daha fazla veri alabiliriz
+        max_api_limit = 200
+        result = []
+        requests_needed = (limit + max_api_limit - 1) // max_api_limit  # Ceiling division
+        
+        print(f"Toplam {requests_needed} API isteği gerçekleştirilecek.")
+        
+        for i in range(requests_needed):
+            # API URL
+            url = f"https://api.bybit.com/v5/market/kline"
+            
+            # Her istekte en fazla 200 veri noktası alabiliriz
+            current_limit = min(max_api_limit, limit - i * max_api_limit)
+            if current_limit <= 0:
+                break
+                
+            # Eğer ilk istek değilse, son alınan verinin zaman damgasını kullan
+            end_time = None
+            if i > 0 and result:
+                # Son veriden bir saniye önceyi al
+                last_timestamp = int(datetime.strptime(result[-1]["date"], '%Y-%m-%d %H:%M:%S').timestamp()) - 1
+                end_time = last_timestamp * 1000  # milisaniye cinsinden
+            
+            # API parametreleri
+            params = {
+                "category": "spot",
+                "symbol": symbol,
+                "interval": interval,
+                "limit": current_limit
+            }
+            
+            # Eğer bir önceki istekten veri varsa, bitiş zamanını belirt
+            if end_time:
+                params["end"] = end_time
+            
+            print(f"API isteği #{i+1}: {url} - Parameters: {params}")
+            
+            # API isteği gönder
+            try:
+                response = requests.get(url, params=params, timeout=10)
+                data = response.json()
+                
+                if data["retCode"] == 0 and "list" in data["result"]:
+                    # API yanıtını işle
+                    klines = data["result"]["list"]
+                    
+                    if not klines:
+                        # Daha fazla veri yok
+                        print(f"İstek #{i+1}: Veri bulunamadı.")
+                        break
+                    
+                    print(f"İstek #{i+1}: {len(klines)} veri noktası alındı.")
+                    
+                    for kline in klines:
+                        # Zamanı milisaniyeden normal zamana çevir
+                        timestamp = int(kline[0])
+                        date = datetime.fromtimestamp(timestamp/1000).strftime('%Y-%m-%d %H:%M:%S')
+                        
+                        result.append({
+                            "date": date,
+                            "open": float(kline[1]),
+                            "high": float(kline[2]),
+                            "low": float(kline[3]),
+                            "close": float(kline[4]),
+                            "volume": float(kline[5])
+                        })
+                    
+                    # API rate limit aşımını önlemek için kısa bir bekleme
+                    if i < requests_needed - 1:
+                        time.sleep(0.5)
+                else:
+                    print(f"ByBit API hatası: {data}")
+                    break
+            except Exception as req_err:
+                print(f"API isteği hatası: {req_err}")
+                # Hataya rağmen devam et, belki diğer istekler başarılı olur
+                time.sleep(1)
+                continue
+        
+        # Sonuçları tarihe göre sırala (eskiden yeniye)
+        result.sort(key=lambda x: x["date"])
+        
+        print(f"Toplam {len(result)} veri noktası alındı. İstenen limit: {limit}")
+        
+        # Sonuçları limit değerine göre kes
+        if len(result) > limit:
+            print(f"Sonuçlar {limit} veri noktasına kısıtlanıyor.")
+            result = result[-limit:]
+        
+        return result
+    except Exception as e:
+        print(f"ByBit veri alımı hatası: {e}")
+        return []
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)

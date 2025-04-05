@@ -19,6 +19,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 from dotenv import load_dotenv
 import config
 import argparse
+import time
 
 # Set up console for rich text display
 console = Console()
@@ -415,4 +416,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    while True:
+        main()
+        time.sleep(10)
