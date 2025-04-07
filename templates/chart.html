@@ -886,124 +886,108 @@
                                     return context.formattedValue;
                                 }
                             }
+                        },
+                        annotation: {
+                            annotations: {}
                         }
                     },
                     interaction: {
                         mode: 'index',
                         intersect: false
                     },
-                    onClick: function(e) {
-                        const points = myChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
-                        
-                        if (points.length) {
-                            const firstPoint = points[0];
-                            const datasetIndex = firstPoint.datasetIndex;
-                            const index = firstPoint.index;
-                            
-                            let data;
-                            if (datasetIndex === 0) {
-                                // Ana fiyat grafiği
-                                data = historicalData[index];
-                            } else {
-                                // Sinyal noktası
-                                data = myChart.data.datasets[datasetIndex].data[index].originalData;
-                            }
-                            
-                            if (data) {
-                                // Tıklanan noktadaki indikatör değerleri
-                                showPointDetails(e, data, myChart.canvas);
-                            }
-                        } else {
-                            // Boş alana tıklandığında detayları gizle
-                            pointDetailsElement.style.display = 'none';
+                    onClick: function(e, elements) {
+                        if (elements.length > 0) {
+                            const element = elements[0];
+                            const dataPoint = myChart.data.datasets[element.datasetIndex].data[element.index];
+                            showPointDetails(dataPoint, e);
                         }
                     }
                 }
             });
             
             // Tıklanılan noktadaki indikatör değerlerini göster
-            function showPointDetails(event, data, canvas) {
+            function showPointDetails(dataPoint, event) {
                 // Pozisyonu hesapla
-                const rect = canvas.getBoundingClientRect();
+                const rect = myChart.canvas.getBoundingClientRect();
                 const x = event.clientX - rect.left;
                 const y = event.clientY - rect.top;
                 
                 // İçerik oluştur
                 let content = `
                     <div class="point-details-header">
-                        ${new Date(data.date).toLocaleString()} - $${data.price.toFixed(4)}
+                        ${new Date(dataPoint.x || dataPoint.date).toLocaleString()} - $${(dataPoint.y || dataPoint.price).toFixed(4)}
                     </div>
                 `;
                 
                 // İndikatör değerlerini ekle
-                if (data.indicators) {
-                    if (data.indicators.RSI !== undefined) {
-                        const rsiClass = data.signals && data.signals.RSI === 'BUY' ? 'buy' : 
-                                        data.signals && data.signals.RSI === 'SELL' ? 'sell' : 'neutral';
+                if (dataPoint.indicators) {
+                    if (dataPoint.indicators.RSI !== undefined) {
+                        const rsiClass = dataPoint.signals && dataPoint.signals.RSI === 'BUY' ? 'buy' : 
+                                        dataPoint.signals && dataPoint.signals.RSI === 'SELL' ? 'sell' : 'neutral';
                         content += `
                             <div class="point-indicator">
-                                <strong>RSI:</strong> ${data.indicators.RSI.toFixed(2)}
-                                <span class="${rsiClass}"> (${data.signals ? data.signals.RSI : 'N/A'})</span>
+                                <strong>RSI:</strong> ${dataPoint.indicators.RSI.toFixed(2)}
+                                <span class="${rsiClass}"> (${dataPoint.signals ? dataPoint.signals.RSI : 'N/A'})</span>
                             </div>
                         `;
                     }
                     
-                    if (data.indicators.MACD) {
-                        const macdClass = data.signals && data.signals.MACD === 'BUY' ? 'buy' : 
-                                          data.signals && data.signals.MACD === 'SELL' ? 'sell' : 'neutral';
+                    if (dataPoint.indicators.MACD) {
+                        const macdClass = dataPoint.signals && dataPoint.signals.MACD === 'BUY' ? 'buy' : 
+                                          dataPoint.signals && dataPoint.signals.MACD === 'SELL' ? 'sell' : 'neutral';
                         content += `
                             <div class="point-indicator">
                                 <strong>MACD:</strong>
-                                <span class="${macdClass}"> (${data.signals ? data.signals.MACD : 'N/A'})</span><br>
-                                <small>Line: ${data.indicators.MACD.line ? data.indicators.MACD.line.toFixed(4) : 'N/A'}</small><br>
-                                <small>Signal: ${data.indicators.MACD.signal ? data.indicators.MACD.signal.toFixed(4) : 'N/A'}</small><br>
-                                <small>Hist: ${data.indicators.MACD.histogram ? data.indicators.MACD.histogram.toFixed(4) : 'N/A'}</small>
+                                <span class="${macdClass}"> (${dataPoint.signals ? dataPoint.signals.MACD : 'N/A'})</span><br>
+                                <small>Line: ${dataPoint.indicators.MACD.line ? dataPoint.indicators.MACD.line.toFixed(4) : 'N/A'}</small><br>
+                                <small>Signal: ${dataPoint.indicators.MACD.signal ? dataPoint.indicators.MACD.signal.toFixed(4) : 'N/A'}</small><br>
+                                <small>Hist: ${dataPoint.indicators.MACD.histogram ? dataPoint.indicators.MACD.histogram.toFixed(4) : 'N/A'}</small>
                             </div>
                         `;
                     }
                     
-                    if (data.indicators.BBANDS) {
-                        const bbClass = data.signals && data.signals.BBANDS === 'BUY' ? 'buy' : 
-                                        data.signals && data.signals.BBANDS === 'SELL' ? 'sell' : 'neutral';
+                    if (dataPoint.indicators.BBANDS) {
+                        const bbClass = dataPoint.signals && dataPoint.signals.BBANDS === 'BUY' ? 'buy' : 
+                                        dataPoint.signals && dataPoint.signals.BBANDS === 'SELL' ? 'sell' : 'neutral';
                         content += `
                             <div class="point-indicator">
                                 <strong>Bollinger Bands:</strong>
-                                <span class="${bbClass}"> (${data.signals ? data.signals.BBANDS : 'N/A'})</span><br>
-                                <small>Upper: ${data.indicators.BBANDS.upper.toFixed(4)}</small><br>
-                                <small>Middle: ${data.indicators.BBANDS.middle.toFixed(4)}</small><br>
-                                <small>Lower: ${data.indicators.BBANDS.lower.toFixed(4)}</small><br>
-                                <small>Width: ${data.indicators.BBANDS.width.toFixed(2)}%</small>
+                                <span class="${bbClass}"> (${dataPoint.signals ? dataPoint.signals.BBANDS : 'N/A'})</span><br>
+                                <small>Upper: ${dataPoint.indicators.BBANDS.upper.toFixed(4)}</small><br>
+                                <small>Middle: ${dataPoint.indicators.BBANDS.middle.toFixed(4)}</small><br>
+                                <small>Lower: ${dataPoint.indicators.BBANDS.lower.toFixed(4)}</small><br>
+                                <small>Width: ${dataPoint.indicators.BBANDS.width.toFixed(2)}%</small>
                             </div>
                         `;
                     }
                     
-                    if (data.indicators.SMA) {
-                        const smaClass = data.signals && data.signals.SMA === 'BUY' ? 'buy' : 
-                                         data.signals && data.signals.SMA === 'SELL' ? 'sell' : 'neutral';
+                    if (dataPoint.indicators.SMA) {
+                        const smaClass = dataPoint.signals && dataPoint.signals.SMA === 'BUY' ? 'buy' : 
+                                         dataPoint.signals && dataPoint.signals.SMA === 'SELL' ? 'sell' : 'neutral';
                         content += `
                             <div class="point-indicator">
                                 <strong>SMA:</strong>
-                                <span class="${smaClass}"> (${data.signals ? data.signals.SMA : 'N/A'})</span><br>
-                                <small>Short: ${data.indicators.SMA.short.toFixed(4)}</small><br>
-                                <small>Long: ${data.indicators.SMA.long.toFixed(4)}</small>
+                                <span class="${smaClass}"> (${dataPoint.signals ? dataPoint.signals.SMA : 'N/A'})</span><br>
+                                <small>Short: ${dataPoint.indicators.SMA.short.toFixed(4)}</small><br>
+                                <small>Long: ${dataPoint.indicators.SMA.long.toFixed(4)}</small>
                             </div>
                         `;
                     }
                     
-                    if (data.indicators.FIBONACCI) {
-                        const fibClass = data.signals && data.signals.FIBONACCI === 'BUY' ? 'buy' : 
-                                        data.signals && data.signals.FIBONACCI === 'SELL' ? 'sell' : 'neutral';
+                    if (dataPoint.indicators.FIBONACCI) {
+                        const fibClass = dataPoint.signals && dataPoint.signals.FIBONACCI === 'BUY' ? 'buy' : 
+                                        dataPoint.signals && dataPoint.signals.FIBONACCI === 'SELL' ? 'sell' : 'neutral';
                         content += `
                             <div class="point-indicator">
                                 <strong>FIBONACCI:</strong>
-                                <span class="${fibClass}"> (${data.signals ? data.signals.FIBONACCI : 'N/A'})</span><br>
+                                <span class="${fibClass}"> (${dataPoint.signals ? dataPoint.signals.FIBONACCI : 'N/A'})</span><br>
                         `;
                         
                         // Fibonacci seviyelerini göster
-                        for (const key in data.indicators.FIBONACCI) {
+                        for (const key in dataPoint.indicators.FIBONACCI) {
                             if (key.startsWith('FIB_')) {
                                 const level = key.replace('FIB_', '');
-                                content += `<small>Level ${level}: ${data.indicators.FIBONACCI[key].toFixed(4)}</small><br>`;
+                                content += `<small>Level ${level}: ${dataPoint.indicators.FIBONACCI[key].toFixed(4)}</small><br>`;
                             }
                         }
                         
@@ -1015,11 +999,11 @@
                 content += `
                     <div class="point-indicator">
                         <strong>OHLC:</strong><br>
-                        <small>Open: ${data.open ? data.open.toFixed(4) : 'N/A'}</small><br>
-                        <small>High: ${data.high ? data.high.toFixed(4) : 'N/A'}</small><br>
-                        <small>Low: ${data.low ? data.low.toFixed(4) : 'N/A'}</small><br>
-                        <small>Close: ${data.price.toFixed(4)}</small><br>
-                        <small>Volume: ${data.volume ? (data.volume/1000000).toFixed(2) + 'M' : 'N/A'}</small>
+                        <small>Open: ${dataPoint.open ? dataPoint.open.toFixed(4) : 'N/A'}</small><br>
+                        <small>High: ${dataPoint.high ? dataPoint.high.toFixed(4) : 'N/A'}</small><br>
+                        <small>Low: ${dataPoint.low ? dataPoint.low.toFixed(4) : 'N/A'}</small><br>
+                        <small>Close: ${dataPoint.price.toFixed(4)}</small><br>
+                        <small>Volume: ${dataPoint.volume ? (dataPoint.volume/1000000).toFixed(2) + 'M' : 'N/A'}</small>
                     </div>
                 `;
                 
@@ -1031,7 +1015,7 @@
                 
                 // Pencere sınırlarının dışına taşmasını önle
                 const detailsRect = pointDetailsElement.getBoundingClientRect();
-                const containerRect = canvas.parentNode.getBoundingClientRect();
+                const containerRect = myChart.canvas.parentNode.getBoundingClientRect();
                 
                 if (detailsRect.right > containerRect.right) {
                     pointDetailsElement.style.left = `${x - detailsRect.width - 10}px`;
@@ -1486,6 +1470,544 @@
                     </div>`;
                 
                 performanceContainer.innerHTML = html;
+            }
+            
+            // Formasyon kontrol paneli
+            document.addEventListener('DOMContentLoaded', function() {
+                // Formasyon kontrol panelini ekle
+                const controlPanel = document.querySelector('.control-panel');
+                const patternControl = document.createElement('div');
+                patternControl.className = 'card mt-3';
+                patternControl.innerHTML = `
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Formasyonları Göster</h5>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#patternControls">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="collapse show" id="patternControls">
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="show-support-resistance">
+                                <label class="form-check-label" for="show-support-resistance">
+                                    Destek ve Direnç Seviyeleri
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="show-trend-lines">
+                                <label class="form-check-label" for="show-trend-lines">
+                                    Trend Çizgileri
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="show-triangle-patterns">
+                                <label class="form-check-label" for="show-triangle-patterns">
+                                    Üçgen Formasyonları
+                                </label>
+                            </div>
+                            <button id="analyze-patterns" class="btn btn-primary w-100 mt-2">Formasyonları Analiz Et</button>
+                        </div>
+                    </div>
+                `;
+                controlPanel.appendChild(patternControl);
+                
+                // Formasyon analiz butonuna tıklama olayını ekle
+                document.getElementById('analyze-patterns').addEventListener('click', analyzePatterns);
+            });
+            
+            // Yerel maksimum ve minimum noktaları tespit et
+            function findLocalExtremes(priceData, windowSize = 10) {
+                const extremes = {
+                    maxima: [],
+                    minima: []
+                };
+                
+                for (let i = windowSize; i < priceData.length - windowSize; i++) {
+                    let isMax = true;
+                    let isMin = true;
+                    
+                    for (let j = i - windowSize; j <= i + windowSize; j++) {
+                        if (j === i) continue;
+                        
+                        if (priceData[j].price >= priceData[i].price) isMax = false;
+                        if (priceData[j].price <= priceData[i].price) isMin = false;
+                    }
+                    
+                    if (isMax) extremes.maxima.push({ index: i, ...priceData[i] });
+                    if (isMin) extremes.minima.push({ index: i, ...priceData[i] });
+                }
+                
+                return extremes;
+            }
+            
+            // Destek ve direnç seviyelerini tespit et
+            function findSupportResistanceLevels(priceData, extremes, tolerance = 0.01) {
+                const levels = [];
+                const { maxima, minima } = extremes;
+                
+                // Direnç seviyelerini bul
+                for (let i = 0; i < maxima.length; i++) {
+                    const current = maxima[i].price;
+                    let matches = 0;
+                    
+                    for (let j = 0; j < maxima.length; j++) {
+                        if (i === j) continue;
+                        
+                        const diff = Math.abs(maxima[j].price - current) / current;
+                        if (diff <= tolerance) matches++;
+                    }
+                    
+                    if (matches >= 1) {
+                        // En az bir eşleşme varsa direnç seviyesi olarak kabul et
+                        levels.push({
+                            type: 'resistance',
+                            price: current,
+                            matches: matches + 1
+                        });
+                    }
+                }
+                
+                // Destek seviyelerini bul
+                for (let i = 0; i < minima.length; i++) {
+                    const current = minima[i].price;
+                    let matches = 0;
+                    
+                    for (let j = 0; j < minima.length; j++) {
+                        if (i === j) continue;
+                        
+                        const diff = Math.abs(minima[j].price - current) / current;
+                        if (diff <= tolerance) matches++;
+                    }
+                    
+                    if (matches >= 1) {
+                        // En az bir eşleşme varsa destek seviyesi olarak kabul et
+                        levels.push({
+                            type: 'support',
+                            price: current,
+                            matches: matches + 1
+                        });
+                    }
+                }
+                
+                // Benzer seviyeleri birleştir
+                const mergedLevels = [];
+                const processed = new Set();
+                
+                for (let i = 0; i < levels.length; i++) {
+                    if (processed.has(i)) continue;
+                    
+                    const level = levels[i];
+                    let totalMatches = level.matches;
+                    let priceSum = level.price * level.matches;
+                    let count = 1;
+                    
+                    for (let j = i + 1; j < levels.length; j++) {
+                        if (processed.has(j)) continue;
+                        
+                        const otherLevel = levels[j];
+                        if (otherLevel.type === level.type) {
+                            const diff = Math.abs(otherLevel.price - level.price) / level.price;
+                            if (diff <= tolerance) {
+                                totalMatches += otherLevel.matches;
+                                priceSum += otherLevel.price * otherLevel.matches;
+                                count++;
+                                processed.add(j);
+                            }
+                        }
+                    }
+                    
+                    if (count > 0) {
+                        mergedLevels.push({
+                            type: level.type,
+                            price: priceSum / totalMatches,
+                            strength: totalMatches
+                        });
+                    }
+                }
+                
+                // Güce göre sırala ve en güçlü 5 seviyeyi döndür
+                return mergedLevels
+                    .sort((a, b) => b.strength - a.strength)
+                    .slice(0, 5);
+            }
+            
+            // Trend çizgilerini tespit et
+            function findTrendLines(extremes, priceData, minSlope = 0.0005, maxLines = 3) {
+                const trendLines = {
+                    ascending: [],
+                    descending: []
+                };
+                
+                const { maxima, minima } = extremes;
+                
+                // Yükselen trend çizgileri (minima noktaları arasında)
+                for (let i = 0; i < minima.length - 1; i++) {
+                    for (let j = i + 1; j < minima.length; j++) {
+                        const p1 = minima[i];
+                        const p2 = minima[j];
+                        
+                        // Zaman farkını hesapla (gün cinsinden)
+                        const timeDiff = (new Date(p2.date) - new Date(p1.date)) / (1000 * 60 * 60 * 24);
+                        if (timeDiff < 7) continue; // En az 7 günlük trend olsun
+                        
+                        const slope = (p2.price - p1.price) / timeDiff;
+                        
+                        if (slope > minSlope) {
+                            // Trend çizgisi üzerinde fiyatın altında kaç nokta var?
+                            let validation = 0;
+                            let totalPoints = 0;
+                            
+                            for (let k = p1.index + 1; k < p2.index; k++) {
+                                const point = priceData[k];
+                                const daysSinceStart = (new Date(point.date) - new Date(p1.date)) / (1000 * 60 * 60 * 24);
+                                const expectedPrice = p1.price + (slope * daysSinceStart);
+                                
+                                if (point.price >= expectedPrice * 0.99) {
+                                    validation++;
+                                }
+                                totalPoints++;
+                            }
+                            
+                            const validationRatio = totalPoints > 0 ? validation / totalPoints : 0;
+                            
+                            if (validationRatio > 0.7) {
+                                trendLines.ascending.push({
+                                    start: p1,
+                                    end: p2,
+                                    slope: slope,
+                                    strength: validationRatio * (p2.index - p1.index)
+                                });
+                            }
+                        }
+                    }
+                }
+                
+                // Düşen trend çizgileri (maxima noktaları arasında)
+                for (let i = 0; i < maxima.length - 1; i++) {
+                    for (let j = i + 1; j < maxima.length; j++) {
+                        const p1 = maxima[i];
+                        const p2 = maxima[j];
+                        
+                        // Zaman farkını hesapla (gün cinsinden)
+                        const timeDiff = (new Date(p2.date) - new Date(p1.date)) / (1000 * 60 * 60 * 24);
+                        if (timeDiff < 7) continue; // En az 7 günlük trend olsun
+                        
+                        const slope = (p2.price - p1.price) / timeDiff;
+                        
+                        if (slope < -minSlope) {
+                            // Trend çizgisi altında fiyatın üzerinde kaç nokta var?
+                            let validation = 0;
+                            let totalPoints = 0;
+                            
+                            for (let k = p1.index + 1; k < p2.index; k++) {
+                                const point = priceData[k];
+                                const daysSinceStart = (new Date(point.date) - new Date(p1.date)) / (1000 * 60 * 60 * 24);
+                                const expectedPrice = p1.price + (slope * daysSinceStart);
+                                
+                                if (point.price <= expectedPrice * 1.01) {
+                                    validation++;
+                                }
+                                totalPoints++;
+                            }
+                            
+                            const validationRatio = totalPoints > 0 ? validation / totalPoints : 0;
+                            
+                            if (validationRatio > 0.7) {
+                                trendLines.descending.push({
+                                    start: p1,
+                                    end: p2,
+                                    slope: slope,
+                                    strength: validationRatio * (p2.index - p1.index)
+                                });
+                            }
+                        }
+                    }
+                }
+                
+                // Güce göre sırala ve en güçlü trend çizgilerini döndür
+                trendLines.ascending = trendLines.ascending
+                    .sort((a, b) => b.strength - a.strength)
+                    .slice(0, maxLines);
+                
+                trendLines.descending = trendLines.descending
+                    .sort((a, b) => b.strength - a.strength)
+                    .slice(0, maxLines);
+                
+                return trendLines;
+            }
+            
+            // Üçgen formasyonları tespit et
+            function findTrianglePatterns(trendLines) {
+                const triangles = [];
+                const { ascending, descending } = trendLines;
+                
+                // İki trend çizgisinin kesişip kesişmediğini kontrol et
+                function doLinesIntersect(line1, line2) {
+                    const start1Date = new Date(line1.start.date);
+                    const end1Date = new Date(line1.end.date);
+                    const start2Date = new Date(line2.start.date);
+                    const end2Date = new Date(line2.end.date);
+                    
+                    // İki çizginin zaman aralıkları örtüşüyor mu?
+                    if (end1Date < start2Date || end2Date < start1Date) {
+                        return false;
+                    }
+                    
+                    // Kesişim noktasını bul
+                    // Trend çizgisi denklemi: y = mx + b
+                    // m1: line1 eğimi, m2: line2 eğimi
+                    // b1: line1 y-kesimi, b2: line2 y-kesimi
+                    
+                    // Eğimleri hesapla (fiyat/gün cinsinden)
+                    const m1 = line1.slope;
+                    const m2 = line2.slope;
+                    
+                    // Eğimler neredeyse paralelse kesişmezler
+                    if (Math.abs(m1 - m2) < 0.0001) {
+                        return false;
+                    }
+                    
+                    // y-kesimlerini hesapla (b = y - mx)
+                    const b1 = line1.start.price - m1 * start1Date.getTime();
+                    const b2 = line2.start.price - m2 * start2Date.getTime();
+                    
+                    // Kesişim noktasının x koordinatı (zamanı)
+                    const x = (b2 - b1) / (m1 - m2);
+                    
+                    // Kesişim noktasının y koordinatı (fiyatı)
+                    const y = m1 * x + b1;
+                    
+                    // Kesişim noktası gelecekte mi?
+                    const now = new Date().getTime();
+                    return x > now && x < now + 30 * 24 * 60 * 60 * 1000; // 30 gün içinde
+                }
+                
+                // Simetrik üçgen: Düşen üst trend çizgisi + yükselen alt trend çizgisi
+                for (let i = 0; i < ascending.length; i++) {
+                    for (let j = 0; j < descending.length; j++) {
+                        const ascLine = ascending[i];
+                        const descLine = descending[j];
+                        
+                        if (doLinesIntersect(ascLine, descLine)) {
+                            triangles.push({
+                                type: 'symmetric',
+                                ascLine: ascLine,
+                                descLine: descLine
+                            });
+                        }
+                    }
+                }
+                
+                return triangles;
+            }
+            
+            // Formasyon analizlerini yap ve görselleştir
+            function analyzePatterns() {
+                // Formasyonları analiz et
+                const showSupportResistance = document.getElementById('show-support-resistance').checked;
+                const showTrendLines = document.getElementById('show-trend-lines').checked;
+                const showTrianglePatterns = document.getElementById('show-triangle-patterns').checked;
+                
+                // Önce mevcut annotations'ları temizle
+                myChart.options.plugins.annotation.annotations = {};
+                
+                // Veriyi hazırla
+                const priceData = historicalData.map((data, index) => ({
+                    index: index,
+                    date: data.date,
+                    price: data.price,
+                    high: data.high || data.price,
+                    low: data.low || data.price,
+                    volume: data.volume || 0
+                }));
+                
+                // Yerel maksimum ve minimum noktaları bul
+                const extremes = findLocalExtremes(priceData);
+                console.log("Yerel maksimum noktaları:", extremes.maxima.length);
+                console.log("Yerel minimum noktaları:", extremes.minima.length);
+                
+                // Formasyon sonuçlarını tutacak nesne
+                const patterns = {
+                    supportResistance: [],
+                    trendLines: { ascending: [], descending: [] },
+                    triangles: []
+                };
+                
+                // Destek ve direnç seviyelerini bul
+                if (showSupportResistance) {
+                    patterns.supportResistance = findSupportResistanceLevels(priceData, extremes);
+                    console.log("Destek ve direnç seviyeleri:", patterns.supportResistance);
+                }
+                
+                // Trend çizgilerini bul
+                if (showTrendLines || showTrianglePatterns) {
+                    patterns.trendLines = findTrendLines(extremes, priceData);
+                    console.log("Trend çizgileri:", patterns.trendLines);
+                }
+                
+                // Üçgen formasyonlarını bul
+                if (showTrianglePatterns) {
+                    patterns.triangles = findTrianglePatterns(patterns.trendLines);
+                    console.log("Üçgen formasyonları:", patterns.triangles);
+                }
+                
+                // Formasyonları görselleştir
+                const annotations = {};
+                
+                // Destek ve direnç seviyeleri
+                if (showSupportResistance) {
+                    patterns.supportResistance.forEach((level, index) => {
+                        annotations[`sr-${index}`] = {
+                            type: 'line',
+                            mode: 'horizontal',
+                            scaleID: 'y',
+                            value: level.price,
+                            borderColor: level.type === 'support' ? 'rgba(0, 255, 0, 0.5)' : 'rgba(255, 0, 0, 0.5)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                content: level.type === 'support' ? 'Destek' : 'Direnç',
+                                enabled: true,
+                                position: 'left',
+                                backgroundColor: level.type === 'support' ? 'rgba(0, 255, 0, 0.8)' : 'rgba(255, 0, 0, 0.8)'
+                            }
+                        };
+                    });
+                }
+                
+                // Trend çizgileri
+                if (showTrendLines) {
+                    patterns.trendLines.ascending.forEach((line, index) => {
+                        const start = line.start;
+                        const end = line.end;
+                        
+                        annotations[`trend-asc-${index}`] = {
+                            type: 'line',
+                            mode: 'linear',
+                            scaleID: 'y',
+                            xMin: start.date,
+                            yMin: start.price,
+                            xMax: end.date,
+                            yMax: end.price,
+                            borderColor: 'rgba(0, 200, 0, 0.8)',
+                            borderWidth: 2,
+                            label: {
+                                content: 'Yükselen Trend',
+                                enabled: true,
+                                position: 'start',
+                                backgroundColor: 'rgba(0, 200, 0, 0.8)'
+                            }
+                        };
+                        
+                        // Trend çizgisini gelecekteki bir noktaya uzat
+                        if (end.date) {
+                            const endDate = new Date(end.date);
+                            const futureDate = new Date(endDate);
+                            futureDate.setDate(endDate.getDate() + 30); // 30 gün ileri
+                            
+                            const timeDiff = (futureDate - new Date(start.date)) / (1000 * 60 * 60 * 24);
+                            const futurePrice = start.price + (line.slope * timeDiff);
+                            
+                            annotations[`trend-asc-ext-${index}`] = {
+                                type: 'line',
+                                mode: 'linear',
+                                scaleID: 'y',
+                                xMin: end.date,
+                                yMin: end.price,
+                                xMax: futureDate.toISOString(),
+                                yMax: futurePrice,
+                                borderColor: 'rgba(0, 200, 0, 0.4)',
+                                borderWidth: 2,
+                                borderDash: [5, 5]
+                            };
+                        }
+                    });
+                    
+                    patterns.trendLines.descending.forEach((line, index) => {
+                        const start = line.start;
+                        const end = line.end;
+                        
+                        annotations[`trend-desc-${index}`] = {
+                            type: 'line',
+                            mode: 'linear',
+                            scaleID: 'y',
+                            xMin: start.date,
+                            yMin: start.price,
+                            xMax: end.date,
+                            yMax: end.price,
+                            borderColor: 'rgba(200, 0, 0, 0.8)',
+                            borderWidth: 2,
+                            label: {
+                                content: 'Düşen Trend',
+                                enabled: true,
+                                position: 'start',
+                                backgroundColor: 'rgba(200, 0, 0, 0.8)'
+                            }
+                        };
+                        
+                        // Trend çizgisini gelecekteki bir noktaya uzat
+                        if (end.date) {
+                            const endDate = new Date(end.date);
+                            const futureDate = new Date(endDate);
+                            futureDate.setDate(endDate.getDate() + 30); // 30 gün ileri
+                            
+                            const timeDiff = (futureDate - new Date(start.date)) / (1000 * 60 * 60 * 24);
+                            const futurePrice = start.price + (line.slope * timeDiff);
+                            
+                            annotations[`trend-desc-ext-${index}`] = {
+                                type: 'line',
+                                mode: 'linear',
+                                scaleID: 'y',
+                                xMin: end.date,
+                                yMin: end.price,
+                                xMax: futureDate.toISOString(),
+                                yMax: futurePrice,
+                                borderColor: 'rgba(200, 0, 0, 0.4)',
+                                borderWidth: 2,
+                                borderDash: [5, 5]
+                            };
+                        }
+                    });
+                }
+                
+                // Üçgen formasyonları
+                if (showTrianglePatterns) {
+                    patterns.triangles.forEach((triangle, index) => {
+                        const asc = triangle.ascLine;
+                        const desc = triangle.descLine;
+                        
+                        // Kesişim noktasını hesapla
+                        const m1 = asc.slope;
+                        const m2 = desc.slope;
+                        const b1 = asc.start.price - m1 * new Date(asc.start.date).getTime();
+                        const b2 = desc.start.price - m2 * new Date(desc.start.date).getTime();
+                        
+                        const intersectionX = (b2 - b1) / (m1 - m2);
+                        const intersectionDate = new Date(intersectionX);
+                        const intersectionPrice = m1 * intersectionX + b1;
+                        
+                        annotations[`triangle-${index}`] = {
+                            type: 'box',
+                            xMin: Math.min(new Date(asc.start.date), new Date(desc.start.date)),
+                            xMax: intersectionDate,
+                            yMin: Math.min(asc.start.price, desc.start.price, asc.end.price, desc.end.price, intersectionPrice) * 0.99,
+                            yMax: Math.max(asc.start.price, desc.start.price, asc.end.price, desc.end.price, intersectionPrice) * 1.01,
+                            backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                            borderColor: 'rgba(255, 165, 0, 0.8)',
+                            borderWidth: 2,
+                            label: {
+                                content: `Üçgen Formasyon (Hedef: ${intersectionDate.toLocaleDateString()})`,
+                                enabled: true,
+                                position: 'center',
+                                backgroundColor: 'rgba(255, 165, 0, 0.8)'
+                            }
+                        };
+                    });
+                }
+                
+                // Annotations'ları grafiğe ekle
+                myChart.options.plugins.annotation.annotations = annotations;
+                myChart.update();
             }
         });
     </script>

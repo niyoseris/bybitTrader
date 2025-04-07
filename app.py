@@ -577,18 +577,22 @@ def chart(symbol):
                     days_in_year = 365
                     total_hours = hours_in_day * days_in_year
                     hours_per_interval = int(interval) / 60
-                    limit = min(int(total_hours / hours_per_interval), 1000)  # Makul bir limit
+                    limit = min(int(total_hours / hours_per_interval), 10000)  # Makul bir limit
                 elif interval == '30':
                     # 30 dakikalık periyot için 1 yıllık veri
                     # 1 gün = 48 adet 30dk
-                    limit = min(48 * 365, 1000)  # Makul bir limit
+                    limit = min(48 * 365, 10000)  # Makul bir limit
                 elif interval == '15':
                     # 15 dakikalık periyot için 1 yıllık veri
                     # 1 gün = 96 adet 15dk
                     limit = min(96 * 365, 1000)  # Makul bir limit
+                elif interval == '5':
+                    # 5 dakikalık periyot için 1 yıllık veri
+                    # 1 gün = 288 adet 5dk
+                    limit = min(288 * 365, 5000)  # Makul bir limit
                 else:
                     # Diğer kısa intervallar için
-                    limit = min(config_limit, 1000)  # Makul bir limit
+                    limit = min(config_limit, 10000)  # Makul bir limit
     except Exception as e:
         print(f"Config dosyası okuma hatası: {e}")
     
@@ -749,4 +753,4 @@ def get_historical_data(symbol, interval=None, limit=None):
         return []
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=5005)

@@ -39,8 +39,8 @@ class IndicatorAnalyzer:
         # Load API keys from .env if not provided
         if not api_key or not api_secret:
             load_dotenv()
-            api_key = os.getenv('BYBIT_API_KEY')
-            api_secret = os.getenv('BYBIT_API_SECRET')
+            api_key = 'TEST'
+            api_secret = 'TEST'
         
         # Initialize Bybit client
         self.client = HTTP(
@@ -297,8 +297,21 @@ class IndicatorAnalyzer:
             sell_signals = sum(1 for data in market_data.values() if data.get('combined_signal') == 'SELL')
             neutral_signals = sum(1 for data in market_data.values() if data.get('combined_signal') == 'NEUTRAL')
             
+            # Create a clean copy of the market data without NaN values
+            clean_market_data = {}
+            for symbol, data in market_data.items():
+                clean_data = {}
+                for key, value in data.items():
+                    if isinstance(value, dict):
+                        clean_data[key] = {k: (None if pd.isna(v) else v) for k, v in value.items()}
+                    elif isinstance(value, float) and pd.isna(value):
+                        clean_data[key] = None
+                    else:
+                        clean_data[key] = value
+                clean_market_data[symbol] = clean_data
+            
             payload = {
-                'market_data': market_data,
+                'market_data': clean_market_data,
                 'summary': {
                     'buy_signals': buy_signals,
                     'sell_signals': sell_signals,
@@ -383,7 +396,7 @@ def main():
     """Main function"""
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='Analyze markets and send data to API')
-    parser.add_argument('--api-url', type=str, default='http://localhost:5001/api/market-data',
+    parser.add_argument('--api-url', type=str, default='http://localhost:5005/api/market-data',
                       help='URL of the Flask API to send data to')
     parser.add_argument('--testnet', action='store_true', help='Use Bybit testnet')
     parser.add_argument('--config', type=str, default='config.json', help='Path to config file')
@@ -394,8 +407,8 @@ def main():
     
     # Load API keys from environment variables
     load_dotenv()
-    api_key = os.getenv('BYBIT_API_KEY')
-    api_secret = os.getenv('BYBIT_API_SECRET')
+    api_key = 'TEST'
+    api_secret = 'TEST'
     
     # Check if API keys are available
     if not api_key or not api_secret:

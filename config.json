@@ -1,7 +1,7 @@
 {
     "indicators": {
         "RSI": {
-            "enabled": true,
+            "enabled": false,
             "parameters": {
                 "period": 14,
                 "oversold": 30,
@@ -9,14 +9,14 @@
             }
         },
         "SMA": {
-            "enabled": true,
+            "enabled": false,
             "parameters": {
                 "short_period": 20,
                 "long_period": 50
             }
         },
         "MACD": {
-            "enabled": true,
+            "enabled": false,
             "parameters": {
                 "fast_period": 12,
                 "slow_period": 26,
@@ -24,7 +24,7 @@
             }
         },
         "BBANDS": {
-            "enabled": true,
+            "enabled": false,
             "parameters": {
                 "period": 20,
                 "std_dev": 2
@@ -39,13 +39,13 @@
     },
     "trading": {
         "amount": 1.5,
-        "min_volume": 1000000,
+        "min_volume": 10000000,
         "update_interval": 0,
         "max_workers": 20,
-        "stop_loss_percentage": 1,
-        "take_profit_percentage": 0.5,
+        "stop_loss_percentage": 10,
+        "take_profit_percentage": 10,
         "kline": {
-            "interval": "240",
+            "interval": "1",
             "limit": 200
         }
     }
