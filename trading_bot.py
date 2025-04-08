@@ -460,18 +460,37 @@ class TradingBot:
                     any_sell_signals = True
                     break
             
-            # Combined signal oluştur ve işlemi gerçekleştir
+            # Combined signal oluştur
             if all_buy_signals and active_buy_indicators:
                 market_info['combined_signal'] = 'BUY'
-                self.console.print(f"[bold green]Buy Signal detected for {pair} (All buy indicators: {', '.join(active_buy_indicators)})[/bold green]")
-                # Just pass 1.0, place_order will calculate the correct quantity
-                self.place_order(pair, "Buy", 1.0)
+                
+                # Hali hazırda bu coini alıp almadığımızı kontrol et
+                base_currency = pair[:-4] if pair.endswith('USDT') else pair.split('USDT')[0]
+                current_qty = self.positions.get(base_currency, {}).get("free", 0)
+                current_price = float(ticker["lastPrice"])
+                current_value = current_qty * current_price
+                
+                if current_value > 1:  # 2 dolar yerine 1 dolar olarak değiştirildi
+                    self.console.print(f"[bold yellow]Buy Signal detected for {pair} but already holding {current_qty} {base_currency} worth {current_value:.2f} USDT (>1 USDT), skipping buy[/bold yellow]")
+                else:
+                    self.console.print(f"[bold green]Buy Signal detected for {pair} (All buy indicators: {', '.join(active_buy_indicators)})[/bold green]")
+                    # Just pass 1.0, place_order will calculate the correct quantity
+                    self.place_order(pair, "Buy", 1.0)
+                    
             elif any_sell_signals and active_sell_indicators:  # OR mantığı burada kullanılıyor
                 market_info['combined_signal'] = 'SELL'
-                active_sell_signals = [ind for ind in active_sell_indicators if ind in signals and signals[ind] == 'SELL']
-                self.console.print(f"[bold red]Sell Signal detected for {pair} (Selling indicators: {', '.join(active_sell_signals)})[/bold red]")
-                # Just pass 1.0, place_order will calculate the correct quantity
-                self.place_order(pair, "Sell", 1.0)
+                
+                # Hali hazırda bu coini elimizde var mı kontrol et (sadece varsa satışa geç)
+                base_currency = pair[:-4] if pair.endswith('USDT') else pair.split('USDT')[0]
+                current_qty = self.positions.get(base_currency, {}).get("free", 0)
+                
+                if current_qty > 0:
+                    active_sell_signals = [ind for ind in active_sell_indicators if ind in signals and signals[ind] == 'SELL']
+                    self.console.print(f"[bold red]Sell Signal detected for {pair} (Selling indicators: {', '.join(active_sell_signals)})[/bold red]")
+                    # Just pass 1.0, place_order will calculate the correct quantity
+                    self.place_order(pair, "Sell", 1.0)
+                else:
+                    self.console.print(f"[yellow]Sell Signal detected for {pair} but no position to sell[/yellow]")
             else:
                 market_info['combined_signal'] = 'NEUTRAL'
                 
@@ -592,8 +611,8 @@ class TradingBot:
                 current_qty = self.positions.get(base_currency, {}).get("free", 0)
                 current_value = current_qty * current_price
                 
-                if current_value > 2:
-                    self.console.print(f"[yellow]Already holding {current_qty} {base_currency} worth {current_value:.2f} USDT (>2 USDT), skipping buy[/yellow]")
+                if current_value > 1:  # 2 dolar yerine 1 dolar olarak değiştirildi
+                    self.console.print(f"[yellow]Already holding {current_qty} {base_currency} worth {current_value:.2f} USDT (>1 USDT), skipping buy[/yellow]")
                     return None
                 
                 # For buy orders, always use 5.5
