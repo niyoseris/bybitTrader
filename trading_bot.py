@@ -446,6 +446,21 @@ class TradingBot:
             active_buy_indicators = [ind for ind, enabled in self.buy_indicators.items() if enabled]
             active_sell_indicators = [ind for ind, enabled in self.sell_indicators.items() if enabled]
             
+            # Öncelikle RSI değerini kontrol et - eğer RSI 60'ın üzerindeyse hemen satış yap
+            if self.active_indicators['RSI'] and 'RSI' in values:
+                rsi_value = values['RSI']
+                base_currency = pair[:-4] if pair.endswith('USDT') else pair.split('USDT')[0]
+                current_qty = self.positions.get(base_currency, {}).get("free", 0)
+                
+                # RSI 60'ın üzerindeyse ve elimizde bu coin varsa, hemen satış yap
+                if rsi_value > 60 and current_qty > 0:
+                    self.console.print(f"[bold red]DIRECT SELL! RSI value {rsi_value} > 60 for {pair}[/bold red]")
+                    self.place_order(pair, "Sell", 1.0)
+                    market_info['combined_signal'] = 'SELL'
+                    return pair, market_info
+            
+            # RSI satış durumu değilse, normal alış/satış mantığını uygula
+            
             # Alış sinyalleri: enabled_for_buy olan TÜM indikatörler alış sinyali veriyorsa (AND mantığı)
             all_buy_signals = True
             for indicator in active_buy_indicators:

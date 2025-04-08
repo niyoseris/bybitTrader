@@ -36,7 +36,7 @@
         },
         "FIBONACCI": {
             "enabled_for_buy": true,
-            "enabled_for_sell": true,
+            "enabled_for_sell": false,
             "parameters": {
                 "levels": [0, 0.236, 0.382, 0.618, 1]
             }

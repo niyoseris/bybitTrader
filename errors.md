@@ -1,46 +1,62 @@
 # Trading Bot Errors and Solutions
 
+## Position Management Issues
+
+### Error: Bot buys coins it already holds
+- **Description**: The trading bot was executing buy orders even when it already held a position in that coin.
+- **Solution**: Updated the `analyze_market` and `place_order` functions to check if the bot already holds a coin before executing a buy order. Added a threshold (currently set to $1) to prevent buying coins that are already held above this value.
+
+### Error: RSI sell signals not executing
+- **Description**: The bot was not executing sell orders when only the RSI indicator provided a sell signal.
+- **Solution**: Modified the `analyze_market` function to prioritize RSI sell signals. When RSI exceeds 60 and the coin is held, a sell order is executed immediately, bypassing other indicator checks.
+
+### Error: Position checks not working when disabled
+- **Description**: Even when `enable_position_checks` was set to `false` in the config, the bot was still checking positions.
+- **Solution**: Enhanced the position checking logic to respect the configuration setting properly. When position checks are disabled, the bot will not perform take profit/stop loss checks but will still prevent duplicate buys.
+
+## Configuration Issues
+
+### Error: Indicator settings not applied correctly
+- **Description**: Changes to indicator settings in the config file were not being reflected in the bot's behavior.
+- **Solution**: Improved the configuration loading mechanism to validate and apply all indicator settings at startup. Added logging to confirm that settings are loaded correctly.
+
 ## API Connection Errors
 
-- **Connection Pool Full**: When the bot makes too many concurrent API requests, the connection pool can become full.
-  - Solution: Implemented better connection pooling management and reduced concurrent requests.
+### Error: Connection Pool Full
+- **Description**: When the bot makes too many concurrent API requests, the connection pool can become full.
+- **Solution**: Implemented better connection pooling management and reduced concurrent requests.
 
-## PyBit Library Integration
+### Error: Authentication Errors
+- **Description**: Issues with API key and secret handling in PyBit initialization.
+- **Solution**: Updated the API key and secret loading process to ensure proper authentication.
 
-- **Authentication Errors**: Issues with API key and secret handling in PyBit initialization.
-  - Solution: Updated the API key and secret loading process to ensure proper authentication.
-
-- **Rate Limiting**: Hitting Bybit API rate limits during high activity periods.
-  - Solution: Implemented exponential backoff and request batching.
-
-## Indicator Calculation
-
-- **Missing Indicator Values**: The application was receiving data but not showing all indicator values in the web interface.
-  - Solution: Modified `show_indicators.py` to include both signal and actual indicator values in the returned data, then updated templates.
-
-- **Fibonacci Signal Display**: Fibonacci signals were not being displayed on the chart.
-  - Solution: Fixed format mismatch by changing Fibonacci level keys from 'FIB_0.382' to 'FIB_0_382' to avoid JavaScript property access conflicts.
+### Error: Rate Limiting
+- **Description**: Hitting Bybit API rate limits during high activity periods.
+- **Solution**: Implemented exponential backoff and request batching.
 
 ## UI/UX Issues
 
-- **HTML Template Issues**: Problems with displaying indicator values and filtering options.
-  - Solution: Implemented DataTables library for better sorting and filtering, added checkboxes for indicator-based filtering.
+### Error: Missing indicator values in display
+- **Description**: Some indicator values were not being displayed in the console output or web interface.
+- **Solution**: Updated the display formatting to show all active indicator values and their respective signals.
 
-- **Automatic Page Refresh**: Table would disappear after being displayed due to automatic refreshing.
-  - Solution: Disabled automatic refresh meta tags and implemented manual refresh button.
+### Error: Table automatic refresh
+- **Description**: Table would disappear after being displayed due to automatic refreshing.
+- **Solution**: Disabled automatic refresh meta tags and implemented manual refresh button.
 
-- **Signal Strength Calculation**: Inconsistencies in signal strength calculation.
-  - Solution: Updated calculation logic to properly account for all signal types including STRONG_SELL and STRONG_BUY.
+### Error: Signal strength calculation
+- **Description**: Inconsistencies in signal strength calculation.
+- **Solution**: Updated calculation logic to properly account for all signal types including STRONG_SELL and STRONG_BUY.
 
-## Chart Visualization
+## Trading Logic Errors
 
-- **Missing Signal Points**: Current signals were not automatically displayed on the chart when entering a coin page.
-  - Solution: Implemented `showCurrentSignals()` function to automatically display points matching current signals when the page loads.
+### Error: Inconsistent sell signal logic
+- **Description**: The bot used different logic for buy signals (AND) and sell signals (OR), leading to confusion.
+- **Solution**: Made the logic configurable in the settings, allowing users to choose between AND/OR logic for both buy and sell signals independently.
 
-- **Signal Logic Issues**: AND vs OR logic confusion in signal display.
-  - Solution: Updated to use OR logic, allowing any selected indicator to trigger the display of historical signals.
-
-# Trading Bot Errors
+### Error: Direct RSI sell trigger needed
+- **Description**: Users needed the ability to have RSI directly trigger a sell without checking other indicators.
+- **Solution**: Implemented a priority check for RSI in the `analyze_market` function that can bypass normal indicator logic and directly trigger a sell order when RSI exceeds a threshold.
 
 ## Module Import Errors
 - **Missing Module**: `ModuleNotFoundError: No module named 'data_collector'` - Fixed by creating data_collector.py with fetch_klines function
@@ -59,28 +75,22 @@
 4. Improved check_positions to handle both wallet and tracked positions
 5. Added command-line arguments for customization
 
-# Errors and Solutions
+## UI/UX Issues
 
-## 1. HTML Template Issues
-
-### Error: Missing all indicator values in display
-**Problem**: The application was receiving data but not showing all indicator values in the web interface.
-**Solution**: Modified the `show_indicators.py` file to include both signal and actual indicator values in the return data, then updated the template to display these values with better formatting.
-
-### Error: Lack of filtering options for indicators
-**Problem**: Users could not filter the table based on specific indicators.
-**Solution**: Implemented DataTables library for table sorting and advanced filtering, added checkboxes for indicator-based filtering and signal filtering.
+### Error: HTML Template Issues
+- **Description**: Problems with displaying indicator values and filtering options.
+- **Solution**: Implemented DataTables library for better sorting and filtering, added checkboxes for indicator-based filtering.
 
 ### Error: Jinja2 Template Hatası - Fibonacci Gösterimi
-**Problem**: Fibonacci bölümünde `data.values.keys()` metodunun çağrılması sırasında hata oluşuyor: 
+- **Description**: Fibonacci bölümünde `data.values.keys()` metodunun çağrılması sırasında hata oluşuyor: 
 `jinja2.exceptions.UndefinedError: 'builtin_function_or_method object' has no attribute 'keys'`
-**Solution**: Şablon dosyasında Fibonacci gösterimi için daha güvenli bir kontrol ekledik. `{% if data.values and data.values is mapping %}` kontrolü ile değerin bir dictionary olduğundan emin olduktan sonra `{% for key, value in data.values.items() %}` döngüsünü kullanarak ve `{% if key.startswith('FIB_') %}` koşuluyla filtreleme yaparak hatayı çözdük. Bu, `values` bazen bir dictionary olmadığı ve built-in method olarak yorumlandığı durumları önlüyor.
+- **Solution**: Şablon dosyasında Fibonacci gösterimi için daha güvenli bir kontrol ekledik. `{% if data.values and data.values is mapping %}` kontrolü ile değerin bir dictionary olduğundan emin olduktan sonra `{% for key, value in data.values.items() %}` döngüsünü kullanarak ve `{% if key.startswith('FIB_') %}` koşuluyla filtreleme yaparak hatayı çözdük. Bu, `values` bazen bir dictionary olmadığı ve built-in method olarak yorumlandığı durumları önlüyor.
 
 ## 2. JavaScript Functionality Issues
 
 ### Error: Original filtering mechanism was limited
-**Problem**: The original dropdown filter only allowed filtering by buy/sell/neutral signals one at a time.
-**Solution**: Upgraded to a more robust filtering system with:
+- **Description**: The original dropdown filter only allowed filtering by buy/sell/neutral signals one at a time.
+- **Solution**: Upgraded to a more robust filtering system with:
 - Checkboxes for multiple indicator selection
 - Advanced data table functionality (sorting, pagination)
 - Data attributes for cells to facilitate filtering logic
@@ -88,10 +98,10 @@
 ## 3. UI/UX Improvements
 
 ### Issue: Table wasn't sortable
-**Solution**: Implemented DataTables library for column sorting, pagination, and search functionality.
+- **Solution**: Implemented DataTables library for column sorting, pagination, and search functionality.
 
 ### Issue: Poor organization of filter options
-**Solution**: Created a dedicated filter container with better styling and organization of filter options
+- **Solution**: Created a dedicated filter container with better styling and organization of filter options
 
 # Tespit Edilen Hatalar ve Çözümleri
 
@@ -479,3 +489,22 @@ This file tracks errors and issues encountered in the trading bot project to pre
   - Incorrect parameter formats in config.json
   - Inconsistent indicator parameter values
   - Invalid timeframe specifications
+
+## RSI Indicator Sell Signal Issues
+
+### Error: RSI Sell Signals Not Executing
+**Problem**: When the RSI indicator exceeds 60 and is enabled for selling in the config.json, it sometimes fails to execute sell orders.
+**Cause**: There are three conditions that need to be met for an RSI sell to occur:
+1. The RSI value must be greater than 60 (overbought threshold in config.json)
+2. The RSI indicator must be enabled for selling in config.json
+3. The user must hold the coin in their wallet
+
+**Solution**: 
+- Ensure position checks are enabled with `"enable_position_checks": true` in config.json
+- Verify that the RSI indicator is correctly configured with `"enabled_for_sell": true`
+- If using RSI exclusively for sell signals, consider adjusting the overbought threshold to the standard level of 70 rather than 60
+
+### Error: RSI and Other Indicators Conflict
+**Problem**: When multiple indicators are enabled for selling, the bot might not sell based on just RSI.
+**Cause**: The analyze_market function uses OR logic for sell signals, meaning any active sell indicator should trigger a sell, but position requirements or other conditions might be interfering.
+**Solution**: If you want to prioritize RSI for selling, the bot already has a specific check for RSI values > 60 before evaluating other indicators. This direct sell check is implemented in lines 449-458 of trading_bot.py.
