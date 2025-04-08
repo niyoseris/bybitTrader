@@ -52,6 +52,11 @@
         "kline": {
             "interval": "1",
             "limit": 200
+        },
+        "position_management": {
+            "enable_position_checks": false,
+            "enable_take_profit": true,
+            "enable_stop_loss": true
         }
     }
 } 

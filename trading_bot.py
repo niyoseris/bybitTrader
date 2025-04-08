@@ -49,35 +49,40 @@ class TradingBot:
         self.market_data_lock = Lock()
         self.load_config(config_path)
         
-        # First get current positions from the exchange
-        self.positions = self.get_positions()
-        
-        # Then load saved positions from file and merge them
-        saved_positions = self.load_positions_from_file()
-        if saved_positions:
-            # Update positions with saved data for coins not currently in the wallet
-            for coin, data in saved_positions.items():
-                if coin not in self.positions:
-                    self.console.print(f"[cyan]Adding saved position for {coin} from positions.json[/cyan]")
-                    # Create a basic position structure
-                    self.positions[coin] = {
-                        "free": data.get("total", 0),
-                        "locked": 0,
-                        "total": data.get("total", 0),
-                        "entry_price": data.get("entry_price"),
-                        "stop_loss": data.get("stop_loss"),
-                        "take_profit": data.get("take_profit")
-                    }
-                else:
-                    # Update existing position with saved trading data if missing
-                    if not self.positions[coin].get("entry_price") and data.get("entry_price"):
-                        self.console.print(f"[cyan]Updating position data for {coin} from positions.json[/cyan]")
-                        self.positions[coin]["entry_price"] = data.get("entry_price")
-                        self.positions[coin]["stop_loss"] = data.get("stop_loss")
-                        self.positions[coin]["take_profit"] = data.get("take_profit")
+        # Pozisyon kontrollerini yapılandırmadan kontrol et
+        if not self.enable_position_checks:
+            self.console.print("[yellow]Position checks are disabled, skipping position queries[/yellow]")
+            self.positions = {}  # Boş bir positions sözlüğü oluştur
+        else:
+            # First get current positions from the exchange
+            self.positions = self.get_positions()
             
-            # Save the merged positions
-            self.save_positions_to_file()
+            # Then load saved positions from file and merge them
+            saved_positions = self.load_positions_from_file()
+            if saved_positions:
+                # Update positions with saved data for coins not currently in the wallet
+                for coin, data in saved_positions.items():
+                    if coin not in self.positions:
+                        self.console.print(f"[cyan]Adding saved position for {coin} from positions.json[/cyan]")
+                        # Create a basic position structure
+                        self.positions[coin] = {
+                            "free": data.get("total", 0),
+                            "locked": 0,
+                            "total": data.get("total", 0),
+                            "entry_price": data.get("entry_price"),
+                            "stop_loss": data.get("stop_loss"),
+                            "take_profit": data.get("take_profit")
+                        }
+                    else:
+                        # Update existing position with saved trading data if missing
+                        if not self.positions[coin].get("entry_price") and data.get("entry_price"):
+                            self.console.print(f"[cyan]Updating position data for {coin} from positions.json[/cyan]")
+                            self.positions[coin]["entry_price"] = data.get("entry_price")
+                            self.positions[coin]["stop_loss"] = data.get("stop_loss")
+                            self.positions[coin]["take_profit"] = data.get("take_profit")
+                
+                # Save the merged positions
+                self.save_positions_to_file()
         
     def load_config(self, config_path):
         """Load configuration from JSON file"""
@@ -110,6 +115,12 @@ class TradingBot:
             self.stop_loss_percentage = config.STOP_LOSS_PERCENT * 100  # Convert to percentage
             self.take_profit_percentage = config.TAKE_PROFIT_PERCENT * 100  # Convert to percentage
             
+            # Position management ayarlarını yükle - varsayılan olarak hepsini etkinleştir
+            position_management = config_json['trading'].get('position_management', {})
+            self.enable_position_checks = position_management.get('enable_position_checks', True)
+            self.enable_take_profit = position_management.get('enable_take_profit', True)
+            self.enable_stop_loss = position_management.get('enable_stop_loss', True)
+            
             self.kline_interval = str(config_json['trading']['kline']['interval'])
             self.kline_limit = int(config_json['trading']['kline']['limit'])
             
@@ -133,6 +144,13 @@ class TradingBot:
                     self.console.print(f"  - {indicator}")
                     
             self.console.print(f"[blue]Stop Loss: {self.stop_loss_percentage}%, Take Profit: {self.take_profit_percentage}%[/blue]")
+            
+            # Position management durumunu yazdır
+            self.console.print("[blue]Position management settings:[/blue]")
+            self.console.print(f"  - Position checks: {'Enabled' if self.enable_position_checks else 'Disabled'}")
+            self.console.print(f"  - Take profit: {'Enabled' if self.enable_take_profit else 'Disabled'}")
+            self.console.print(f"  - Stop loss: {'Enabled' if self.enable_stop_loss else 'Disabled'}")
+            
         except Exception as e:
             self.console.print(f"[bold red]Error loading config: {str(e)}[/bold red]")
             raise
@@ -428,18 +446,18 @@ class TradingBot:
             active_buy_indicators = [ind for ind, enabled in self.buy_indicators.items() if enabled]
             active_sell_indicators = [ind for ind, enabled in self.sell_indicators.items() if enabled]
             
-            # Alış sinyalleri: enabled_for_buy olan TÜM indikatörler alış sinyali veriyorsa
+            # Alış sinyalleri: enabled_for_buy olan TÜM indikatörler alış sinyali veriyorsa (AND mantığı)
             all_buy_signals = True
             for indicator in active_buy_indicators:
                 if indicator in signals and signals[indicator] not in ['BUY', 'STRONG_BUY']:
                     all_buy_signals = False
                     break
             
-            # Satış sinyalleri: enabled_for_sell olan TÜM indikatörler satış sinyali veriyorsa
-            all_sell_signals = True
+            # Satış sinyalleri: enabled_for_sell olan HERHANGİ BİR indikatör satış sinyali veriyorsa (OR mantığı)
+            any_sell_signals = False
             for indicator in active_sell_indicators:
-                if indicator in signals and signals[indicator] != 'SELL':
-                    all_sell_signals = False
+                if indicator in signals and signals[indicator] == 'SELL':
+                    any_sell_signals = True
                     break
             
             # Combined signal oluştur ve işlemi gerçekleştir
@@ -448,9 +466,10 @@ class TradingBot:
                 self.console.print(f"[bold green]Buy Signal detected for {pair} (All buy indicators: {', '.join(active_buy_indicators)})[/bold green]")
                 # Just pass 1.0, place_order will calculate the correct quantity
                 self.place_order(pair, "Buy", 1.0)
-            elif all_sell_signals and active_sell_indicators:
+            elif any_sell_signals and active_sell_indicators:  # OR mantığı burada kullanılıyor
                 market_info['combined_signal'] = 'SELL'
-                self.console.print(f"[bold red]Sell Signal detected for {pair} (All sell indicators: {', '.join(active_sell_indicators)})[/bold red]")
+                active_sell_signals = [ind for ind in active_sell_indicators if ind in signals and signals[ind] == 'SELL']
+                self.console.print(f"[bold red]Sell Signal detected for {pair} (Selling indicators: {', '.join(active_sell_signals)})[/bold red]")
                 # Just pass 1.0, place_order will calculate the correct quantity
                 self.place_order(pair, "Sell", 1.0)
             else:
@@ -718,8 +737,11 @@ class TradingBot:
         while True:
             try:
                 # Step 1: Check existing positions for stop loss and take profit
-                self.console.print("[bold blue]Step 1: Checking existing positions...[/bold blue]")
-                self.check_positions()
+                if self.enable_position_checks:
+                    self.console.print("[bold blue]Step 1: Checking existing positions...[/bold blue]")
+                    self.check_positions()
+                else:
+                    self.console.print("[yellow]Step 1: Position checks are disabled, skipping...[/yellow]")
                 
                 # Step 2: Get markets
                 self.console.print("[bold blue]Step 2: Identifying high volume markets...[/bold blue]")
@@ -760,6 +782,11 @@ class TradingBot:
     def check_positions(self):
         """Check current positions for stop loss and take profit levels"""
         try:
+            # Eğer position_checks devre dışı bırakıldıysa, hiçbir şey yapma
+            if not self.enable_position_checks:
+                self.console.print("[yellow]Position checks are disabled in config.json[/yellow]")
+                return
+                
             # Print current positions summary
             self.console.print("[bold blue]Checking current positions...[/bold blue]")
             
@@ -831,8 +858,8 @@ class TradingBot:
                     else:
                         self.console.print(f"[yellow]Position is not in wallet, may be a saved/tracked position[/yellow]")
                     
-                    # Check stop loss
-                    if current_price <= stop_loss_price:
+                    # Check stop loss - eğer stop loss etkinse
+                    if self.enable_stop_loss and current_price <= stop_loss_price:
                         self.console.print(f"[red]Stop Loss triggered for {symbol} at {current_price:.8f}[/red]")
                         # Cancel existing limit sell orders before selling
                         self.cancel_all_orders(symbol)
@@ -844,8 +871,8 @@ class TradingBot:
                             # Remove from positions anyway
                             del self.positions[coin]
                         
-                    # Check take profit
-                    elif current_price >= take_profit_price:
+                    # Check take profit - eğer take profit etkinse
+                    elif self.enable_take_profit and current_price >= take_profit_price:
                         self.console.print(f"[green]Take Profit triggered for {symbol} at {current_price:.8f}[/green]")
                         # Cancel existing limit sell orders before selling
                         self.cancel_all_orders(symbol)
