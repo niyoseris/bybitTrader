@@ -86,9 +86,20 @@ class TradingBot:
                 config_json = json.load(f)
                 
             self.active_indicators = {
-                name: indicator['enabled']
+                name: (indicator.get('enabled_for_buy', False) or indicator.get('enabled_for_sell', False))
                 for name, indicator in config_json['indicators'].items()
             }
+            
+            self.buy_indicators = {
+                name: indicator.get('enabled_for_buy', False)
+                for name, indicator in config_json['indicators'].items()
+            }
+            
+            self.sell_indicators = {
+                name: indicator.get('enabled_for_sell', False)
+                for name, indicator in config_json['indicators'].items()
+            }
+            
             self.indicator_params = config_json['indicators']
             self.trade_amount = config_json['trading']['amount']
             self.min_volume = config_json['trading']['min_volume']
@@ -110,6 +121,17 @@ class TradingBot:
             
             self.console.print(f"[green]Configuration loaded successfully from {config_path}[/green]")
             self.console.print(f"[blue]Using {self.kline_interval} minute candles, fetching last {self.kline_limit} candles[/blue]")
+            
+            self.console.print("[blue]Active indicators for BUY signals:[/blue]")
+            for indicator, enabled in self.buy_indicators.items():
+                if enabled:
+                    self.console.print(f"  - {indicator}")
+            
+            self.console.print("[blue]Active indicators for SELL signals:[/blue]")
+            for indicator, enabled in self.sell_indicators.items():
+                if enabled:
+                    self.console.print(f"  - {indicator}")
+                    
             self.console.print(f"[blue]Stop Loss: {self.stop_loss_percentage}%, Take Profit: {self.take_profit_percentage}%[/blue]")
         except Exception as e:
             self.console.print(f"[bold red]Error loading config: {str(e)}[/bold red]")
@@ -368,29 +390,71 @@ class TradingBot:
         try:
             # Get market data
             df = self.get_klines(pair)
-            signals = self.calculate_indicators(df)
+            signals, values = self.calculate_indicators(df)
             
             ticker = self.client.get_tickers(
                 category="spot",
                 symbol=pair
             )["result"]["list"][0]
             
+            # BUY sinyalleri için sadece enabled_for_buy olan indikatörleri kontrol et
+            buy_signals = []
+            for indicator_name, is_enabled in self.buy_indicators.items():
+                if is_enabled and indicator_name in signals:
+                    if signals[indicator_name] in ['BUY', 'STRONG_BUY']:
+                        buy_signals.append(indicator_name)
+            
+            # SELL sinyalleri için sadece enabled_for_sell olan indikatörleri kontrol et
+            sell_signals = []
+            for indicator_name, is_enabled in self.sell_indicators.items():
+                if is_enabled and indicator_name in signals:
+                    if signals[indicator_name] == 'SELL':
+                        sell_signals.append(indicator_name)
+            
+            # Nötr sinyaller
+            neutral_signals = [k for k, v in signals.items() if v == 'NEUTRAL']
+            
             market_info = {
                 'price': float(ticker["lastPrice"]),
                 'volume': float(ticker["volume24h"]) * float(ticker["lastPrice"]) / 1_000_000,
-                'signals': signals
+                'signals': signals,
+                'values': values,
+                'buy_indicators': buy_signals,
+                'sell_indicators': sell_signals,
+                'neutral_indicators': neutral_signals
             }
             
-            # Check signals and place orders
-            active_signals = {k: v for k, v in signals.items() if self.active_indicators[k]}
-            if active_signals and all(signal in ['BUY', 'STRONG_BUY'] for signal in active_signals.values()):
-                self.console.print(f"[bold green]Buy Signal detected for {pair}[/bold green]")
-                # Just pass 1.0 as a placeholder, place_order will calculate the correct quantity
+            # Alış ve satış için farklı indikatörleri kontrol et
+            active_buy_indicators = [ind for ind, enabled in self.buy_indicators.items() if enabled]
+            active_sell_indicators = [ind for ind, enabled in self.sell_indicators.items() if enabled]
+            
+            # Alış sinyalleri: enabled_for_buy olan TÜM indikatörler alış sinyali veriyorsa
+            all_buy_signals = True
+            for indicator in active_buy_indicators:
+                if indicator in signals and signals[indicator] not in ['BUY', 'STRONG_BUY']:
+                    all_buy_signals = False
+                    break
+            
+            # Satış sinyalleri: enabled_for_sell olan TÜM indikatörler satış sinyali veriyorsa
+            all_sell_signals = True
+            for indicator in active_sell_indicators:
+                if indicator in signals and signals[indicator] != 'SELL':
+                    all_sell_signals = False
+                    break
+            
+            # Combined signal oluştur ve işlemi gerçekleştir
+            if all_buy_signals and active_buy_indicators:
+                market_info['combined_signal'] = 'BUY'
+                self.console.print(f"[bold green]Buy Signal detected for {pair} (All buy indicators: {', '.join(active_buy_indicators)})[/bold green]")
+                # Just pass 1.0, place_order will calculate the correct quantity
                 self.place_order(pair, "Buy", 1.0)
-            elif active_signals and all(signal == 'SELL' for signal in active_signals.values()):
-                self.console.print(f"[bold red]Sell Signal detected for {pair}[/bold red]")
-                # Just pass 1.0 as a placeholder, place_order will calculate the correct quantity
+            elif all_sell_signals and active_sell_indicators:
+                market_info['combined_signal'] = 'SELL'
+                self.console.print(f"[bold red]Sell Signal detected for {pair} (All sell indicators: {', '.join(active_sell_indicators)})[/bold red]")
+                # Just pass 1.0, place_order will calculate the correct quantity
                 self.place_order(pair, "Sell", 1.0)
+            else:
+                market_info['combined_signal'] = 'NEUTRAL'
                 
             return pair, market_info
             
@@ -415,33 +479,56 @@ class TradingBot:
     def calculate_indicators(self, df):
         """Calculate technical indicators"""
         signals = {}
+        values = {}  # Dictionary to store actual indicator values
         
         if self.active_indicators['RSI']:
             params = self.indicator_params['RSI']['parameters']
             rsi = RSIIndicator(df['close'], window=params['period']).rsi()
-            signals['RSI'] = 'BUY' if rsi.iloc[-1] < params['oversold'] else 'SELL' if rsi.iloc[-1] > params['overbought'] else 'NEUTRAL'
+            rsi_value = rsi.iloc[-1]
+            signals['RSI'] = 'BUY' if rsi_value < params['oversold'] else 'SELL' if rsi_value > params['overbought'] else 'NEUTRAL'
+            values['RSI'] = round(float(rsi_value), 2)
             
         if self.active_indicators['SMA']:
             params = self.indicator_params['SMA']['parameters']
             sma_short = SMAIndicator(df['close'], window=params['short_period']).sma_indicator()
             sma_long = SMAIndicator(df['close'], window=params['long_period']).sma_indicator()
-            signals['SMA'] = 'BUY' if sma_short.iloc[-1] > sma_long.iloc[-1] else 'SELL'
+            sma_short_value = sma_short.iloc[-1]
+            sma_long_value = sma_long.iloc[-1]
+            signals['SMA'] = 'BUY' if sma_short_value > sma_long_value else 'SELL'
+            values['SMA_Short'] = round(float(sma_short_value), 4)
+            values['SMA_Long'] = round(float(sma_long_value), 4)
+            values['SMA_Diff'] = round(float(sma_short_value - sma_long_value), 4)
             
         if self.active_indicators['MACD']:
             params = self.indicator_params['MACD']['parameters']
-            macd = MACD(
+            macd_obj = MACD(
                 df['close'],
                 window_fast=params['fast_period'],
                 window_slow=params['slow_period'],
                 window_sign=params['signal_period']
             )
-            signals['MACD'] = 'BUY' if macd.macd().iloc[-1] > macd.macd_signal().iloc[-1] else 'SELL'
+            macd_line = macd_obj.macd().iloc[-1]
+            macd_signal = macd_obj.macd_signal().iloc[-1]
+            macd_hist = macd_obj.macd_diff().iloc[-1]
+            
+            signals['MACD'] = 'BUY' if macd_line > macd_signal else 'SELL'
+            values['MACD_Line'] = round(float(macd_line), 4)
+            values['MACD_Signal'] = round(float(macd_signal), 4)
+            values['MACD_Hist'] = round(float(macd_hist), 4)
             
         if self.active_indicators['BBANDS']:
             params = self.indicator_params['BBANDS']['parameters']
             bb = BollingerBands(df['close'], window=params['period'], window_dev=params['std_dev'])
             current_price = df['close'].iloc[-1]
-            signals['BBANDS'] = 'BUY' if current_price < bb.bollinger_lband().iloc[-1] else 'SELL' if current_price > bb.bollinger_hband().iloc[-1] else 'NEUTRAL'
+            bb_upper = bb.bollinger_hband().iloc[-1]
+            bb_lower = bb.bollinger_lband().iloc[-1]
+            bb_middle = bb.bollinger_mavg().iloc[-1]
+            
+            signals['BBANDS'] = 'BUY' if current_price < bb_lower else 'SELL' if current_price > bb_upper else 'NEUTRAL'
+            values['BB_Upper'] = round(float(bb_upper), 4)
+            values['BB_Middle'] = round(float(bb_middle), 4)
+            values['BB_Lower'] = round(float(bb_lower), 4)
+            values['BB_Width'] = round(float((bb_upper - bb_lower) / bb_middle * 100), 2)  # % Band width
             
         if self.active_indicators['FIBONACCI']:
             high = df['high'].max()
@@ -450,9 +537,14 @@ class TradingBot:
             levels = self.indicator_params['FIBONACCI']['parameters']['levels']
             fib_levels = {level: low + level * diff for level in levels}
             current_price = df['close'].iloc[-1]
-            signals['FIBONACCI'] = self._get_fibonacci_signal(current_price, fib_levels)
             
-        return signals
+            signals['FIBONACCI'] = self._get_fibonacci_signal(current_price, fib_levels)
+            for level in levels:
+                # Use underscore instead of decimal point to avoid issues in JavaScript
+                level_str = str(level).replace('.', '_')
+                values[f'FIB_{level_str}'] = round(float(fib_levels[level]), 4)
+            
+        return signals, values
     
     def _get_fibonacci_signal(self, price, fib_levels):
         """Get trading signal based on Fibonacci levels"""
@@ -593,6 +685,7 @@ class TradingBot:
         for indicator in self.active_indicators:
             if self.active_indicators[indicator]:
                 table.add_column(indicator, justify="center")
+        table.add_column("Signal", justify="center", style="bold")
         
         # Add rows
         for symbol, data in market_data.items():
@@ -608,6 +701,12 @@ class TradingBot:
                     signal = data['signals'][indicator]
                     color = "green" if signal in ['BUY', 'STRONG_BUY'] else "red" if signal == 'SELL' else "white"
                     row.append(f"[{color}]{signal}[/{color}]")
+            
+            # Add combined signal
+            combined_signal = data.get('combined_signal', 'NEUTRAL')
+            signal_color = "green" if combined_signal == 'BUY' else "red" if combined_signal == 'SELL' else "white"
+            row.append(f"[{signal_color}]{combined_signal}[/{signal_color}]")
+            
             table.add_row(*row)
         
         self.console.print(table)

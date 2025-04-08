@@ -1,13 +1,49 @@
+# Trading Bot Errors and Solutions
+
+## API Connection Errors
+
+- **Connection Pool Full**: When the bot makes too many concurrent API requests, the connection pool can become full.
+  - Solution: Implemented better connection pooling management and reduced concurrent requests.
+
+## PyBit Library Integration
+
+- **Authentication Errors**: Issues with API key and secret handling in PyBit initialization.
+  - Solution: Updated the API key and secret loading process to ensure proper authentication.
+
+- **Rate Limiting**: Hitting Bybit API rate limits during high activity periods.
+  - Solution: Implemented exponential backoff and request batching.
+
+## Indicator Calculation
+
+- **Missing Indicator Values**: The application was receiving data but not showing all indicator values in the web interface.
+  - Solution: Modified `show_indicators.py` to include both signal and actual indicator values in the returned data, then updated templates.
+
+- **Fibonacci Signal Display**: Fibonacci signals were not being displayed on the chart.
+  - Solution: Fixed format mismatch by changing Fibonacci level keys from 'FIB_0.382' to 'FIB_0_382' to avoid JavaScript property access conflicts.
+
+## UI/UX Issues
+
+- **HTML Template Issues**: Problems with displaying indicator values and filtering options.
+  - Solution: Implemented DataTables library for better sorting and filtering, added checkboxes for indicator-based filtering.
+
+- **Automatic Page Refresh**: Table would disappear after being displayed due to automatic refreshing.
+  - Solution: Disabled automatic refresh meta tags and implemented manual refresh button.
+
+- **Signal Strength Calculation**: Inconsistencies in signal strength calculation.
+  - Solution: Updated calculation logic to properly account for all signal types including STRONG_SELL and STRONG_BUY.
+
+## Chart Visualization
+
+- **Missing Signal Points**: Current signals were not automatically displayed on the chart when entering a coin page.
+  - Solution: Implemented `showCurrentSignals()` function to automatically display points matching current signals when the page loads.
+
+- **Signal Logic Issues**: AND vs OR logic confusion in signal display.
+  - Solution: Updated to use OR logic, allowing any selected indicator to trigger the display of historical signals.
+
 # Trading Bot Errors
 
 ## Module Import Errors
 - **Missing Module**: `ModuleNotFoundError: No module named 'data_collector'` - Fixed by creating data_collector.py with fetch_klines function
-
-## API Errors
-- **Connection Pool**: Connection pool is full, discarding connection - Need to implement connection pooling management or reduce concurrent requests
-
-## Runtime Errors
-- **Connection Pool**: Connection pool is full, discarding connection - Might need to implement connection pooling management or reduce concurrent requests
 
 ## Configuration Errors
 - None reported yet
@@ -377,3 +413,27 @@ Bu değişikliklerle string karşılaştırma sorununu aşarak daha güvenilir b
 - Daha temiz bir kullanıcı arayüzü
 - Debug bilgilerine artık gerek olmadığı için daha yalın yapı
 - Doğru sıralama sayesinde en yüksek ve en düşük sinyal değerlerine sahip pazarları daha kolay görüntüleme
+
+# Trading Bot Errors Log
+
+This file tracks errors and issues encountered with the trading bot to avoid repeating them.
+
+## API Connection Issues
+- PyBit connection failures may occur due to invalid credentials
+- Rate limiting issues when making too many requests to Bybit API
+
+## Signal Processing Issues
+- Fibonacci indicator signals not showing properly on charts
+- Signal calculation errors when data is missing
+
+## UI/Display Issues
+- Chart not updating automatically when new data arrives
+- Signal indicators not properly color-coded in some situations
+
+## Performance Issues
+- Slow response when processing multiple markets simultaneously
+- High memory usage when keeping extensive historical data
+
+## Configuration Issues
+- Missing API credentials in .env file
+- Incorrect format for configuration parameters

@@ -65,9 +65,20 @@ class IndicatorAnalyzer:
                 config_json = json.load(f)
                 
             self.active_indicators = {
-                name: indicator['enabled']
+                name: (indicator.get('enabled_for_buy', False) or indicator.get('enabled_for_sell', False))
                 for name, indicator in config_json['indicators'].items()
             }
+            
+            self.buy_indicators = {
+                name: indicator.get('enabled_for_buy', False)
+                for name, indicator in config_json['indicators'].items()
+            }
+            
+            self.sell_indicators = {
+                name: indicator.get('enabled_for_sell', False)
+                for name, indicator in config_json['indicators'].items()
+            }
+            
             self.indicator_params = config_json['indicators']
             self.min_volume = config_json['trading']['min_volume']
             self.kline_interval = str(config_json['trading']['kline']['interval'])
@@ -76,7 +87,17 @@ class IndicatorAnalyzer:
             
             console.print(f"[green]Configuration loaded successfully from {config_path}[/green]")
             console.print(f"[blue]Using {self.kline_interval} minute candles, fetching last {self.kline_limit} candles[/blue]")
-            console.print(f"[blue]Active indicators: {', '.join([k for k, v in self.active_indicators.items() if v])}[/blue]")
+            
+            console.print("[blue]Active indicators for BUY signals:[/blue]")
+            for indicator, enabled in self.buy_indicators.items():
+                if enabled:
+                    console.print(f"  - {indicator}")
+            
+            console.print("[blue]Active indicators for SELL signals:[/blue]")
+            for indicator, enabled in self.sell_indicators.items():
+                if enabled:
+                    console.print(f"  - {indicator}")
+            
             console.print(f"[blue]Using {self.max_workers} parallel threads for analysis[/blue]")
             if self.api_url:
                 console.print(f"[blue]Will send results to API: {self.api_url}[/blue]")
@@ -182,7 +203,9 @@ class IndicatorAnalyzer:
             
             signals['FIBONACCI'] = self._get_fibonacci_signal(current_price, fib_levels)
             for level in levels:
-                values[f'FIB_{int(level*1000)}'] = round(float(fib_levels[level]), 4)
+                # Decimal nokta ile sorun çıkmasın diye _ kullanıyoruz
+                level_str = str(level).replace('.', '_')
+                values[f'FIB_{level_str}'] = round(float(fib_levels[level]), 4)
             
         return signals, values
     
@@ -212,31 +235,60 @@ class IndicatorAnalyzer:
                 symbol=pair
             )["result"]["list"][0]
             
-            # Group indicators by signal type
-            buy_indicators = [k for k, v in signals.items() if v in ['BUY', 'STRONG_BUY']]
-            sell_indicators = [k for k, v in signals.items() if v == 'SELL']
-            neutral_indicators = [k for k, v in signals.items() if v == 'NEUTRAL']
+            # BUY sinyalleri için sadece enabled_for_buy olan indikatörleri kontrol et
+            buy_signals = []
+            for indicator_name, is_enabled in self.buy_indicators.items():
+                if is_enabled and indicator_name in signals:
+                    if signals[indicator_name] in ['BUY', 'STRONG_BUY']:
+                        buy_signals.append(indicator_name)
+            
+            # SELL sinyalleri için sadece enabled_for_sell olan indikatörleri kontrol et
+            sell_signals = []
+            for indicator_name, is_enabled in self.sell_indicators.items():
+                if is_enabled and indicator_name in signals:
+                    if signals[indicator_name] == 'SELL':
+                        sell_signals.append(indicator_name)
+            
+            # Nötr sinyaller
+            neutral_signals = [k for k, v in signals.items() if v == 'NEUTRAL']
             
             market_info = {
                 'price': float(ticker["lastPrice"]),
                 'volume': float(ticker["volume24h"]) * float(ticker["lastPrice"]) / 1_000_000,
                 'signals': signals,
                 'values': values,
-                'buy_indicators': buy_indicators,
-                'sell_indicators': sell_indicators,
-                'neutral_indicators': neutral_indicators
+                'buy_indicators': buy_signals,
+                'sell_indicators': sell_signals,
+                'neutral_indicators': neutral_signals
             }
             
-            # Check if we have a unanimous buy or sell signal
-            active_signals = {k: v for k, v in signals.items() if self.active_indicators[k]}
-            if active_signals and all(signal in ['BUY', 'STRONG_BUY'] for signal in active_signals.values()):
+            # Alış ve satış için farklı indikatörleri kontrol et
+            active_buy_indicators = [ind for ind, enabled in self.buy_indicators.items() if enabled]
+            active_sell_indicators = [ind for ind, enabled in self.sell_indicators.items() if enabled]
+            
+            # Alış sinyalleri: enabled_for_buy olan TÜM indikatörler alış sinyali veriyorsa
+            all_buy_signals = True
+            for indicator in active_buy_indicators:
+                if indicator in signals and signals[indicator] not in ['BUY', 'STRONG_BUY']:
+                    all_buy_signals = False
+                    break
+            
+            # Satış sinyalleri: enabled_for_sell olan TÜM indikatörler satış sinyali veriyorsa
+            all_sell_signals = True
+            for indicator in active_sell_indicators:
+                if indicator in signals and signals[indicator] != 'SELL':
+                    all_sell_signals = False
+                    break
+            
+            # Combined signal oluştur
+            if all_buy_signals and active_buy_indicators:
                 market_info['combined_signal'] = 'BUY'
                 with self.market_data_lock:
-                    console.print(f"[bold green]Buy Signal detected for {pair}[/bold green]")
-            elif active_signals and all(signal == 'SELL' for signal in active_signals.values()):
+                    console.print(f"[bold green]Buy Signal detected for {pair} (All buy indicators: {', '.join(active_buy_indicators)})[/bold green]")
+            elif all_sell_signals and active_sell_indicators:
                 market_info['combined_signal'] = 'SELL'
                 with self.market_data_lock:
-                    console.print(f"[bold red]Sell Signal detected for {pair}[/bold red]")
+                    console.print(f"[bold red]Sell Signal detected for {pair} (All sell indicators: {', '.join(active_sell_indicators)})[/bold red]")
             else:
                 market_info['combined_signal'] = 'NEUTRAL'
                 

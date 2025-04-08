@@ -1,7 +1,8 @@
 {
     "indicators": {
         "RSI": {
-            "enabled": false,
+            "enabled_for_buy": false,
+            "enabled_for_sell": true,
             "parameters": {
                 "period": 14,
                 "oversold": 30,
@@ -9,14 +10,16 @@
             }
         },
         "SMA": {
-            "enabled": false,
+            "enabled_for_buy": false,
+            "enabled_for_sell": false,
             "parameters": {
                 "short_period": 20,
                 "long_period": 50
             }
         },
         "MACD": {
-            "enabled": false,
+            "enabled_for_buy": false,
+            "enabled_for_sell": false,
             "parameters": {
                 "fast_period": 12,
                 "slow_period": 26,
@@ -24,14 +27,16 @@
             }
         },
         "BBANDS": {
-            "enabled": false,
+            "enabled_for_buy": false,
+            "enabled_for_sell": false,
             "parameters": {
                 "period": 20,
                 "std_dev": 2
             }
         },
         "FIBONACCI": {
-            "enabled": true,
+            "enabled_for_buy": true,
+            "enabled_for_sell": false,
             "parameters": {
                 "levels": [0, 0.236, 0.382, 0.618, 1]
             }
@@ -39,11 +44,11 @@
     },
     "trading": {
         "amount": 1.5,
-        "min_volume": 10000000,
+        "min_volume": 1000000,
         "update_interval": 0,
         "max_workers": 20,
-        "stop_loss_percentage": 10,
-        "take_profit_percentage": 10,
+        "stop_loss_percentage": 1,
+        "take_profit_percentage": 0.5,
         "kline": {
             "interval": "1",
             "limit": 200
