@@ -616,7 +616,7 @@ class TradingBot:
                     return None
                 
                 # For buy orders, always use 5.5
-                qty = 5.5
+                qty = 10
                 
                 self.console.print(f"[yellow]Placing Buy order for {symbol}:[/yellow]")
                 self.console.print(f"Price: {current_price:.8f}")

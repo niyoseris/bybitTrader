@@ -416,24 +416,66 @@ Bu değişikliklerle string karşılaştırma sorununu aşarak daha güvenilir b
 
 # Trading Bot Errors Log
 
-This file tracks errors and issues encountered with the trading bot to avoid repeating them.
+This file tracks errors and issues encountered in the trading bot project to prevent repetition and facilitate troubleshooting.
 
 ## API Connection Issues
-- PyBit connection failures may occur due to invalid credentials
-- Rate limiting issues when making too many requests to Bybit API
+
+- **PyBit Connection Failures**
+  - Connection timeouts when connecting to Bybit API
+  - Authentication failures with API keys
+  - Rate limiting issues (too many requests)
+  - Network connectivity problems affecting API calls
+
+- **API Response Handling**
+  - Unexpected response formats from Bybit API
+  - Missing fields in API responses
+  - Error handling for non-200 HTTP status codes
 
 ## Signal Processing Issues
-- Fibonacci indicator signals not showing properly on charts
-- Signal calculation errors when data is missing
+
+- **Fibonacci Indicator Signals**
+  - Fibonacci signals not displaying on chart visualization
+  - Format mismatch in Fibonacci level keys (fixed by changing from 'FIB_0.382' to 'FIB_0_382' format)
+  - Incorrect calculation of Fibonacci retracement levels
+
+- **General Signal Calculation**
+  - Inconsistent signal generation across different indicators
+  - Signal miscalculations due to insufficient historical data
+  - Conflicting signals between different timeframes
+  - Signal delay causing missed trading opportunities
 
 ## UI/Display Issues
-- Chart not updating automatically when new data arrives
-- Signal indicators not properly color-coded in some situations
+
+- **Chart Visualization**
+  - Charts not updating with real-time data
+  - Signal markers not appearing at correct positions on charts
+  - Incorrect color-coding of buy/sell signal indicators
+  - Issues with time synchronization on x-axis
+
+- **Dashboard Issues**
+  - Table formatting problems in console output
+  - Missing or incorrect data in market overview
+  - Responsiveness issues with web interface
+  - Incorrect sorting of market data by volume/price
 
 ## Performance Issues
-- Slow response when processing multiple markets simultaneously
-- High memory usage when keeping extensive historical data
+
+- **Execution Speed**
+  - Slow response times when scanning multiple markets
+  - High CPU usage during indicator calculations
+  - Memory leaks during extended operation
+  - Thread management issues in parallel market analysis
+
+- **Data Processing**
+  - Delays in fetching market data
+  - High memory consumption when processing large datasets
+  - Inefficient handling of market data updates
+  - Data synchronization issues between components
 
 ## Configuration Issues
-- Missing API credentials in .env file
-- Incorrect format for configuration parameters
+
+- **Parameter Settings**
+  - Missing or invalid API credentials in .env file
+  - Incorrect parameter formats in config.json
+  - Inconsistent indicator parameter values
+  - Invalid timeframe specifications
