@@ -293,7 +293,7 @@ class TradingBot:
             if fib_signal in ['BUY', 'STRONG_BUY']:
                 # Check if RSI is not in overbought territory before buying
                 overbought = self.indicator_params['RSI']['parameters']['overbought']
-                if rsi_value * 1.05 < overbought:
+                if rsi_value < overbought - 10:
                     # Check if we already have this coin
                     wallet = self.get_wallet_balance()
                     base_currency = pair[:-4] if pair.endswith('USDT') else pair.split('USDT')[0]

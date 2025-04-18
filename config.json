@@ -6,7 +6,7 @@
             "parameters": {
                 "period": 14,
                 "oversold": 30,
-                "overbought": 55
+                "overbought": 45
             }
         },
         "SMA": {
@@ -44,7 +44,7 @@
     },
     "trading": {
         "amount": 1.5,
-        "min_volume": 5000000,
+        "min_volume": 10000000,
         "update_interval": 0,
         "max_workers": 10,
         "stop_loss_percentage": 1,
