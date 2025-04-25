@@ -49,12 +49,15 @@
             position: absolute;
             background: white;
             border: 1px solid #ddd;
-            border-radius: 4px;
             padding: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 1000;
             display: none;
             max-width: 300px;
+            font-size: 0.9rem;
+            pointer-events: auto;
+            cursor: default;
         }
         
         .point-details-header {
@@ -896,14 +899,59 @@
                         intersect: false
                     },
                     onClick: function(e, elements) {
+                        // Eğer bir veri noktasına tıklandıysa, o noktanın verilerini kullan
                         if (elements.length > 0) {
                             const element = elements[0];
                             const dataPoint = myChart.data.datasets[element.datasetIndex].data[element.index];
                             showPointDetails(dataPoint, e);
+                        } else {
+                            // Eğer boş bir alana tıklandıysa, en yakın veri noktasını bul
+                            const rect = this.canvas.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            
+                            // Tıklanan x koordinatına karşılık gelen zaman değerini bul
+                            const xValue = this.scales.x.getValueForPixel(x);
+                            
+                            // Fiyat veri setini bul (genellikle ilk veri seti)
+                            const priceDataset = this.data.datasets.find(ds => ds.label === 'Fiyat' || ds.type === 'line');
+                            
+                            if (priceDataset && priceDataset.data.length > 0) {
+                                // En yakın veri noktasını bul
+                                const closestPoint = findClosestDataPoint(priceDataset.data, xValue);
+                                if (closestPoint) {
+                                    showPointDetails(closestPoint, e);
+                                }
+                            }
                         }
                     }
                 }
             });
+            
+            // Belirli bir x değerine en yakın veri noktasını bulan fonksiyon
+            function findClosestDataPoint(dataPoints, xValue) {
+                if (!dataPoints || dataPoints.length === 0) return null;
+                
+                // En yakın noktayı bul (x değerine göre)
+                let closestPoint = null;
+                let minDistance = Infinity;
+                
+                for (const point of dataPoints) {
+                    // x değeri olarak date veya x kullan
+                    const pointX = point.x || point.date;
+                    if (!pointX) continue;
+                    
+                    // Zamansal mesafeyi hesapla
+                    const distance = Math.abs(new Date(pointX).getTime() - new Date(xValue).getTime());
+                    
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestPoint = point;
+                    }
+                }
+                
+                return closestPoint;
+            }
             
             // Tıklanılan noktadaki indikatör değerlerini göster
             function showPointDetails(dataPoint, event) {
@@ -914,22 +962,48 @@
                 
                 // İçerik oluştur
                 let content = `
-                    <div class="point-details-header">
-                        ${new Date(dataPoint.x || dataPoint.date).toLocaleString()} - $${(dataPoint.y || dataPoint.price).toFixed(4)}
+                    <div class="point-details-header" style="font-weight: bold; border-bottom: 1px solid #eee; margin-bottom: 8px; padding-bottom: 5px;">
+                        <i class="fas fa-calendar-alt"></i> ${new Date(dataPoint.x || dataPoint.date).toLocaleString()}
+                        <br>
+                        <i class="fas fa-dollar-sign"></i> $${(dataPoint.y || dataPoint.price).toFixed(4)}
                     </div>
                 `;
                 
+                content += '<div style="max-height: 300px; overflow-y: auto;">';
+                
                 // İndikatör değerlerini ekle
                 if (dataPoint.indicators) {
+                    // RSI - Kullanıcının tercih ettiği RMA (Wilder's) smoothing ile hesaplanan değerler
                     if (dataPoint.indicators.RSI !== undefined) {
                         const rsiClass = dataPoint.signals && dataPoint.signals.RSI === 'BUY' ? 'buy' : 
                                         dataPoint.signals && dataPoint.signals.RSI === 'SELL' ? 'sell' : 'neutral';
+                        
                         content += `
-                            <div class="point-indicator">
-                                <strong>RSI:</strong> ${dataPoint.indicators.RSI.toFixed(2)}
-                                <span class="${rsiClass}"> (${dataPoint.signals ? dataPoint.signals.RSI : 'N/A'})</span>
-                            </div>
+                            <div class="point-indicator" style="margin-bottom: 8px; padding: 5px; background-color: #f8f9fa; border-radius: 3px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <strong>RSI:</strong>
+                                    <span class="${rsiClass}" style="font-weight: bold;">${dataPoint.indicators.RSI.toFixed(2)}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                    <span>Sinyal:</span>
+                                    <span class="${rsiClass}">${dataPoint.signals ? dataPoint.signals.RSI : 'N/A'}</span>
+                                </div>
                         `;
+                        
+                        // RSI için smoothing bilgisi ekle
+                        if (dataPoint.indicators.RSI_Smoothed !== undefined) {
+                            content += `
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 3px;">
+                                    <span>Ham RSI:</span>
+                                    <span>${dataPoint.indicators.RSI_Raw ? dataPoint.indicators.RSI_Raw.toFixed(2) : dataPoint.indicators.RSI.toFixed(2)}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                    <span>Smoothed RSI (RMA):</span>
+                                    <span>${dataPoint.indicators.RSI_Smoothed.toFixed(2)}</span>
+                                </div>
+                            `;
+                        }
+                        content += '</div>';
                     }
                     
                     if (dataPoint.indicators.MACD) {
@@ -946,30 +1020,75 @@
                         `;
                     }
                     
-                    if (dataPoint.indicators.BBANDS) {
+                    if (dataPoint.indicators.BB_Upper !== undefined) {
                         const bbClass = dataPoint.signals && dataPoint.signals.BBANDS === 'BUY' ? 'buy' : 
-                                        dataPoint.signals && dataPoint.signals.BBANDS === 'SELL' ? 'sell' : 'neutral';
+                                       dataPoint.signals && dataPoint.signals.BBANDS === 'SELL' ? 'sell' : 'neutral';
+                        const price = dataPoint.y || dataPoint.price;
+                        const upperDist = ((dataPoint.indicators.BB_Upper - price) / price * 100).toFixed(2);
+                        const lowerDist = ((price - dataPoint.indicators.BB_Lower) / price * 100).toFixed(2);
+                        
                         content += `
-                            <div class="point-indicator">
-                                <strong>Bollinger Bands:</strong>
-                                <span class="${bbClass}"> (${dataPoint.signals ? dataPoint.signals.BBANDS : 'N/A'})</span><br>
-                                <small>Upper: ${dataPoint.indicators.BBANDS.upper.toFixed(4)}</small><br>
-                                <small>Middle: ${dataPoint.indicators.BBANDS.middle.toFixed(4)}</small><br>
-                                <small>Lower: ${dataPoint.indicators.BBANDS.lower.toFixed(4)}</small><br>
-                                <small>Width: ${dataPoint.indicators.BBANDS.width.toFixed(2)}%</small>
+                            <div class="point-indicator" style="margin-bottom: 8px; padding: 5px; background-color: #f8f9fa; border-radius: 3px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <strong>Bollinger Bands:</strong>
+                                    <span class="${bbClass}">${dataPoint.signals ? dataPoint.signals.BBANDS : 'N/A'}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                    <span>Üst Bant:</span>
+                                    <span>${dataPoint.indicators.BB_Upper.toFixed(4)} (${upperDist}% uzaklık)</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                    <span>Orta Bant (SMA):</span>
+                                    <span>${dataPoint.indicators.BB_Middle.toFixed(4)}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                    <span>Alt Bant:</span>
+                                    <span>${dataPoint.indicators.BB_Lower.toFixed(4)} (${lowerDist}% uzaklık)</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                    <span>Bant Genişliği:</span>
+                                    <span>${dataPoint.indicators.BB_Width ? dataPoint.indicators.BB_Width.toFixed(2) + '%' : '-'}</span>
+                                </div>
                             </div>
                         `;
                     }
                     
-                    if (dataPoint.indicators.SMA) {
-                        const smaClass = dataPoint.signals && dataPoint.signals.SMA === 'BUY' ? 'buy' : 
-                                         dataPoint.signals && dataPoint.signals.SMA === 'SELL' ? 'sell' : 'neutral';
+                    if (dataPoint.indicators.RSI_Smoothed !== undefined) {
                         content += `
-                            <div class="point-indicator">
-                                <strong>SMA:</strong>
-                                <span class="${smaClass}"> (${dataPoint.signals ? dataPoint.signals.SMA : 'N/A'})</span><br>
-                                <small>Short: ${dataPoint.indicators.SMA.short.toFixed(4)}</small><br>
-                                <small>Long: ${dataPoint.indicators.SMA.long.toFixed(4)}</small>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 3px;">
+                                <span>Ham RSI:</span>
+                                <span>${dataPoint.indicators.RSI_Raw ? dataPoint.indicators.RSI_Raw.toFixed(2) : dataPoint.indicators.RSI.toFixed(2)}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                <span>Smoothed RSI (RMA):</span>
+                                <span>${dataPoint.indicators.RSI_Smoothed.toFixed(2)}</span>
+                            </div>
+                        `;
+                    }
+                    
+                    if (dataPoint.indicators.SMA_Short !== undefined && dataPoint.indicators.SMA_Long !== undefined) {
+                        const smaClass = dataPoint.signals && dataPoint.signals.SMA === 'BUY' ? 'buy' : 
+                                        dataPoint.signals && dataPoint.signals.SMA === 'SELL' ? 'sell' : 'neutral';
+                        content += `
+                            <div class="point-indicator" style="margin-bottom: 8px; padding: 5px; background-color: #f8f9fa; border-radius: 3px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <strong>SMA:</strong>
+                                    <span class="${smaClass}">${dataPoint.signals ? dataPoint.signals.SMA : 'N/A'}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                    <span>Kısa Periyot (${20}):</span>
+                                    <span>${dataPoint.indicators.SMA_Short.toFixed(4)}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                    <span>Uzun Periyot (${50}):</span>
+                                    <span>${dataPoint.indicators.SMA_Long.toFixed(4)}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                    <span>Fark:</span>
+                                    <span class="${dataPoint.indicators.SMA_Short > dataPoint.indicators.SMA_Long ? 'buy' : 'sell'}">
+                                        ${(dataPoint.indicators.SMA_Short - dataPoint.indicators.SMA_Long).toFixed(4)}
+                                    </span>
+                                </div>
                             </div>
                         `;
                     }
@@ -1007,10 +1126,33 @@
                     </div>
                 `;
                 
-                // İçeriği göster
+                content += '</div>';
+                
+                // Detayları göster
                 pointDetailsElement.innerHTML = content;
-                pointDetailsElement.style.left = `${x + 10}px`;
-                pointDetailsElement.style.top = `${y + 10}px`;
+                
+                // Pozisyonu ayarla (ekranın dışına taşmasını önle)
+                const boxWidth = 300; // Yaklaşık genişlik
+                const boxHeight = Math.min(300, pointDetailsElement.scrollHeight); // Maksimum yükseklik
+                
+                // Sağ kenara yakınsa, sola doğru konumlandır
+                let leftPos = x;
+                if (leftPos + boxWidth > myChart.canvas.width) {
+                    leftPos = x - boxWidth;
+                }
+                
+                // Alt kenara yakınsa, yukarı doğru konumlandır
+                let topPos = y;
+                if (topPos + boxHeight > myChart.canvas.height) {
+                    topPos = y - boxHeight;
+                }
+                
+                // Negatif değerleri önle
+                leftPos = Math.max(0, leftPos);
+                topPos = Math.max(0, topPos);
+                
+                pointDetailsElement.style.left = `${leftPos}px`;
+                pointDetailsElement.style.top = `${topPos}px`;
                 pointDetailsElement.style.display = 'block';
                 
                 // Pencere sınırlarının dışına taşmasını önle

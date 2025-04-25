@@ -10,8 +10,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
 from pybit.unified_trading import HTTP
 from ta.trend import SMAIndicator, MACD
-from ta.momentum import RSIIndicator
-from ta.volatility import BollingerBands
+from ta.momentum import RSIIndicator, StochasticOscillator
+from ta.volatility import BollingerBands, AverageTrueRange
+from ta.volume import OnBalanceVolumeIndicator
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
@@ -146,10 +147,35 @@ class IndicatorAnalyzer:
         
         if self.active_indicators['RSI']:
             params = self.indicator_params['RSI']['parameters']
+            # Önce normal RSI hesapla
             rsi = RSIIndicator(df['close'], window=params['period']).rsi()
-            rsi_value = rsi.iloc[-1]
+            
+            # Eğer smoothing etkinleştirilmişse, RSI değerlerini smoothlaştır
+            if params.get('smoothing_enabled', False):
+                smoothing_period = params.get('smoothing_period', 3)
+                smoothing_type = params.get('smoothing_type', 'SMA')
+                
+                if smoothing_type == 'SMA':
+                    # SMA ile smoothlaştırma
+                    smoothed_rsi = rsi.rolling(window=smoothing_period).mean()
+                elif smoothing_type == 'RMA':
+                    # RMA (Wilder's) ile smoothlaştırma - kullanıcının tercihi
+                    alpha = 1/smoothing_period
+                    smoothed_rsi = rsi.ewm(alpha=alpha, adjust=False).mean()
+                else:
+                    # Varsayılan olarak SMA kullan
+                    smoothed_rsi = rsi.rolling(window=smoothing_period).mean()
+                    
+                # Son smoothlaştırılmış RSI değerini al
+                rsi_value = smoothed_rsi.iloc[-1]
+                values['RSI_Raw'] = round(float(rsi.iloc[-1]), 2)  # Ham RSI değeri
+                values['RSI_Smoothed'] = round(float(rsi_value), 2)  # Smoothlaştırılmış değer
+            else:
+                # Smoothing etkinleştirilmemişse, normal RSI değerini kullan
+                rsi_value = rsi.iloc[-1]
+                values['RSI'] = round(float(rsi_value), 2)
+                
             signals['RSI'] = 'BUY' if rsi_value < params['oversold'] else 'SELL' if rsi_value > params['overbought'] else 'NEUTRAL'
-            values['RSI'] = round(float(rsi_value), 2)
             
         if self.active_indicators['SMA']:
             params = self.indicator_params['SMA']['parameters']
@@ -198,6 +224,112 @@ class IndicatorAnalyzer:
             low = df['low'].min()
             diff = high - low
             levels = self.indicator_params['FIBONACCI']['parameters']['levels']
+            fib_levels = {level: low + level * diff for level in levels}
+            current_price = df['close'].iloc[-1]
+            
+            # Fibonacci seviyeleri ile ilgili hesaplamalar
+            closest_level = min(levels, key=lambda x: abs(low + x * diff - current_price))
+            closest_price = low + closest_level * diff
+            
+            # Fiyat yükseliyor ve bir sonraki Fibonacci seviyesine yaklaşıyorsa BUY sinyali
+            price_trend = df['close'].iloc[-1] - df['close'].iloc[-5]  # Son 5 mum içindeki trend
+            
+            if price_trend > 0 and current_price < high:
+                signals['FIBONACCI'] = 'STRONG_BUY'
+            elif price_trend < 0 and current_price > low:
+                signals['FIBONACCI'] = 'SELL'
+            else:
+                signals['FIBONACCI'] = 'NEUTRAL'
+                
+            # Fibonacci değerlerini kaydet
+            values['FIB_Levels'] = {str(level): round(float(price), 4) for level, price in fib_levels.items()}
+            values['FIB_Closest'] = round(float(closest_price), 4)
+            values['FIB_Closest_Level'] = closest_level
+            
+        # Stochastic Oscillator
+        if self.active_indicators.get('STOCHASTIC', False):
+            params = self.indicator_params['STOCHASTIC']['parameters']
+            stoch = StochasticOscillator(
+                high=df['high'],
+                low=df['low'],
+                close=df['close'],
+                window=params['k_period'],
+                smooth_window=params['smooth_k']
+            )
+            
+            # %K ve %D değerlerini hesapla
+            k = stoch.stoch()
+            d = k.rolling(window=params['d_period']).mean()
+            
+            k_value = k.iloc[-1]
+            d_value = d.iloc[-1]
+            
+            # Sinyal hesapla
+            if k_value < params['oversold'] and k_value > d_value:
+                signals['STOCHASTIC'] = 'STRONG_BUY'
+            elif k_value < params['oversold']:
+                signals['STOCHASTIC'] = 'BUY'
+            elif k_value > params['overbought'] and k_value < d_value:
+                signals['STOCHASTIC'] = 'STRONG_SELL'
+            elif k_value > params['overbought']:
+                signals['STOCHASTIC'] = 'SELL'
+            else:
+                signals['STOCHASTIC'] = 'NEUTRAL'
+                
+            values['STOCH_K'] = round(float(k_value), 2)
+            values['STOCH_D'] = round(float(d_value), 2)
+            
+        # Average True Range (ATR)
+        if self.active_indicators.get('ATR', False):
+            params = self.indicator_params['ATR']['parameters']
+            atr = AverageTrueRange(
+                high=df['high'],
+                low=df['low'],
+                close=df['close'],
+                window=params['period']
+            ).average_true_range()
+            
+            atr_value = atr.iloc[-1]
+            current_price = df['close'].iloc[-1]
+            atr_percent = (atr_value / current_price) * 100  # ATR as percentage of price
+            
+            # ATR değerini kaydet
+            values['ATR'] = round(float(atr_value), 4)
+            values['ATR_Percent'] = round(float(atr_percent), 2)  # % olarak ATR
+            
+            # ATR sinyali (volatilite göstergesi olarak kullanılır)
+            # Burada doğrudan alım/satım sinyali vermek yerine volatilite seviyesini belirtiyoruz
+            if atr_percent > params['multiplier'] * 2:
+                signals['ATR'] = 'HIGH_VOLATILITY'
+            elif atr_percent > params['multiplier']:
+                signals['ATR'] = 'MEDIUM_VOLATILITY'
+            else:
+                signals['ATR'] = 'LOW_VOLATILITY'
+                
+        # On-Balance Volume (OBV)
+        if self.active_indicators.get('OBV', False):
+            params = self.indicator_params['OBV']['parameters']
+            obv = OnBalanceVolumeIndicator(
+                close=df['close'],
+                volume=df['volume']
+            ).on_balance_volume()
+            
+            # OBV'nin EMA'sını hesapla
+            obv_ema = obv.rolling(window=params['ema_period']).mean()
+            
+            obv_value = obv.iloc[-1]
+            obv_ema_value = obv_ema.iloc[-1]
+            
+            # OBV sinyali
+            if obv_value > obv_ema_value:
+                signals['OBV'] = 'BUY'
+            elif obv_value < obv_ema_value:
+                signals['OBV'] = 'SELL'
+            else:
+                signals['OBV'] = 'NEUTRAL'
+                
+            values['OBV'] = round(float(obv_value), 0)
+            values['OBV_EMA'] = round(float(obv_ema_value), 0)
             fib_levels = {level: low + level * diff for level in levels}
             current_price = df['close'].iloc[-1]
             

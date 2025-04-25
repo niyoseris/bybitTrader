@@ -1,25 +1,28 @@
 {
     "indicators": {
         "RSI": {
-            "enabled_for_buy": false,
+            "enabled_for_buy": true,
             "enabled_for_sell": true,
             "parameters": {
                 "period": 14,
                 "oversold": 30,
-                "overbought": 45
+                "overbought": 55,
+                "smoothing_enabled": true,
+                "smoothing_period": 3,
+                "smoothing_type": "RMA"
             }
         },
         "SMA": {
-            "enabled_for_buy": false,
-            "enabled_for_sell": false,
+            "enabled_for_buy": true,
+            "enabled_for_sell": true,
             "parameters": {
                 "short_period": 20,
                 "long_period": 50
             }
         },
         "MACD": {
-            "enabled_for_buy": false,
-            "enabled_for_sell": false,
+            "enabled_for_buy": true,
+            "enabled_for_sell": true,
             "parameters": {
                 "fast_period": 12,
                 "slow_period": 26,
@@ -27,8 +30,8 @@
             }
         },
         "BBANDS": {
-            "enabled_for_buy": false,
-            "enabled_for_sell": false,
+            "enabled_for_buy": true,
+            "enabled_for_sell": true,
             "parameters": {
                 "period": 20,
                 "std_dev": 2
@@ -36,9 +39,35 @@
         },
         "FIBONACCI": {
             "enabled_for_buy": true,
-            "enabled_for_sell": false,
+            "enabled_for_sell": true,
             "parameters": {
                 "levels": [0, 0.236, 0.382, 0.618, 1]
+            }
+        },
+        "STOCHASTIC": {
+            "enabled_for_buy": true,
+            "enabled_for_sell": true,
+            "parameters": {
+                "k_period": 14,
+                "d_period": 3,
+                "smooth_k": 3,
+                "oversold": 20,
+                "overbought": 80
+            }
+        },
+        "ATR": {
+            "enabled_for_buy": true,
+            "enabled_for_sell": true,
+            "parameters": {
+                "period": 14,
+                "multiplier": 2.0
+            }
+        },
+        "OBV": {
+            "enabled_for_buy": true,
+            "enabled_for_sell": true,
+            "parameters": {
+                "ema_period": 20
             }
         }
     },
