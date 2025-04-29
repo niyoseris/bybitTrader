@@ -77,7 +77,7 @@
         "update_interval": 0,
         "max_workers": 10,
         "stop_loss_percentage": 1,
-        "take_profit_percentage": 0.5,
+        "take_profit_percentage": 0.1,
         "kline": {
             "interval": "1",
             "limit": 200

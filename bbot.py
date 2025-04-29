@@ -55,6 +55,8 @@ class TradingBot:
         self.entry_price = None
         self.stop_loss = None
         self.take_profit = None
+        self.take_profit_levels = []  # Multiple take profit levels [(price, percentage), ...]  
+        self.take_profit_triggered = []  # Track which take profit levels have been triggered
         self.last_signal = None
         self.prev_k = None
         self.prev_d = None
@@ -80,6 +82,18 @@ class TradingBot:
             self.update_interval = config_json['trading']['update_interval']
             self.kline_interval = str(config_json['trading']['kline']['interval'])
             self.kline_limit = int(config_json['trading']['kline']['limit'])
+            
+            # Load take profit settings if they exist
+            if 'take_profit' in config_json['trading']:
+                self.tp_config = config_json['trading']['take_profit']
+            else:
+                # Default take profit configuration based on config.json take_profit_percentage
+                take_profit_pct = config_json['trading'].get('take_profit_percentage', 0.5)
+                self.tp_config = {
+                    'use_percentage': True,  # Use percentage-based take profit
+                    'percentage_levels': [take_profit_pct],  # Take profit at specified percentage
+                    'quantity_per_level': [1.0]  # Sell 100% of position at the level
+                }
             
             # Kline interval validation
             valid_intervals = ['1', '3', '5', '15', '30', '60', '120', '240', '360', '720', '1440']
@@ -223,7 +237,7 @@ class TradingBot:
             df['rsi'] = rsi
             
             # Calculate Bollinger Bands
-            bb = BollingerBands(df['close'], window=20, window_dev=2)
+            bb = BollingerBands(df['close'], window=20, window_dev=4)
             df['bb_upper'] = bb.bollinger_hband()
             df['bb_middle'] = bb.bollinger_mavg()
             df['bb_lower'] = bb.bollinger_lband()
@@ -424,9 +438,44 @@ class TradingBot:
         
         return False, None, None
     
+    def setup_take_profit_levels(self, entry_price):
+        """Set up take profit levels based on configuration"""
+        self.entry_price = entry_price
+        self.take_profit_levels = []
+        self.take_profit_triggered = []
+        
+        if self.tp_config.get('use_percentage', True):
+            # Percentage-based take profit levels
+            percentages = self.tp_config.get('percentage_levels', [0.5, 1.0, 2.0])
+            quantities = self.tp_config.get('quantity_per_level', [0.33, 0.33, 0.34])
+            
+            # Ensure we have matching percentages and quantities
+            if len(percentages) != len(quantities):
+                # Default to equal distribution if mismatch
+                quantities = [1.0 / len(percentages)] * len(percentages)
+            
+            # Calculate actual price levels from percentages
+            for i, percentage in enumerate(percentages):
+                tp_price = entry_price * (1 + percentage / 100)
+                self.take_profit_levels.append((tp_price, quantities[i]))
+                self.take_profit_triggered.append(False)
+                
+            # Set the main take profit to the highest level for backward compatibility
+            self.take_profit = self.take_profit_levels[-1][0] if self.take_profit_levels else None
+            
+            self.console.print(f"[green]Take profit levels set:[/green]")
+            for i, (price, qty_pct) in enumerate(self.take_profit_levels):
+                self.console.print(f"[green]Level {i+1}: ${price:.2f} ({percentages[i]}% gain) - {qty_pct*100:.1f}% of position[/green]")
+        else:
+            # Use the single take profit level (backward compatibility)
+            if self.take_profit:
+                self.take_profit_levels = [(self.take_profit, 1.0)]
+                self.take_profit_triggered = [False]
+                self.console.print(f"[green]Take profit set at: ${self.take_profit:.2f}[/green]")
+    
     def check_stop_loss_take_profit(self, df):
         """Check if current position hit stop loss or take profit"""
-        if self.current_position is None or self.stop_loss is None or self.take_profit is None:
+        if self.current_position is None or self.stop_loss is None:
             return False
         
         current_close = df['close'].iloc[-1]
@@ -435,12 +484,22 @@ class TradingBot:
             # Check stop loss
             if current_close <= self.stop_loss:
                 self.console.print(f"[bold red]STOP LOSS TRIGGERED at ${current_close:.2f}[/bold red]")
-                return "sell"
+                return "sell_all"
             
-            # Check take profit
-            if current_close >= self.take_profit:
+            # Check take profit levels
+            if self.take_profit_levels:
+                for i, (tp_price, tp_quantity) in enumerate(self.take_profit_levels):
+                    if not self.take_profit_triggered[i] and current_close >= tp_price:
+                        self.take_profit_triggered[i] = True
+                        self.console.print(f"[bold green]TAKE PROFIT TRIGGERED at ${current_close:.2f} (+{((current_close - self.entry_price) / self.entry_price) * 100:.2f}%)[/bold green]")
+                        
+                        # Sell the entire position when take profit is hit
+                        return "sell_all"
+            
+            # For backward compatibility
+            elif self.take_profit and current_close >= self.take_profit:
                 self.console.print(f"[bold green]TAKE PROFIT TRIGGERED at ${current_close:.2f}[/bold green]")
-                return "sell"
+                return "sell_all"
         
         return False
     
@@ -470,6 +529,9 @@ class TradingBot:
                 self.console.print(f"Price: {current_price:.2f}")
                 self.console.print(f"Quantity: {qty}")
                 
+                # Store entry price for take profit calculations
+                self.entry_price = current_price
+                
             else:  # Sell order
                 # For sell orders, use the available balance
                 wallet = self.get_wallet_balance()
@@ -498,6 +560,12 @@ class TradingBot:
                 self.console.print(f"Price: {current_price:.2f}")
                 self.console.print(f"Quantity: {qty}")
                 self.console.print(f"Total Value: {value:.2f} USDT")
+                
+                # Calculate profit if we have an entry price
+                if self.entry_price:
+                    profit_pct = ((current_price - self.entry_price) / self.entry_price) * 100
+                    profit_amount = (current_price - self.entry_price) * qty
+                    self.console.print(f"[{'green' if profit_pct >= 0 else 'red'}]Profit: {profit_amount:.2f} USDT ({profit_pct:.2f}%)[/{'green' if profit_pct >= 0 else 'red'}]")
             
             # Place the order
             order = self.client.place_order(
@@ -513,13 +581,25 @@ class TradingBot:
             # Log the transaction details
             if side == "Buy":
                 self.console.print(f"[green]BTC purchased at ${current_price:.2f}[/green]")
+                # Set up take profit levels after a buy
+                self.setup_take_profit_levels(current_price)
+                self.current_position = "long"
             else:
                 self.console.print(f"[red]BTC sold at ${current_price:.2f}[/red]")
                 
-            # Reset tracking variables after selling
-            if side == "Sell":
-                self.stop_loss = None
-                self.take_profit = None
+                # Check if this was a full sell or partial take profit
+                wallet = self.get_wallet_balance()
+                base_currency = self.symbol[:-4] if self.symbol.endswith('USDT') else self.symbol.split('USDT')[0]
+                remaining_balance = wallet.get(base_currency, {}).get("free", 0)
+                
+                # If we sold everything or have very little left, reset all variables
+                if remaining_balance < min_qty:
+                    self.stop_loss = None
+                    self.take_profit = None
+                    self.take_profit_levels = []
+                    self.take_profit_triggered = []
+                    self.entry_price = None
+                    self.current_position = None
             
             return order
             
@@ -557,8 +637,11 @@ class TradingBot:
             
             # Check if we need to close position due to stop loss or take profit
             sl_tp_action = self.check_stop_loss_take_profit(df)
-            if sl_tp_action == "sell":
+            if sl_tp_action == "sell_all":
                 self.place_order("Sell")
+                return
+            elif isinstance(sl_tp_action, tuple) and sl_tp_action[0] == "sell_partial":
+                self.place_order("Sell", sl_tp_action[1])
                 return
             
             # Check wallet balance to see if we have BTC
@@ -575,8 +658,10 @@ class TradingBot:
                 self.console.print(f"[bold green]Oversold buy signal detected - Buying {self.base_asset}[/bold green]")
                 order = self.place_order("Buy")
                 if order is not None:
+                    # Store the indicator-based take profit level for reference
                     self.take_profit = oversold_tp
                     self.stop_loss = oversold_sl
+                    # Setup take profit levels happens inside place_order
                 return
             
             trend_buy, trend_tp, trend_sl = self.check_trend_buy_signal(df)
@@ -585,8 +670,10 @@ class TradingBot:
                 self.console.print(f"[bold green]Trend buy signal detected - Buying {self.base_asset}[/bold green]")
                 order = self.place_order("Buy")
                 if order is not None:
+                    # Store the indicator-based take profit level for reference
                     self.take_profit = trend_tp
                     self.stop_loss = trend_sl
+                    # Setup take profit levels happens inside place_order
                 return
             
             # Check for sell signals
