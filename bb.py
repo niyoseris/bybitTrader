@@ -8,6 +8,7 @@ from datetime import datetime
 from threading import Lock
 from pybit.unified_trading import HTTP
 from ta.volatility import BollingerBands
+from ta.momentum import RSIIndicator
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
@@ -57,9 +58,10 @@ class BBTradingBot:
             with open(config_path, 'r') as f:
                 config_json = json.load(f)
                 
-            # We're only using Bollinger Bands for this strategy
+            # Using Bollinger Bands and RSI for this strategy
             self.active_indicators = {
-                'BBANDS': True
+                'BBANDS': True,
+                'RSI': True
             }
             
             self.indicator_params = config_json['indicators']
@@ -205,13 +207,52 @@ class BBTradingBot:
             return None
     
     def calculate_indicators(self, df):
-        """Calculate Bollinger Bands indicator"""
+        """Calculate Bollinger Bands and RSI indicators"""
         try:
             # Calculate Bollinger Bands with standard settings (length=20, multiplier=2)
             bb = BollingerBands(df['close'], window=20, window_dev=2)
             df['bb_upper'] = bb.bollinger_hband()
             df['bb_middle'] = bb.bollinger_mavg()
             df['bb_lower'] = bb.bollinger_lband()
+            
+            # Calculate RSI with RMA (Wilder's) smoothing
+            close_prices = df['close'].values
+            delta = np.zeros_like(close_prices)
+            delta[1:] = close_prices[1:] - close_prices[:-1]
+            
+            # Separate gains and losses
+            gains = delta.copy()
+            losses = delta.copy()
+            gains[gains < 0] = 0
+            losses[losses > 0] = 0
+            losses = abs(losses)
+            
+            # Calculate RMA for gains and losses (Wilder's smoothing)
+            length = 14  # Standard RSI period
+            avg_gains = np.zeros_like(gains)
+            avg_losses = np.zeros_like(losses)
+            
+            # First average is simple average
+            avg_gains[length] = np.mean(gains[1:length+1])
+            avg_losses[length] = np.mean(losses[1:length+1])
+            
+            # Use RMA for subsequent values
+            for i in range(length+1, len(gains)):
+                avg_gains[i] = (avg_gains[i-1] * (length-1) + gains[i]) / length
+                avg_losses[i] = (avg_losses[i-1] * (length-1) + losses[i]) / length
+            
+            # Calculate RS and RSI
+            rs = np.zeros_like(close_prices)
+            rsi = np.zeros_like(close_prices)
+            
+            for i in range(length, len(close_prices)):
+                if avg_losses[i] == 0:
+                    rsi[i] = 100
+                else:
+                    rs[i] = avg_gains[i] / avg_losses[i]
+                    rsi[i] = 100 - (100 / (1 + rs[i]))
+            
+            df['rsi'] = rsi
             
             # Store previous close for comparison
             if len(df) > 1:
@@ -359,8 +400,10 @@ class BBTradingBot:
             bb_lower = df['bb_lower'].iloc[-1]
             
             # Display current market status
+            current_rsi = df['rsi'].iloc[-1]
             self.console.print(f"[cyan]{self.symbol} - Price: ${current_close:.4f}[/cyan]")
             self.console.print(f"BB Upper: ${bb_upper:.4f}, Middle: ${bb_middle:.4f}, Lower: ${bb_lower:.4f}")
+            self.console.print(f"RSI: {current_rsi:.2f}")
             
             # Display take profit price if in a position
             if self.current_position == "long" and self.take_profit is not None:
@@ -387,11 +430,15 @@ class BBTradingBot:
                     self.console.print(f"[yellow]Entry Price: ${self.entry_price:.4f}, Take Profit: ${self.take_profit:.4f} (+{self.take_profit_percentage:.4f}%)[/yellow]")
                     self.console.print(f"[{profit_color}]Current P/L: {current_profit_pct:.4f}%[/{profit_color}]")
                 
-            # Check for buy signal - only when price is below lower Bollinger Band and we don't have a position
-            if self.is_price_below_bb_lower(df) and (self.current_position is None):
+            # Get current RSI value
+            current_rsi = df['rsi'].iloc[-1]
+            self.console.print(f"RSI: {current_rsi:.2f}")
+            
+            # Check for buy signal - only when price is below lower Bollinger Band, RSI is below 30, and we don't have a position
+            if self.is_price_below_bb_lower(df) and current_rsi < 30 and (self.current_position is None):
                 # Only buy if we don't already have a position
-                self.console.print(f"[bold green]BUY SIGNAL: Price below lower Bollinger Band[/bold green]")
-                self.console.print(f"Price: ${current_close:.4f}, Lower BB: ${bb_lower:.4f}")
+                self.console.print(f"[bold green]BUY SIGNAL: Price below lower Bollinger Band and RSI below 30[/bold green]")
+                self.console.print(f"Price: ${current_close:.4f}, Lower BB: ${bb_lower:.4f}, RSI: {current_rsi:.2f}")
                 self.console.print(f"Take Profit will be set at: ${current_close * (1 + self.take_profit_percentage / 100):.4f} (+{self.take_profit_percentage:.4f}%)")
                 order = self.place_order("Buy")
                 return
