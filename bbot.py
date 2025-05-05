@@ -518,7 +518,7 @@ class TradingBot:
                 # For buy orders, use fixed amount from config
                 if qty is None:
                     qty = self.trade_amount / current_price
-                    qty = 30
+                    qty = 10
                 
                 # Round to correct decimal places
                 if decimal_places is not None:

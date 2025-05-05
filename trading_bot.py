@@ -388,20 +388,27 @@ class TradingBot:
             return False, None
     
     def get_high_volume_pairs(self):
-        """Get USDT pairs with daily volume > minimum volume"""
-        self.console.print("[bold blue]Step 1: Identifying high volume markets...[/bold blue]")
+        """Get USDT pairs with daily volume > minimum volume and exactly 4 decimal places"""
+        self.console.print("[bold blue]Step 1: Identifying high volume markets with 4 decimal places...[/bold blue]")
         tickers = self.client.get_tickers(category="spot")
         high_volume_pairs = []
+        four_decimal_pairs = []
         
         for ticker in tickers["result"]["list"]:
             symbol = ticker["symbol"]
             if symbol.endswith("USDT"):
                 volume_24h = float(ticker["volume24h"]) * float(ticker["lastPrice"])
                 if volume_24h > self.min_volume:
-                    high_volume_pairs.append(symbol)
+                    # Check decimal places
+                    _, _, decimal_places = self.get_min_order_size(symbol)
+                    if decimal_places == 4:
+                        four_decimal_pairs.append(symbol)
+                        self.console.print(f"[green]Added {symbol} with {decimal_places} decimal places[/green]")
+                    else:
+                        self.console.print(f"[yellow]Skipping {symbol} with {decimal_places} decimal places (not 4)[/yellow]")
         
-        self.console.print(f"[green]Found {len(high_volume_pairs)} markets with >${self.min_volume/1_000_000:.1f}M daily volume[/green]")
-        return high_volume_pairs
+        self.console.print(f"[green]Found {len(four_decimal_pairs)} markets with >${self.min_volume/1_000_000:.1f}M daily volume and exactly 4 decimal places[/green]")
+        return four_decimal_pairs
     
     def analyze_market(self, pair):
         """Analyze a single market"""

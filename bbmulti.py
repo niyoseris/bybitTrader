@@ -26,14 +26,14 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("bb_bot.log"),
+        logging.FileHandler("bbmulti_bot.log"),
         logging.StreamHandler()
     ]
 )
 logger = logging.getLogger(__name__)
 
-class BBTradingBot:
-    def __init__(self, api_key, api_secret, symbol="BTCUSDT", config_path='config.json', testnet=True):
+class BBMultiTradingBot:
+    def __init__(self, api_key, api_secret, symbols=["ETHUSDT", "SOLUSDT", "SUIUSDT", "ADAUSDT", "XRPUSDT", "DOGEUSDT", "SUSDT", "HAEDALUSDT", "TRUMPUSDT", "VIRTUALUSDT", "AVAXUSDT", "APEXUSDT", "WALUSDT", "PEPEUSDT", "TONUSDT"], config_path='config.json', testnet=True):
         self.client = HTTP(
             api_key=api_key,
             api_secret=api_secret,
@@ -42,15 +42,25 @@ class BBTradingBot:
         self.console = Console()
         self.market_data_lock = Lock()
         self.load_config(config_path)
-        self.symbol = symbol
-        self.base_asset = symbol.replace("USDT", "")  # Extract base asset (e.g., BTC from BTCUSDT)
-        self.current_position = None  # None: no position, "long": long position
-        self.entry_price = None
-        self.take_profit = None
-        self.prev_close = None
         
-        # Get last trade information
-        self.get_last_trade_info()
+        # Initialize symbols
+        self.symbols = symbols
+        self.base_assets = {}
+        self.current_positions = {}
+        self.entry_prices = {}
+        self.take_profits = {}
+        self.prev_closes = {}
+        
+        # Initialize data for each symbol
+        for symbol in self.symbols:
+            self.base_assets[symbol] = symbol.replace("USDT", "")  # Extract base asset (e.g., BTC from BTCUSDT)
+            self.current_positions[symbol] = None  # None: no position, "long": long position
+            self.entry_prices[symbol] = None
+            self.take_profits[symbol] = None
+            self.prev_closes[symbol] = None
+            
+            # Get last trade information for each symbol
+            self.get_last_trade_info(symbol)
         
     def load_config(self, config_path):
         """Load configuration from JSON file"""
@@ -73,6 +83,12 @@ class BBTradingBot:
             # Load take profit settings
             self.take_profit_percentage = config_json['trading'].get('take_profit_percentage', 0.5)
             
+            # Load display formatting settings
+            display_settings = config_json['trading'].get('display', {})
+            self.enable_decimal_formatting = display_settings.get('enable_decimal_formatting', True)
+            self.price_decimal_places = display_settings.get('price_decimal_places', 4)
+            self.percentage_decimal_places = display_settings.get('percentage_decimal_places', 2)
+            
             # Kline interval validation
             valid_intervals = ['1', '3', '5', '15', '30', '60', '120', '240', '360', '720', '1440']
             if self.kline_interval not in valid_intervals:
@@ -80,18 +96,20 @@ class BBTradingBot:
             
             self.console.print(f"[green]Configuration loaded successfully from {config_path}[/green]")
             self.console.print(f"[blue]Using {self.kline_interval} minute candles, fetching last {self.kline_limit} candles[/blue]")
-            
+            if self.enable_decimal_formatting:
+                self.console.print(f"[blue]Display formatting: Price decimals: {self.price_decimal_places}, Percentage decimals: {self.percentage_decimal_places}[/blue]")
+        
         except Exception as e:
             self.console.print(f"[bold red]Error loading config: {str(e)}[/bold red]")
             raise
     
-    def get_last_trade_info(self):
-        """Get information about the last trade for this symbol"""
+    def get_last_trade_info(self, symbol):
+        """Get information about the last trade for a specific symbol"""
         try:
             # Get execution history instead of trade history
             trade_history = self.client.get_executions(
                 category="spot",
-                symbol=self.symbol,
+                symbol=symbol,
                 limit=1  # Just get the most recent execution
             )
             
@@ -104,22 +122,22 @@ class BBTradingBot:
                 exec_qty = float(last_trade.get("execQty", 0))
                 exec_time = datetime.fromtimestamp(int(last_trade.get("execTime", 0)) / 1000)
                 
-                self.console.print(f"[bold blue]Last trade found:[/bold blue]")
+                self.console.print(f"[bold blue]Last trade found for {symbol}:[/bold blue]")
                 self.console.print(f"Side: {side}, Price: ${exec_price:.4f}, Quantity: {exec_qty:.4f}, Time: {exec_time}")
                 
                 # If the last trade was a buy, set the current position
                 if side == "Buy":
-                    self.current_position = "long"
-                    self.entry_price = exec_price
-                    self.take_profit = self.calculate_take_profit(exec_price)
-                    self.console.print(f"[green]Setting current position based on last trade[/green]")
-                    self.console.print(f"[green]Entry Price: ${self.entry_price:.4f}, Take Profit: ${self.take_profit:.4f} (+{self.take_profit_percentage:.4f}%)[/green]")
+                    self.current_positions[symbol] = "long"
+                    self.entry_prices[symbol] = exec_price
+                    self.take_profits[symbol] = self.calculate_take_profit(exec_price)
+                    self.console.print(f"[green]Setting current position based on last trade for {symbol}[/green]")
+                    self.console.print(f"[green]Entry Price: ${self.entry_prices[symbol]:.4f}, Take Profit: ${self.take_profits[symbol]:.4f} (+{self.take_profit_percentage:.4f}%)[/green]")
                 
             else:
-                self.console.print("[yellow]No recent trades found for this symbol[/yellow]")
+                self.console.print(f"[yellow]No recent trades found for {symbol}[/yellow]")
                 
         except Exception as e:
-            self.console.print(f"[bold red]Error getting last trade info: {str(e)}[/bold red]")
+            self.console.print(f"[bold red]Error getting last trade info for {symbol}: {str(e)}[/bold red]")
     
     def get_wallet_balance(self):
         """Get wallet balance"""
@@ -181,12 +199,12 @@ class BBTradingBot:
             self.console.print(f"[bold red]Error getting min order size for {symbol}: {str(e)}[/bold red]")
             return None, None, None
     
-    def get_klines(self):
+    def get_klines(self, symbol):
         """Get historical klines/candlestick data for the trading pair"""
         try:
             klines = self.client.get_kline(
                 category="spot",
-                symbol=self.symbol,
+                symbol=symbol,
                 interval=self.kline_interval,
                 limit=self.kline_limit
             )
@@ -203,7 +221,7 @@ class BBTradingBot:
             
             return df
         except Exception as e:
-            self.console.print(f"[bold red]Error fetching klines: {str(e)}[/bold red]")
+            self.console.print(f"[bold red]Error fetching klines for {symbol}: {str(e)}[/bold red]")
             return None
     
     def calculate_indicators(self, df):
@@ -254,10 +272,6 @@ class BBTradingBot:
             
             df['rsi'] = rsi
             
-            # Store previous close for comparison
-            if len(df) > 1:
-                self.prev_close = df['close'].iloc[-2]
-            
             return df
         except Exception as e:
             self.console.print(f"[bold red]Error calculating indicators: {str(e)}[/bold red]")
@@ -275,27 +289,27 @@ class BBTradingBot:
         """Calculate take profit price based on percentage from config"""
         return entry_price * (1 + self.take_profit_percentage / 100)
     
-    def check_take_profit(self, df):
+    def check_take_profit(self, symbol, df):
         """Check if current position hit take profit"""
-        if self.current_position is None or self.take_profit is None:
+        if self.current_positions[symbol] is None or self.take_profits[symbol] is None:
             return False
         
         current_close = df['close'].iloc[-1]
         
-        if self.current_position == "long" and current_close >= self.take_profit:
-            self.console.print(f"[bold green]TAKE PROFIT TRIGGERED at ${current_close:.4f} (+{((current_close - self.entry_price) / self.entry_price) * 100:.4f}%)[/bold green]")
+        if self.current_positions[symbol] == "long" and current_close >= self.take_profits[symbol]:
+            self.console.print(f"[bold green]{symbol} TAKE PROFIT TRIGGERED at ${current_close:.4f} (+{((current_close - self.entry_prices[symbol]) / self.entry_prices[symbol]) * 100:.4f}%)[/bold green]")
             return "sell_all"
         
         return False
     
-    def place_order(self, side, qty=None):
+    def place_order(self, symbol, side, qty=None):
         """Place a market order"""
         try:
             # Get current price
-            current_price = float(self.client.get_tickers(category="spot", symbol=self.symbol)["result"]["list"][0]["lastPrice"])
+            current_price = float(self.client.get_tickers(category="spot", symbol=symbol)["result"]["list"][0]["lastPrice"])
             
             # Get minimum order size and decimal places
-            min_qty, min_order_amt, decimal_places = self.get_min_order_size(self.symbol)
+            min_qty, min_order_amt, decimal_places = self.get_min_order_size(symbol)
             if min_qty is None:
                 return None
             
@@ -310,82 +324,93 @@ class BBTradingBot:
                     multiplier = 10 ** decimal_places
                     qty = math.floor(qty * multiplier) / multiplier
                 
-                self.console.print(f"[yellow]Placing Buy order for {self.symbol}:[/yellow]")
+                self.console.print(f"[yellow]Placing Buy order for {symbol}:[/yellow]")
                 self.console.print(f"Price: {current_price:.4f}")
                 self.console.print(f"Quantity: {qty:.4f}")
                 
                 # Place the order
                 order = self.client.place_order(
                     category="spot",
-                    symbol=self.symbol,
+                    symbol=symbol,
                     side="Buy",
                     orderType="Market",
                     qty=str(qty)
                 )
                 
                 if order.get("retCode") == 0:
-                    self.console.print(f"[bold green]Buy order placed successfully![/bold green]")
-                    self.current_position = "long"
-                    self.entry_price = current_price
-                    self.take_profit = self.calculate_take_profit(current_price)
-                    self.console.print(f"[green]Take profit set at: ${self.take_profit:.4f} (+{self.take_profit_percentage:.4f}%)[/green]")
+                    self.console.print(f"[bold green]Buy order placed successfully for {symbol}![/bold green]")
+                    self.current_positions[symbol] = "long"
+                    self.entry_prices[symbol] = current_price
+                    self.take_profits[symbol] = self.calculate_take_profit(current_price)
+                    self.console.print(f"[green]Take profit set at: ${self.take_profits[symbol]:.4f} (+{self.take_profit_percentage:.4f}%)[/green]")
                 else:
-                    self.console.print(f"[bold red]Error placing buy order: {order.get('retMsg')}[/bold red]")
+                    self.console.print(f"[bold red]Error placing buy order for {symbol}: {order.get('retMsg')}[/bold red]")
                     return None
                 
             elif side == "Sell":
                 # Get wallet balance to determine how much to sell
                 wallet = self.get_wallet_balance()
-                btc_balance = wallet.get(self.base_asset, {}).get("free", 0)
+                base_asset = self.base_assets[symbol]
+                base_balance = wallet.get(base_asset, {}).get("free", 0)
                 
-                if btc_balance <= 0:
-                    self.console.print(f"[yellow]No {self.base_asset} balance available to sell[/yellow]")
+                if base_balance <= 0:
+                    self.console.print(f"[yellow]No {base_asset} balance available to sell[/yellow]")
                     return None
                 
                 # If qty not specified, sell all available balance
                 if qty is None:
-                    qty = btc_balance
+                    qty = base_balance
                 
                 # Round to correct decimal places
                 if decimal_places is not None:
                     multiplier = 10 ** decimal_places
                     qty = math.floor(qty * multiplier) / multiplier
                 
-                self.console.print(f"[yellow]Placing Sell order for {self.symbol}:[/yellow]")
+                self.console.print(f"[yellow]Placing Sell order for {symbol}:[/yellow]")
                 self.console.print(f"Price: {current_price:.4f}")
                 self.console.print(f"Quantity: {qty:.4f}")
                 
                 # Place the order
                 order = self.client.place_order(
                     category="spot",
-                    symbol=self.symbol,
+                    symbol=symbol,
                     side="Sell",
                     orderType="Market",
                     qty=str(qty)
                 )
                 
                 if order.get("retCode") == 0:
-                    self.console.print(f"[bold green]Sell order placed successfully![/bold green]")
-                    self.take_profit = None
-                    self.entry_price = None
-                    self.current_position = None
+                    self.console.print(f"[bold green]Sell order placed successfully for {symbol}![/bold green]")
+                    self.take_profits[symbol] = None
+                    self.entry_prices[symbol] = None
+                    self.current_positions[symbol] = None
                 else:
-                    self.console.print(f"[bold red]Error placing sell order: {order.get('retMsg')}[/bold red]")
+                    self.console.print(f"[bold red]Error placing sell order for {symbol}: {order.get('retMsg')}[/bold red]")
                     return None
             
             return order
             
         except Exception as e:
-            self.console.print(f"[bold red]Error placing order: {str(e)}[/bold red]")
+            self.console.print(f"[bold red]Error placing order for {symbol}: {str(e)}[/bold red]")
             return None
     
-    def analyze_market(self):
-        """Analyze market and execute trading strategy for the trading pair"""
+    def format_value(self, value, is_price=True):
+        """Format a value according to the user's decimal place preferences"""
+        if not self.enable_decimal_formatting:
+            # Default formatting if disabled
+            return f"{value:.4f}" if is_price else f"{value:.2f}"
+        
+        # Use the configured decimal places
+        decimal_places = self.price_decimal_places if is_price else self.percentage_decimal_places
+        return f"{value:.{decimal_places}f}"
+    
+    def analyze_market(self, symbol):
+        """Analyze market and execute trading strategy for a specific trading pair"""
         try:
             # Get market data
-            df = self.get_klines()
+            df = self.get_klines(symbol)
             if df is None or len(df) < 30:  # Need enough data for indicators
-                self.console.print("[yellow]Not enough data for analysis[/yellow]")
+                self.console.print(f"[yellow]Not enough data for analysis of {symbol}[/yellow]")
                 return
             
             # Calculate indicators
@@ -401,68 +426,131 @@ class BBTradingBot:
             
             # Display current market status
             current_rsi = df['rsi'].iloc[-1]
-            self.console.print(f"[cyan]{self.symbol} - Price: ${current_close:.4f}[/cyan]")
-            self.console.print(f"BB Upper: ${bb_upper:.4f}, Middle: ${bb_middle:.4f}, Lower: ${bb_lower:.4f}")
-            self.console.print(f"RSI: {current_rsi:.2f}")
+            self.console.print(f"[cyan]{symbol} - Price: ${self.format_value(current_close)}[/cyan]")
+            self.console.print(f"BB Upper: ${self.format_value(bb_upper)}, Middle: ${self.format_value(bb_middle)}, Lower: ${self.format_value(bb_lower)}")
+            self.console.print(f"RSI: {self.format_value(current_rsi, is_price=False)}")
             
             # Display take profit price if in a position
-            if self.current_position == "long" and self.take_profit is not None:
-                self.console.print(f"[green]Current Take Profit Price: ${self.take_profit:.4f} (+{self.take_profit_percentage:.4f}%)[/green]")
+            if self.current_positions[symbol] == "long" and self.take_profits[symbol] is not None:
+                self.console.print(f"[green]Current Take Profit Price for {symbol}: ${self.format_value(self.take_profits[symbol])} (+{self.format_value(self.take_profit_percentage, is_price=False)}%)[/green]")
             
             # Check if we need to close position due to take profit
-            tp_action = self.check_take_profit(df)
+            tp_action = self.check_take_profit(symbol, df)
             if tp_action == "sell_all":
-                self.place_order("Sell")
+                self.place_order(symbol, "Sell")
                 return
             
             # Check wallet balance to see if we have the base asset
             wallet = self.get_wallet_balance()
-            base_balance = wallet.get(self.base_asset, {}).get("total", 0)
+            base_asset = self.base_assets[symbol]
+            base_balance = wallet.get(base_asset, {}).get("total", 0)
             
             # Display current base asset balance if any
             if base_balance > 0:
-                self.console.print(f"[yellow]Current {self.base_asset} balance: {base_balance} {self.base_asset}[/yellow]")
+                self.console.print(f"[yellow]Current {base_asset} balance: {base_balance} {base_asset}[/yellow]")
                 
                 # If we have a position, show entry and take profit
-                if self.entry_price is not None:
-                    current_profit_pct = ((current_close - self.entry_price) / self.entry_price) * 100
+                if self.entry_prices[symbol] is not None:
+                    current_profit_pct = ((current_close - self.entry_prices[symbol]) / self.entry_prices[symbol]) * 100
                     profit_color = "green" if current_profit_pct >= 0 else "red"
-                    self.console.print(f"[yellow]Entry Price: ${self.entry_price:.4f}, Take Profit: ${self.take_profit:.4f} (+{self.take_profit_percentage:.4f}%)[/yellow]")
-                    self.console.print(f"[{profit_color}]Current P/L: {current_profit_pct:.4f}%[/{profit_color}]")
-                
-            # Get current RSI value
-            current_rsi = df['rsi'].iloc[-1]
-            self.console.print(f"RSI: {current_rsi:.2f}")
+                    self.console.print(f"[yellow]Entry Price: ${self.format_value(self.entry_prices[symbol])}, Take Profit: ${self.format_value(self.take_profits[symbol])} (+{self.format_value(self.take_profit_percentage, is_price=False)}%)[/yellow]")
+                    self.console.print(f"[{profit_color}]Current P/L: {self.format_value(current_profit_pct, is_price=False)}%[/{profit_color}]")
             
             # Check for buy signal - only when price is below lower Bollinger Band, RSI is below 30, and we don't have a position
-            if self.is_price_below_bb_lower(df) and current_rsi < 30 and (self.current_position is None):
+            if self.is_price_below_bb_lower(df) and current_rsi < 30 and (self.current_positions[symbol] is None):
                 # Only buy if we don't already have a position
-                self.console.print(f"[bold green]BUY SIGNAL: Price below lower Bollinger Band and RSI below 30[/bold green]")
-                self.console.print(f"Price: ${current_close:.4f}, Lower BB: ${bb_lower:.4f}, RSI: {current_rsi:.2f}")
-                self.console.print(f"Take Profit will be set at: ${current_close * (1 + self.take_profit_percentage / 100):.4f} (+{self.take_profit_percentage:.4f}%)")
-                order = self.place_order("Buy")
+                self.console.print(f"[bold green]BUY SIGNAL for {symbol}: Price below lower Bollinger Band and RSI below 30[/bold green]")
+                self.console.print(f"Price: ${self.format_value(current_close)}, Lower BB: ${self.format_value(bb_lower)}, RSI: {self.format_value(current_rsi, is_price=False)}")
+                take_profit_price = current_close * (1 + self.take_profit_percentage / 100)
+                self.console.print(f"Take Profit will be set at: ${self.format_value(take_profit_price)} (+{self.format_value(self.take_profit_percentage, is_price=False)}%)")
+                order = self.place_order(symbol, "Buy")
                 return
             
             # No signals
-            self.console.print("[white]No trading signals detected[/white]")
+            self.console.print(f"[white]No trading signals detected for {symbol}[/white]")
             
         except Exception as e:
-            self.console.print(f"[bold red]Error analyzing market: {str(e)}[/bold red]")
+            self.console.print(f"[bold red]Error analyzing market for {symbol}: {str(e)}[/bold red]")
             import traceback
             traceback.print_exc()
     
+    def get_high_volume_pairs(self, min_volume=1000000, excluded_coins=None):
+        """Get trading pairs with 24h volume above the specified minimum and matching the configured decimal places"""
+        try:
+            # Initialize excluded coins list if None
+            if excluded_coins is None:
+                excluded_coins = []
+            
+            # Convert all excluded coins to uppercase for comparison
+            excluded_coins = [coin.upper() for coin in excluded_coins]
+            
+            # Get tickers for all symbols
+            tickers = self.client.get_tickers(category="spot")
+            high_volume_pairs = []
+            excluded_pairs = []
+            matching_decimal_pairs = []
+            
+            # Get the target decimal places from config (default to 4 if not using custom formatting)
+            target_decimal_places = self.price_decimal_places if self.enable_decimal_formatting else 4
+            
+            if tickers.get("retCode") == 0 and tickers.get("result", {}).get("list"):
+                for ticker in tickers["result"]["list"]:
+                    symbol = ticker.get("symbol")
+                    # Only consider USDT pairs
+                    if symbol and symbol.endswith("USDT"):
+                        # Extract the base coin (e.g., BTC from BTCUSDT)
+                        base_coin = symbol.replace("USDT", "")
+                        
+                        # Skip if the base coin is in the excluded list
+                        if base_coin in excluded_coins:
+                            volume_24h = float(ticker.get("turnover24h", 0))
+                            if volume_24h >= min_volume:
+                                excluded_pairs.append((symbol, volume_24h))
+                            continue
+                        
+                        # Convert volume to float and check against minimum
+                        volume_24h = float(ticker.get("turnover24h", 0))
+                        if volume_24h >= min_volume:
+                            # Check decimal places
+                            min_qty, min_order_amt, decimal_places = self.get_min_order_size(symbol)
+                            if decimal_places == target_decimal_places:
+                                matching_decimal_pairs.append(symbol)
+                                self.console.print(f"[green]Added {symbol} - 24h Volume: ${volume_24h:.2f}, Decimal Places: {decimal_places}[/green]")
+                            else:
+                                self.console.print(f"[yellow]Skipping {symbol} - 24h Volume: ${volume_24h:.2f}, Decimal Places: {decimal_places} (not {target_decimal_places})[/yellow]")
+                                excluded_pairs.append((symbol, volume_24h))
+            
+            # Report on excluded pairs
+            if excluded_pairs:
+                self.console.print(f"[yellow]Excluded {len(excluded_pairs)} high volume pairs:[/yellow]")
+                for pair, volume in excluded_pairs:
+                    self.console.print(f"[yellow]Excluded {pair} - 24h Volume: ${volume:.2f}[/yellow]")
+            
+            self.console.print(f"[bold blue]Found {len(matching_decimal_pairs)} pairs with 24h volume above ${min_volume:,} and exactly {target_decimal_places} decimal places[/bold blue]")
+            return matching_decimal_pairs
+        except Exception as e:
+            self.console.print(f"[bold red]Error getting high volume pairs: {str(e)}[/bold red]")
+            return []
+    
+    def analyze_all_markets(self):
+        """Analyze all markets in the symbols list"""
+        for symbol in self.symbols:
+            self.console.print(f"\n[bold blue]Analyzing {symbol} market...[/bold blue]")
+            self.analyze_market(symbol)
+    
     def run(self):
         """Main bot loop"""
-        self.console.print(Panel.fit(f"[bold green]{self.symbol} Bollinger Band Trading Bot Started[/bold green]", title="Status"))
+        self.console.print(Panel.fit(f"[bold green]Multi-Coin Bollinger Band Trading Bot Started[/bold green]", title="Status"))
+        self.console.print(f"[bold blue]Monitoring symbols: {', '.join(self.symbols)}[/bold blue]")
         
-        # Display current position if any
-        if self.current_position == "long" and self.entry_price is not None:
-            self.console.print(Panel.fit(f"[bold yellow]Current Position: LONG\nEntry Price: ${self.entry_price:.4f}\nTake Profit: ${self.take_profit:.4f} (+{self.take_profit_percentage:.4f}%)[/bold yellow]", title="Position"))
+        # Display current positions if any
+        for symbol in self.symbols:
+            if self.current_positions[symbol] == "long" and self.entry_prices[symbol] is not None:
+                self.console.print(Panel.fit(f"[bold yellow]Current Position for {symbol}: LONG\nEntry Price: ${self.entry_prices[symbol]:.4f}\nTake Profit: ${self.take_profits[symbol]:.4f} (+{self.take_profit_percentage:.4f}%)[/bold yellow]", title=f"{symbol} Position"))
         
         while True:
             try:
-                self.console.print(f"\n[bold blue]Analyzing {self.symbol} market...[/bold blue]")
-                self.analyze_market()
+                self.analyze_all_markets()
                 
                 # Wait before next iteration
                 self.console.print(f"[yellow]Waiting {self.update_interval} seconds before next analysis...[/yellow]")
@@ -478,17 +566,24 @@ if __name__ == "__main__":
     import argparse
     import sys
     
-    parser = argparse.ArgumentParser(description='Bollinger Band Trading Bot for Bybit')
-    parser.add_argument('symbol', nargs='?', type=str, default="BTC", help='Trading pair symbol (e.g., BTC, ETH, DOGE) - will be paired with USDT')
+    parser = argparse.ArgumentParser(description='Multi-Coin Bollinger Band Trading Bot for Bybit')
+    parser.add_argument('--symbols', type=str, default="ETH,SOL,SUI,ADA,XRP,DOGE,S,HAEDAL,TRUMP,VIRTUAL,AVAX,APEX,WAL,PEPE,TON,ONDO", help='Comma-separated list of trading symbols (e.g., BTC,ETH,SOL) - will be paired with USDT')
+    parser.add_argument('--high-volume', action='store_true', help='Use high volume pairs (24h volume > 1,000,000 USDT) instead of specified symbols')
+    parser.add_argument('--min-volume', type=float, default=1000000, help='Minimum 24h volume for high volume pairs (default: 1,000,000 USDT)')
+    parser.add_argument('--exclude', type=str, default="BTC", help='Comma-separated list of coins to exclude (e.g., BTC,ETH)')
     parser.add_argument('--testnet', action='store_true', help='Use testnet instead of mainnet')
     parser.add_argument('--config', type=str, default='config.json', help='Path to configuration file')
     
     args = parser.parse_args()
     
-    # Format the symbol properly (add USDT suffix if not already present)
-    symbol = args.symbol.upper()
-    if not symbol.endswith("USDT"):
-        symbol = f"{symbol}USDT"
+    # Parse the symbols
+    symbol_list = [s.strip().upper() for s in args.symbols.split(',')]
+    # Format the symbols properly (add USDT suffix if not already present)
+    symbols = []
+    for symbol in symbol_list:
+        if not symbol.endswith("USDT"):
+            symbol = f"{symbol}USDT"
+        symbols.append(symbol)
     
     api_key = os.getenv('BYBIT_API_KEY')
     api_secret = os.getenv('BYBIT_API_SECRET')
@@ -498,11 +593,31 @@ if __name__ == "__main__":
         exit(1)
     
     console = Console()
-    console.print(f"[bold blue]Starting {symbol} Bollinger Band Trading Bot...[/bold blue]")
+    console.print(f"[bold blue]Starting Multi-Coin Bollinger Band Trading Bot...[/bold blue]")
     console.print(f"[cyan]Using {'testnet' if args.testnet else 'mainnet'}[/cyan]")
     
     try:
-        bot = BBTradingBot(api_key, api_secret, symbol=symbol, config_path=args.config, testnet=args.testnet)
+        # Initialize bot with default symbols first
+        bot = BBMultiTradingBot(api_key, api_secret, symbols=symbols, config_path=args.config, testnet=args.testnet)
+        
+        # If high-volume flag is set, replace symbols with high volume pairs
+        if args.high_volume:
+            # Parse excluded coins
+            excluded_coins = [coin.strip() for coin in args.exclude.split(',')] if args.exclude else []
+            if excluded_coins:
+                console.print(f"[yellow]Will exclude these coins: {', '.join(excluded_coins)}[/yellow]")
+            
+            console.print(f"[yellow]Fetching high volume pairs (minimum 24h volume: ${args.min_volume:,})...[/yellow]")
+            high_volume_pairs = bot.get_high_volume_pairs(min_volume=args.min_volume, excluded_coins=excluded_coins)
+            
+            if high_volume_pairs:
+                # Reinitialize bot with high volume pairs
+                bot = BBMultiTradingBot(api_key, api_secret, symbols=high_volume_pairs, config_path=args.config, testnet=args.testnet)
+            else:
+                console.print(f"[bold red]No high volume pairs found. Using default symbols.[/bold red]")
+        else:
+            console.print(f"[cyan]Monitoring symbols: {', '.join(symbols)}[/cyan]")
+        
         bot.run()
     except KeyboardInterrupt:
         console.print("\n[yellow]Bot stopped by user[/yellow]")
